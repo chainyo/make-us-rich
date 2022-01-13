@@ -1,0 +1,25 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+
+
+###########################################################################
+#                           PREPROCESSED DATA                             #
+###########################################################################
+
+preprocessed_bitcoin_vs_usd_market_chart:
+  type: pandas.CSVDataset
+  file: data/intermediate/bitcoin_vs_usd_market_chart.csv
+
+preprocessed_chiliz_vs_usd_market_chart:
+  type: pandas.CSVDataset
+  file: data/intermediate/chiliz_vs_usd_market_chart.csv
+
+preprocessed_eos_vs_usd_market_chart:
+  type: pandas.CSVDataset
+  file: data/intermediate/eos_vs_usd_market_chart.csv
+
+preprocessed_etheruem_vs_usd_market_chart:
+  type: pandas.CSVDataset
+  file: data/intermediate/ethereum_vs_usd_market_chart.csv

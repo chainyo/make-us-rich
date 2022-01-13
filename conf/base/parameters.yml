@@ -1,0 +1,9 @@
+api_datasets_to_create:
+  currencies: 
+    - bitcoin
+    - chiliz
+    - eos
+    - ethereum
+    - ripple
+  compare:
+    - usd
