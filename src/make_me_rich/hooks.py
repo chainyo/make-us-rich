@@ -47,13 +47,13 @@ class APICatalogHooks:
         This hook is called after the catalog is created. It creates one entry in the catalog per crypto currency
         listed in the config file.
         """
-        api_datasets_to_create = feed_dict["params:currencies_datasets"]
-        datasets = list(product(api_datasets_to_create["currencies"], api_datasets_to_create["compare"]))
+        currency = feed_dict["params:currency"]
+        compare = feed_dict["params:compare"]
 
-        for dataset in datasets:
-            new_entry = {
-                f"{dataset[0]}_vs_{dataset[1]}_market_chart": APIDataSet(
-                    url=f"https://api.coingecko.com/api/v3/coins/{dataset[0]}/market_chart?vs_currency={dataset[1]}&days=max&interval=daily"
-                ),
-            }
-            catalog.add(new_entry, replace=True)
+        catalog.add(
+            data_set_name=f"inputs_market_chart",
+            data_set=APIDataSet(
+                url=f"https://api.coingecko.com/api/v3/coins/{currency}/market_chart?vs_currency={compare}&days=max&interval=daily"
+            ),
+            replace=True
+        )
