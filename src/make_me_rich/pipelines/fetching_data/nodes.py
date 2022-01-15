@@ -1,5 +1,5 @@
-import requests
 import pandas as pd
+import requests
 
 from datetime import datetime
 
@@ -17,7 +17,7 @@ def convert_timestamp(timestamp: int) -> str:
     return datetime.utcfromtimestamp(timestamp / 1000).strftime("%Y-%m-%d")
 
 
-def preprocess_market_chart_to_dataframe(api_response: requests.models.Response) -> pd.DataFrame:
+def format_market_chart_to_dataframe(api_response: requests.models.Response,) -> pd.DataFrame:
     """
     Preprocesses the market chart data from the API response.
 
