@@ -1,0 +1,10 @@
+training:
+  batch_size: 32
+  criterion: nn.MSELoss()
+  dropout_rate: 0.2
+  hidden_size: 100
+  learning_rate: 0.001
+  max_epochs: 10
+  n_features: 7
+  number_of_layers: 1
+  sequence_length: 24
