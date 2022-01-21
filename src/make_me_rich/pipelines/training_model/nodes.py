@@ -1,42 +1,74 @@
 import pandas as pd
 
-from pytorch_lightning import Trainer, seed_everything
-from typing import Dict
+from pytorch_lightning import (
+    Trainer, 
+    callbacks,
+    seed_everything
+)
+from typing import Dict, List, Tuple
 
-from .model import LSTMRegressor
+from .model import PricePredictor
 from .dataloader import LSTMDataLoader
 
 
-def training_loop(data: pd.DataFrame, parameters: Dict):
+def training_loop(
+    train_sequences: List[Tuple[pd.DataFrame, float]], 
+    val_sequences: List[Tuple[pd.DataFrame, float]],
+    test_sequences: List[Tuple[pd.DataFrame, float]],
+    parameters: Dict):
     """
     Training loop for the LSTM model.
 
     Args:
-        parameters: The parameters for the LSTM model.
+        train_sequences: List of training sequences.
+        val_sequences: List of validation sequences.
+        test_sequences: List of test sequences.
+        parameters: Dictionary of training parameters.
     """
     seed_everything(1)
+
+
+    model = PricePredictor(
+        batch_size=parameters["train_batch_size"],
+        dropout_rate=parameters["dropout_rate"],
+        hidden_size=parameters["hidden_size"],
+        learning_rate=parameters["learning_rate"],
+        number_of_features=parameters["number_of_features"],
+        number_of_layers=parameters["number_of_layers"],
+    )
+
+    data_module = LSTMDataLoader(
+        train_sequences=train_sequences, 
+        val_sequences=val_sequences,
+        test_sequences=test_sequences,
+        train_batch_size=parameters["train_batch_size"], 
+        val_batch_size=parameters["val_batch_size"],
+        train_workers=parameters["train_workers"],
+        val_workers=parameters["val_workers"],
+    )
+
+    checkpoint_callback = callbacks.ModelCheckpoint(
+        filename="best-checkpoint",
+        dirpath="data/06_models/checkpoints",
+        save_top_k=1,
+        verbose=True,
+        monitor="val_loss",
+        mode="min",
+    )
+
+    early_stopping_callback = callbacks.EarlyStopping(
+        monitor="val_loss",
+        patience=2
+    )
 
     trainer = Trainer(
         max_epochs=parameters["max_epochs"],
         logger=False,
+        checkpoint_callback=checkpoint_callback,
+        callbacks=[early_stopping_callback],
         gpus=0,
-        row_log_interval=1,
-        progress_bar_refresh_rate=2,
-    )
-
-    model = LSTMRegressor(
-        batch_size=parameters["batch_size"],
-        criterion=parameters["criterion"],
-        dropout_rate=parameters["dropout_rate"],
-        hidden_size=parameters["hidden_size"],
-        learning_rate=parameters["learning_rate"],
-        n_features=parameters["n_features"],
-        number_of_layers=parameters["number_of_layers"],
-        sequence_length=parameters["sequence_length"],
-    )
-
-    data_module = LSTMDataLoader(
-        data=data, batch_size=parameters["batch_size"], sequence_length=parameters["sequence_length"],
+        log_every_n_steps=1,
+        progress_bar_refresh_rate=10,
     )
 
     trainer.fit(model, data_module)

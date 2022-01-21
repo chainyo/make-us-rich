@@ -1,10 +1,14 @@
+target_column: 'close'
+sequence_length: 60
+val_size: 0.2
 training:
-  batch_size: 32
-  criterion: nn.MSELoss()
+  train_batch_size: 16
+  val_batch_size: 1
+  train_workers: 2
+  val_workers: 1
+  max_epochs: 100
+  hidden_size: 128
+  number_of_features: 9
+  number_of_layers: 2
   dropout_rate: 0.2
-  hidden_size: 100
-  learning_rate: 0.001
-  max_epochs: 10
-  n_features: 7
-  number_of_layers: 1
-  sequence_length: 24
+  learning_rate: 0.0001

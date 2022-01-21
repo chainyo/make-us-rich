@@ -1,15 +1,20 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import
+from .nodes import training_loop
 
 
 def create_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                func=,
-                inputs="preprocessed_market_chart",
-                outputs=,
+                func=training_loop,
+                inputs=[
+                    "train_sequences",
+                    "val_sequences",
+                    "test_sequences",
+                    "params:training"
+                ],
+                outputs=None,
                 name="training_data_node",
             ),
         ]

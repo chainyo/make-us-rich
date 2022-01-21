@@ -6,7 +6,25 @@
 fetched_market_chart:
   type: pandas.CSVDataSet
   filepath: data/01_raw/fetched_market_chart.csv
+  load_args:
+    parse_dates: ['timestamp']
 
-preprocessed_data:
+extracted_features:
   type: pandas.CSVDataSet
-  filepath: data/05_model_input/preprocessed_data.csv
+  filepath: data/04_feature/extracted_features.csv
+
+splitted_train_data:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/splitted_train_data.csv
+
+splitted_test_data:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/splitted_test_data.csv
+
+scaled_train_data:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/scaled_train_data.csv
+
+scaled_test_data:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/scaled_test_data.csv

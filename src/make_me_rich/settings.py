@@ -1,11 +1,10 @@
 """Project settings."""
 from make_me_rich.hooks import (
-    APICatalogHooks, 
     ProjectHooks,
 )
 
 # Instantiate and list your project hooks here
-HOOKS = (ProjectHooks(), APICatalogHooks())
+HOOKS = (ProjectHooks(),)
 
 # List the installed plugins for which to disable auto-registry
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)

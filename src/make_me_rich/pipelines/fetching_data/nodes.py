@@ -1,25 +1,15 @@
 import pandas as pd
-import requests
 
-from datetime import datetime
+from binance.client import Client
 
 
-def convert_timestamp(timestamp: int) -> str:
+def fetch_data_to_dataframe(
+    currency: str, 
+    compare: str,
+    kline_size: str = Client.KLINE_INTERVAL_1DAY,
+    ) -> pd.DataFrame:
     """
-    Converts a timestamp to a human readable format.
-
-    Args:
-        timestamp: The timestamp to convert.
-
-    Returns:
-        A human readable timestamp.
-    """
-    return datetime.utcfromtimestamp(timestamp / 1000).strftime("%Y-%m-%d")
-
-
-def format_market_chart_to_dataframe(api_response: requests.models.Response,) -> pd.DataFrame:
-    """
-    Preprocesses the market chart data from the API response.
+    Fetch data from the API and convert it to a pandas dataframe.
 
     Args:
         api_response: The response from the API.
@@ -27,11 +17,25 @@ def format_market_chart_to_dataframe(api_response: requests.models.Response,) ->
     Returns:
         A pandas dataframe with the market chart data.
     """
-    data = api_response.json()
-    if "error" not in data:
-        dataframe = pd.DataFrame(data["prices"], columns=["timestamps", "prices"])
-        dataframe["market_caps"] = [value[1] for value in data["market_caps"]]
-        dataframe["total_volumes"] = [value[1] for value in data["total_volumes"]]
-        dataframe["timestamps"] = dataframe["timestamps"].map(convert_timestamp)
-        dataframe.dropna(inplace=True)
-    return dataframe
+    symbol = f"{currency.upper()}{compare.upper()}"
+    binance_client = Client(api_key="params:API_KEY", api_secret="params:SECRET_KEY")
+    klines = binance_client.get_historical_klines(symbol, kline_size, "3650 days ago UTC")
+    data = pd.DataFrame(
+        klines, 
+        columns = [
+            "timestamp", 
+            "open", 
+            "high", 
+            "low", 
+            "close", 
+            "volume", 
+            "close_time", 
+            "quote_av", 
+            "trades", 
+            "tb_base_av", 
+            "tb_quote_av", 
+            "ignore"
+        ],
+    )
+    data["timestamp"] = pd.to_datetime(data["timestamp"], unit="ms")
+    return data

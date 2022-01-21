@@ -31,29 +31,29 @@ class ProjectHooks:
         )
 
 
-class APICatalogHooks:
-    @hook_impl
-    def after_catalog_created(
-        self, 
-        catalog: DataCatalog,
-        conf_catalog: Dict[str, Any],
-        conf_creds: Dict[str, Any],
-        feed_dict: Dict[str, Any],
-        save_version: str,
-        load_versions: Dict[str, str],
-        run_id: str,
-    ) -> None:
-        """
-        This hook is called after the catalog is created. It creates one entry in the catalog per crypto currency
-        listed in the config file.
-        """
-        currency = feed_dict["params:currency"]
-        compare = feed_dict["params:compare"]
+# class APICatalogHooks:
+#     @hook_impl
+#     def after_catalog_created(
+#         self, 
+#         catalog: DataCatalog,
+#         conf_catalog: Dict[str, Any],
+#         conf_creds: Dict[str, Any],
+#         feed_dict: Dict[str, Any],
+#         save_version: str,
+#         load_versions: Dict[str, str],
+#         run_id: str,
+#     ) -> None:
+#         """
+#         This hook is called after the catalog is created. It creates one entry in the catalog per crypto currency
+#         listed in the config file.
+#         """
+#         currency = feed_dict["params:currency"]
+#         compare = feed_dict["params:compare"]
 
-        catalog.add(
-            data_set_name=f"inputs_market_chart",
-            data_set=APIDataSet(
-                url=f"https://api.coingecko.com/api/v3/coins/{currency}/market_chart?vs_currency={compare}&days=max&interval=daily"
-            ),
-            replace=True
-        )
+#         catalog.add(
+#             data_set_name=f"inputs_market_chart",
+#             data_set=APIDataSet(
+#                 url=f"https://api.coingecko.com/api/v3/coins/{currency}/market_chart?vs_currency={compare}&days=max&interval=daily"
+#             ),
+#             replace=True
+#         )
