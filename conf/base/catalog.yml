@@ -28,3 +28,15 @@ scaled_train_data:
 scaled_test_data:
   type: pandas.CSVDataSet
   filepath: data/05_model_input/scaled_test_data.csv
+
+sequences_train_data:
+  type: MemoryDataSet
+
+test_sequences:
+  type: MemoryDataSet
+
+train_sequences:
+  type: MemoryDataSet
+  
+val_sequences:
+  type: MemoryDataSet

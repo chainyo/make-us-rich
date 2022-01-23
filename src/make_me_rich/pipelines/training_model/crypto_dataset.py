@@ -9,7 +9,7 @@ class CryptoDataset(Dataset):
     """
     Dataset class for the LSTM model used by PyTorch Lightning.
     """
-    def __init__(self, sequences: List[Tuple[pd.DataFrame]]):
+    def __init__(self, sequences: List[Tuple[pd.DataFrame, float]]):
         self.sequences = sequences
 
 
@@ -19,7 +19,4 @@ class CryptoDataset(Dataset):
 
     def __getitem__(self, index: int):
         sequence, label = self.sequences[index]
-        return dict(
-            sequence=torch.tensor(sequence.to_numpy()),
-            label=torch.tensor(label).float(),
-        )
+        return (torch.Tensor(sequence.to_numpy()),torch.tensor(label).float())

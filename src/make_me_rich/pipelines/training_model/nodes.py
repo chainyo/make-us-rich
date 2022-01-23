@@ -66,7 +66,7 @@ def training_loop(
         logger=False,
         checkpoint_callback=checkpoint_callback,
         callbacks=[early_stopping_callback],
-        gpus=0,
+        gpus=1,
         log_every_n_steps=1,
         progress_bar_refresh_rate=10,
     )

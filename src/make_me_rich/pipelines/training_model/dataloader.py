@@ -44,7 +44,7 @@ class LSTMDataLoader(pl.LightningDataModule):
         return DataLoader(
             self.train_dataset, 
             batch_size=self.train_batch_size, 
-            shuffle=True,
+            shuffle=False,
             num_workers=self.train_workers
         )
 
@@ -61,7 +61,7 @@ class LSTMDataLoader(pl.LightningDataModule):
     def test_dataloader(self):
         return DataLoader(
             self.test_dataset, 
-            batch_size=self.batch_size, 
+            batch_size=self.val_batch_size, 
             shuffle=False,
             num_workers=self.test_workers
         )
