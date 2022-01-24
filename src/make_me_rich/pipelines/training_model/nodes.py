@@ -28,7 +28,6 @@ def training_loop(
         val_sequences: List of validation sequences.
         test_sequences: List of test sequences.
         parameters: Dictionary of training parameters.
-        dir_path: Path to store checkpoints.
     """
     seed_everything(42, workers=True)
 
@@ -64,19 +63,21 @@ def training_loop(
 
     early_stopping_callback = callbacks.EarlyStopping(
         monitor="val_loss",
-        patience=2
+        patience=3,
+        verbose=True,
+        mode="min",
     )
 
+    gpu_value = 1 if parameters["run_on_gpu"] else 0
     trainer = Trainer(
         max_epochs=parameters["max_epochs"],
         logger=logger,
         checkpoint_callback=checkpoint_callback,
         callbacks=[early_stopping_callback],
-        gpus=0, # 0 by default, 1 for gpu user
+        gpus=gpu_value,
         log_every_n_steps=parameters["log_n_steps"],
         progress_bar_refresh_rate=10,
         deterministic=True,
-        accelerator="cpu",
     )
 
     trainer.fit(model, data_module)

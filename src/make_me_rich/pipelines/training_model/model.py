@@ -71,29 +71,27 @@ class PricePredictor(pl.LightningModule):
 
     def forward(self, x, labels=None):
         output = self.model(x)
-        if labels is None:
-            loss = self.criterion(output, labels.unsqueeze(dim=1))
-        else: loss = 0
+        loss = self.criterion(output, labels.unsqueeze(dim=1)) if labels is not None else 0
         return loss, output
 
         
     def training_step(self, batch, batch_idx):
         sequences, labels = batch
-        loss, outputs = self(sequences, labels)
+        loss, _ = self(sequences, labels)
         self.log("train_loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
     def validation_step(self, batch, batch_idx):
         sequences, labels = batch
-        loss, outputs = self(sequences, labels)
+        loss, _ = self(sequences, labels)
         self.log("val_loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
     def test_step(self, batch, batch_idx):
         sequences, labels = batch
-        loss, outputs = self(sequences, labels)
+        loss, _ = self(sequences, labels)
         self.log("test_loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
