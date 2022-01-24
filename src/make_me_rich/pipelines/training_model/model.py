@@ -78,21 +78,21 @@ class PricePredictor(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         sequences, labels = batch
         loss, _ = self(sequences, labels)
-        self.log("train_loss", loss, on_step=True, on_epoch=True)
+        self.log("train/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
     def validation_step(self, batch, batch_idx):
         sequences, labels = batch
         loss, _ = self(sequences, labels)
-        self.log("val_loss", loss, on_step=True, on_epoch=True)
+        self.log("valid/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
     def test_step(self, batch, batch_idx):
         sequences, labels = batch
         loss, _ = self(sequences, labels)
-        self.log("test_loss", loss, on_step=True, on_epoch=True)
+        self.log("test/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 

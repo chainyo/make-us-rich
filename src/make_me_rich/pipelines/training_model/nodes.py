@@ -1,5 +1,6 @@
 import pandas as pd
 
+from pathlib import Path
 from pytorch_lightning import (
     Trainer, 
     callbacks,
@@ -54,16 +55,15 @@ def training_loop(
 
     checkpoint_callback = callbacks.ModelCheckpoint(
         dirpath=parameters["dir_path"],
-        filename="{epoch}-{val_loss:.2f}",
         save_top_k=1,
         verbose=True,
-        monitor="val_loss",
+        monitor="valid/loss",
         mode="min",
     )
 
     early_stopping_callback = callbacks.EarlyStopping(
-        monitor="val_loss",
-        patience=3,
+        monitor="valid/loss",
+        patience=2,
         verbose=True,
         mode="min",
     )
@@ -72,8 +72,7 @@ def training_loop(
     trainer = Trainer(
         max_epochs=parameters["max_epochs"],
         logger=logger,
-        checkpoint_callback=checkpoint_callback,
-        callbacks=[early_stopping_callback],
+        callbacks=[checkpoint_callback, early_stopping_callback],
         gpus=gpu_value,
         log_every_n_steps=parameters["log_n_steps"],
         progress_bar_refresh_rate=10,
