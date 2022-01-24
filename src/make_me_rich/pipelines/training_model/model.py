@@ -13,6 +13,7 @@ class LSTMRegressor(nn.Module):
         hidden_size: int,
         number_of_features: int,
         number_of_layers: int,
+        run_on_gpu: bool,
     ):
         super().__init__()
         self.batch_size = batch_size
@@ -20,6 +21,7 @@ class LSTMRegressor(nn.Module):
         self.hidden_size = hidden_size
         self.n_features = number_of_features
         self.number_of_layers = number_of_layers
+        self.run_on_gpu = run_on_gpu
 
         self.lstm = nn.LSTM(
             batch_first=True,
@@ -38,7 +40,8 @@ class LSTMRegressor(nn.Module):
 
         lstm_out = (batch_size, sequence_length, hidden_size)
         """
-        self.lstm.flatten_parameters()
+        if self.run_on_gpu:
+            self.lstm.flatten_parameters()
         _, (hidden, _) = self.lstm(x)
         out = hidden[-1]
         return self.regressor(out)
@@ -55,11 +58,12 @@ class PricePredictor(pl.LightningModule):
         learning_rate: float,
         number_of_features: int,
         number_of_layers: int,
+        run_on_gpu: bool,
         criterion: nn.Module = nn.MSELoss(),
     ):
         super().__init__()
         self.model = LSTMRegressor(
-            batch_size, dropout_rate, hidden_size, number_of_features, number_of_layers,
+            batch_size, dropout_rate, hidden_size, number_of_features, number_of_layers, run_on_gpu,
         )
         self.learning_rate = learning_rate
         self.criterion = criterion

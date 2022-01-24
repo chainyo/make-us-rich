@@ -3,13 +3,16 @@ import pandas as pd
 from pytorch_lightning import (
     Trainer, 
     callbacks,
-    seed_everything
+    seed_everything,
 )
+from pytorch_lightning.loggers import WandbLogger
 from typing import Dict, List, Tuple
 
 from .model import PricePredictor
 from .dataloader import LSTMDataLoader
 
+
+logger = WandbLogger(project="make-me-rich")
 
 def training_loop(
     train_sequences: List[Tuple[pd.DataFrame, float]], 
@@ -35,6 +38,7 @@ def training_loop(
         learning_rate=parameters["learning_rate"],
         number_of_features=parameters["number_of_features"],
         number_of_layers=parameters["number_of_layers"],
+        run_on_gpu=parameters["run_on_gpu"],
     )
 
     data_module = LSTMDataLoader(
@@ -63,11 +67,11 @@ def training_loop(
 
     trainer = Trainer(
         max_epochs=parameters["max_epochs"],
-        logger=False,
+        logger=logger,
         checkpoint_callback=checkpoint_callback,
         callbacks=[early_stopping_callback],
-        gpus=1,
-        log_every_n_steps=1,
+        gpus=0, # 0 by default, 1 for gpu user
+        log_every_n_steps=parameters["log_n_steps"],
         progress_bar_refresh_rate=10,
     )
 

@@ -11,4 +11,12 @@ nbstripout~=0.4
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
+python-binance==v1.0.15
+pytorch-lightning==1.5.9
+wandb==0.12.9
 wheel>=0.35, <0.37
+
+--find-links https://download.pytorch.org/whl/cu113/torch_stable.html
+torch==1.10.1+cu113
+torchaudio==0.10.1+cu113
+torchvision==0.11.2+cu113
