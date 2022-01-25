@@ -12,7 +12,7 @@ def create_pipeline(**kwargs):
                     "train_sequences",
                     "val_sequences",
                     "test_sequences",
-                    "params:dir_path"
+                    "params:training"
                 ],
                 outputs=None,
                 name="converting_model_node"

@@ -1,10 +1,12 @@
+import glob
 import onnx
+import pandas as pd
 import torch
 
-from make_me_rich.pipelines import PricePredictor
-from make_me_rich.pipelines import LSTMDataLoader
+from make_me_rich.pipelines.training_model import PricePredictor
+from make_me_rich.pipelines.training_model import LSTMDataLoader
 
-from typing import Any, Dict
+from typing import Any, Dict, List, Tuple
 
 
 def convert_model(
@@ -16,7 +18,8 @@ def convert_model(
     """
     Convert trained model to ONNX.
     """
-    model = PricePredictor.load_from_checkpoint(parameters["dir_path"])
+    model_path = [file for file in glob.glob(f"{parameters['dir_path']}/*.ckpt")][0]
+    model = PricePredictor.load_from_checkpoint(model_path)
     data = LSTMDataLoader(
         train_sequences=train_sequences, 
         val_sequences=val_sequences, 
@@ -26,9 +29,10 @@ def convert_model(
     )
     data.setup()
     input_batch = next(iter(data.train_dataloader()))
+    input_sample = input_batch[0][0].unsqueeze(0)
     path_onnx_model = f"{parameters['dir_path']}/model.onnx"
     torch.onnx.export(
-        model, input_batch, path_onnx_model,
+        model, input_sample, path_onnx_model,
         export_params=True,
         opset_version=11,
         input_names=["sequence"],
