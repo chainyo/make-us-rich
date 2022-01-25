@@ -54,10 +54,10 @@ def convert_model(
                 "output": {0: "batch_size"},
             },
         )
-    return {"conversion_done": True}
+    return {"conversion_done": True}, input_sample
 
 
-def validate_model(dir_path: str, conversion_done: bool):
+def validate_model(dir_path: str, conversion_done: bool, input_sample: torch.Tensor):
     """
     Check if the converted model is valid.
 
@@ -72,24 +72,15 @@ def validate_model(dir_path: str, conversion_done: bool):
             onnx.checker.check_model(onnx_model)
         except onnx.checker.ValidationError as e:
             raise ValueError(f"ONNX model is not valid: {e}")
-        else:
+        
+        try:
+            ort_session = onnxruntime.InferenceSession(path_onnx_model)
+            ort_session.get_providers()
+
+
+
+
+
+
             return {"validation_done": True}
 
-
-def test_model(dir_path: str, validation_done: bool):
-    """
-    Test the converted model.
-
-    Args:
-        dir_path: Directory path where the model is saved.
-        validation_done: Flag to check if the validation is done.
-    """
-    if validation_done["validation_done"] == True:
-        path_onnx_model = f"{dir_path}/model.onnx"
-        onnx_model = onnx.load(path_onnx_model)
-        try:
-            onnx.checker.check_model(onnx_model)
-        except onnx.checker.ValidationError as e:
-            raise ValueError(f"ONNX model is not valid: {e}")
-        else:
-            return {"test_done": True}
