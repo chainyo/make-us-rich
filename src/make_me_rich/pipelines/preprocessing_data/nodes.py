@@ -1,5 +1,6 @@
 import pandas as pd
 
+from pickle import dump
 from sklearn.preprocessing import MinMaxScaler
 from typing import List, Tuple
 
@@ -33,7 +34,9 @@ def split_data(data: pd.DataFrame) -> pd.DataFrame:
     return train_df, test_df
 
 
-def scale_data(train_df: pd.DataFrame, test_df: pd.DataFrame) -> pd.DataFrame:
+def scale_data(
+    train_df: pd.DataFrame, test_df: pd.DataFrame, dir_path: str,
+) -> pd.DataFrame:
     """
     Scale data to have a mean of 0 and a standard deviation of 1.
     """
@@ -50,13 +53,14 @@ def scale_data(train_df: pd.DataFrame, test_df: pd.DataFrame) -> pd.DataFrame:
         index=test_df.index,
         columns=test_df.columns,
     )
+    dump(scaler, open(f"{dir_path}/scaler.pkl", "wb"))
     return scaled_train_df, scaled_test_df
 
 
 def create_sequences(
     input_data: pd.DataFrame, 
     target_column: str, 
-    sequence_length: int
+    sequence_length: int,
     ) -> List[Tuple[pd.DataFrame, float]]:
     """
     Create sequences from the input data.

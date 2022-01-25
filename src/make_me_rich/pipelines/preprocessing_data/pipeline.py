@@ -26,7 +26,7 @@ def create_pipeline(**kwargs):
             ),
             node(
                 func=scale_data,
-                inputs=["splitted_train_data", "splitted_test_data"],
+                inputs=["splitted_train_data", "splitted_test_data", "params:dir_path"],
                 outputs=["scaled_train_data", "scaled_test_data"],
                 name="scaling_data_node",
             ),

@@ -20,6 +20,7 @@ def training_loop(
     val_sequences: List[Tuple[pd.DataFrame, float]],
     test_sequences: List[Tuple[pd.DataFrame, float]],
     parameters: Dict[str, Any],
+    dir_path: str,
 ):
     """
     Training loop for the LSTM model.
@@ -54,7 +55,7 @@ def training_loop(
     )
 
     checkpoint_callback = callbacks.ModelCheckpoint(
-        dirpath=parameters["dir_path"],
+        dirpath=dir_path,
         save_top_k=1,
         verbose=True,
         monitor="valid/loss",
@@ -81,3 +82,5 @@ def training_loop(
 
     trainer.fit(model, data_module)
     trainer.test(model, data_module)
+
+    return {"training_done": True}
