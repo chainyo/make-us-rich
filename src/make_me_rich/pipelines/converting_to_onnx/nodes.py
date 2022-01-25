@@ -36,8 +36,8 @@ def convert_model(
             train_sequences=train_sequences, 
             val_sequences=val_sequences, 
             test_sequences=test_sequences, 
-            train_batch_size=parameters["train_batch_size"], 
-            val_batch_size=parameters["val_batch_size"],
+            train_batch_size=parameters["batch_size"], 
+            val_batch_size=parameters["batch_size"],
         )
         data.setup()
         input_batch = next(iter(data.train_dataloader()))
@@ -73,14 +73,14 @@ def validate_model(dir_path: str, conversion_done: bool, input_sample: torch.Ten
         except onnx.checker.ValidationError as e:
             raise ValueError(f"ONNX model is not valid: {e}")
         
-        try:
-            ort_session = onnxruntime.InferenceSession(path_onnx_model)
-            ort_session.get_providers()
+        # try:
+        #     ort_session = onnxruntime.InferenceSession(path_onnx_model)
+        #     ort_session.get_providers()
 
 
 
 
 
 
-            return {"validation_done": True}
+        #     return {"validation_done": True}
 
