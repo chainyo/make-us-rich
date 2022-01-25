@@ -1,6 +1,7 @@
 target_column: 'close'
 sequence_length: 60
 val_size: 0.2
+dir_path: "data/06_models/"
 training:
   train_batch_size: 16
   val_batch_size: 1
@@ -14,4 +15,3 @@ training:
   learning_rate: 0.0001
   log_n_steps: 2
   run_on_gpu: True
-  dir_path: "data/06_models/"
