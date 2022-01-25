@@ -9,6 +9,7 @@ kedro[pandas.CSVDataSet]==0.17.6
 kedro-telemetry~=0.1.0
 nbstripout~=0.4
 onnx==1.10.2
+onnxruntime==v1.10.0
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
