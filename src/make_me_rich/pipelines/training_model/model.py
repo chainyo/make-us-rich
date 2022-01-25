@@ -67,12 +67,15 @@ class PricePredictor(pl.LightningModule):
         )
         self.learning_rate = learning_rate
         self.criterion = criterion
+        self.save_hyperparameters()
 
 
     def forward(self, x, labels=None):
         output = self.model(x)
-        loss = self.criterion(output, labels.unsqueeze(dim=1)) if labels is not None else 0
-        return loss, output
+        if labels is not None:
+            loss = self.criterion(output, labels.unsqueeze(dim=1))
+            return loss, output
+        return output
 
         
     def training_step(self, batch, batch_idx):
