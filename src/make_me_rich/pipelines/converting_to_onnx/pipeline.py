@@ -20,26 +20,18 @@ def create_pipeline(**kwargs):
                     "params:dir_path",
                     "training_done"
                 ],
-                outputs="conversion_done",
+                outputs=["conversion_done", "input_sample"],
                 name="converting_model_node"
             ),
             node(
                 func=validate_model,
                 inputs=[
                     "params:dir_path",
-                    "conversion_done"
+                    "conversion_done",
+                    "input_sample",
                 ],
                 outputs="validation_done",
-                name="checking_model_node"
-            ),
-            node(
-                func=test_model,
-                inputs=[
-                    "params:dir_path",
-                    "validation_done"
-                ],
-                outputs="test_done",
-                name="testing_model_node"
+                name="validating_model_node"
             ),
         ]
     )
