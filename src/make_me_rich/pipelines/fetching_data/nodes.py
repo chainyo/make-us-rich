@@ -1,25 +1,32 @@
 import pandas as pd
 
 from binance.client import Client
+from typing import Dict
 
 
 def fetch_data_to_dataframe(
     currency: str, 
     compare: str,
-    kline_size: str = Client.KLINE_INTERVAL_1DAY,
-    ) -> pd.DataFrame:
+    parameters: Dict[str, str]
+) -> pd.DataFrame:
     """
     Fetch data from the API and convert it to a pandas dataframe.
 
     Args:
-        api_response: The response from the API.
+        currency: The currency to fetch data for.
+        compare: The currency to compare to.
+        parameters: The parameters to use for the API call.
 
     Returns:
         A pandas dataframe with the market chart data.
     """
     symbol = f"{currency.upper()}{compare.upper()}"
-    binance_client = Client(api_key="params:API_KEY", api_secret="params:SECRET_KEY")
-    klines = binance_client.get_historical_klines(symbol, kline_size, "3650 days ago UTC")
+    binance_client = Client(
+        api_key="params:API_KEY", api_secret="params:SECRET_KEY"
+    )
+    klines = binance_client.get_historical_klines(
+        symbol, parameters["interval"], parameters["start_date"]
+    )
     data = pd.DataFrame(
         klines, 
         columns = [

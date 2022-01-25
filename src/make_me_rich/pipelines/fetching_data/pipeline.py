@@ -8,7 +8,7 @@ def create_pipeline(**kwargs):
         [
             node(
                 func=fetch_data_to_dataframe,
-                inputs=["params:currency", "params:compare"],
+                inputs=["params:currency", "params:compare", "params:fetching"],
                 outputs="fetched_market_chart",
                 name="fetching_data_node",
             ),
