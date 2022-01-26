@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import pytorch_lightning as pl
 
+from typing import Tuple
+
 
 class LSTMRegressor(nn.Module):
     """
@@ -60,7 +62,33 @@ class PricePredictor(pl.LightningModule):
         number_of_layers: int,
         run_on_gpu: bool,
         criterion: nn.Module = nn.MSELoss(),
-    ):
+    ) -> None:
+        """
+        Initialize the model.
+
+        Parameters
+        ----------
+        batch_size: int
+            Batch size for training.
+        dropout_rate: float
+            Dropout rate for the LSTM.
+        hidden_size: int
+            Hidden size for the LSTM.
+        learning_rate: float
+            Learning rate for the optimizer.
+        number_of_features: int
+            Number of features in the input.
+        number_of_layers: int
+            Number of layers in the LSTM.
+        run_on_gpu: bool
+            Whether to run the model on the GPU.
+        criterion: nn.Module
+            Loss function to use.
+
+        Returns
+        -------
+        None
+        """
         super().__init__()
         self.model = LSTMRegressor(
             batch_size, dropout_rate, hidden_size, number_of_features, number_of_layers, run_on_gpu,
@@ -70,7 +98,24 @@ class PricePredictor(pl.LightningModule):
         self.save_hyperparameters()
 
 
-    def forward(self, x, labels=None):
+    def forward(self, x, labels=None) -> Tuple[float, torch.Tensor]:
+        """
+        Forward pass through the model.
+
+        Parameters
+        ----------
+        x: torch.Tensor
+            Input data.
+        labels: torch.Tensor
+            Labels for the data.
+
+        Returns
+        -------
+        loss: float
+            Loss for the model.
+        output: torch.Tensor
+            Output of the model.
+        """
         output = self.model(x)
         if labels is not None:
             loss = self.criterion(output, labels.unsqueeze(dim=1))

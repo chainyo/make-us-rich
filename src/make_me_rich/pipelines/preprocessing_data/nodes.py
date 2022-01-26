@@ -6,7 +6,17 @@ from typing import List, Tuple
 
 def extract_features_from_dataset(data: pd.DataFrame) -> pd.DataFrame:
     """
-    Format market chart data to a pandas dataframe.
+    Extract features from dataset.
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Market chart data.
+    
+    Returns
+    -------
+    pd.DataFrame
+        Pandas dataframe of features.
     """
     rows = []
     for _, row in data.iterrows():
@@ -28,6 +38,16 @@ def extract_features_from_dataset(data: pd.DataFrame) -> pd.DataFrame:
 def split_data(data: pd.DataFrame) -> pd.DataFrame:
     """
     Split data into training and test sets.
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Market chart data.
+    
+    Returns
+    -------
+    pd.DataFrame
+        Pandas dataframe of training and test data.
     """
     train_size = int(len(data) * 0.9)
     train_df, test_df = data[:train_size], data[train_size + 1:]
@@ -39,6 +59,20 @@ def scale_data(
 ) -> pd.DataFrame:
     """
     Scale data to have a mean of 0 and a standard deviation of 1.
+
+    Parameters
+    ----------
+    train_df: pd.DataFrame
+        Training data.
+    test_df: pd.DataFrame
+        Test data.
+    dir_path: str
+        Directory path to save the scaler.
+    
+    Returns
+    -------
+    pd.DataFrame
+        Scaled training and test data.
     """
     scaler = MinMaxScaler(feature_range=(-1, 1))
     scaler = scaler.fit(train_df)
@@ -64,6 +98,20 @@ def create_sequences(
     ) -> List[Tuple[pd.DataFrame, float]]:
     """
     Create sequences from the input data.
+
+    Parameters
+    ----------
+    input_data: pd.DataFrame
+        Pandas dataframe of input data.
+    target_column: str
+        Name of the column to predict.
+    sequence_length: int
+        Length of the sequence.
+    
+    Returns
+    -------
+    List[Tuple[pd.DataFrame, float]]
+        List of sequences.
     """
     sequences = []
     size = len(input_data)
@@ -81,6 +129,18 @@ def split_train_and_val_sequences(
 ) -> Tuple[List[Tuple[pd.DataFrame, float]]]:
     """
     Split sequences into training and validation sets.
+
+    Parameters
+    ----------
+    sequences: List[Tuple[pd.DataFrame, float]]
+        List of sequences.
+    val_size: float
+        Percentage of the data to use as validation.
+    
+    Returns
+    -------
+    Tuple[List[Tuple[pd.DataFrame, float]]]
+        Tuple of training and validation sequences.
     """
     train_sequences, val_sequences = [], []
     for sequence, label in sequences:

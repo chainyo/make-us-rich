@@ -8,7 +8,7 @@ import torch
 from make_me_rich.pipelines.training_model import PricePredictor
 from make_me_rich.pipelines.training_model import LSTMDataLoader
 
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List, Tuple
 
 
 def convert_model(
@@ -17,18 +17,30 @@ def convert_model(
     test_sequences: List[Tuple[pd.DataFrame, float]],
     parameters: str,
     dir_path: str,
-    training_done: bool,
-):
+    training_done: Dict[str, bool],
+) -> Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]:
     """
     Convert trained model to ONNX.
 
-    Args:
-        train_sequences: List of training sequences.
-        val_sequences: List of validation sequences.
-        test_sequences: List of test sequences.
-        parameters: Dictionary of training parameters.
-        dir_path: Directory path where the model is saved.
-        training_done: Flag to check if the training is done.
+    Parameters
+    ----------
+    train_sequences: List[Tuple[pd.DataFrame, float]]
+        Training sequences.
+    val_sequences: List[Tuple[pd.DataFrame, float]]
+        Validation sequences.
+    test_sequences: List[Tuple[pd.DataFrame, float]]
+        Test sequences.
+    parameters: str
+        Parameters used for training.
+    dir_path: str
+        Directory path where the model is saved.
+    training_done: Dict[str, bool]
+        Flag indicating if the training is done.
+
+    Returns
+    -------
+    Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]
+        Dictionary of outputs from the conversion step.
     """
     if training_done["training_done"] == True:
         model_path = [file for file in glob.glob(f"{dir_path}/*.ckpt")][0]
@@ -66,13 +78,25 @@ def _to_numpy(tensor: torch.Tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
 
-def validate_model(dir_path: str, conversion_outputs: Dict[str, Any]):
+def validate_model(
+    dir_path: str, 
+    conversion_outputs: Dict[
+        Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]
+    ]) -> Dict[Tuple[str, bool], Tuple[str, str]]:
     """
     Check if the converted model is valid.
 
-    Args:
-        dir_path: Directory path where the model is saved.
-        conversion_outputs: Dictionary of outputs from the conversion step.
+    Parameters
+    ----------
+    dir_path: str
+        Directory path where the model is saved.
+    conversion_outputs: Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]
+        Dictionary of outputs from the conversion step.
+    
+    Returns
+    -------
+    Dict[Tuple[str, bool], Tuple[str, str]]
+        Dictionary of outputs from the validation step.
     """
     if conversion_outputs["conversion_done"] == True:
         path_onnx_model = f"{dir_path}/model.onnx"
@@ -95,4 +119,4 @@ def validate_model(dir_path: str, conversion_outputs: Dict[str, Any]):
             print("🎉 ONNX model is valid. 🎉")
         except Exception as e:
             raise ValueError(f"ONNX model is not valid: {e}")
-        return {"validation_done": True}
+        return {"validation_done": True, "path_onnx_model": path_onnx_model}

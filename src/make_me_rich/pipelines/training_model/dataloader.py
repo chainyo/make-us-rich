@@ -20,6 +20,26 @@ class LSTMDataLoader(pl.LightningDataModule):
         train_workers: int = 2,
         val_workers: int = 1,
     ):
+        """
+        Initialize the data loader.
+
+        Parameters
+        ----------
+        train_sequences: List[Tuple[pd.DataFrame, float]]
+            List of training sequences.
+        val_sequences: List[Tuple[pd.DataFrame, float]]
+            List of validation sequences.
+        test_sequences: List[Tuple[pd.DataFrame, float]]
+            List of test sequences.
+        train_batch_size: int
+            Batch size for training.
+        val_batch_size: int
+            Batch size for validation.
+        train_workers: int
+            Number of workers for training.
+        val_workers: int
+            Number of workers for validation.
+        """
         super().__init__()
         self.train_sequences = train_sequences
         self.val_sequences = val_sequences
@@ -31,9 +51,18 @@ class LSTMDataLoader(pl.LightningDataModule):
         self.test_workers = val_workers
 
 
-    def setup(self, stage: str = None):
+    def setup(self, stage: str = None) -> None:
         """
         Load the data.
+
+        Parameters
+        ----------
+        stage: str
+            Name of the stage.
+
+        Returns
+        -------
+        None
         """
         self.train_dataset = CryptoDataset(self.train_sequences)
         self.val_dataset = CryptoDataset(self.val_sequences)

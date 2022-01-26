@@ -13,14 +13,21 @@ def fetch_data_to_dataframe(
     """
     Fetch data from the API and convert it to a pandas dataframe.
 
-    Args:
-        currency: The currency to fetch data for.
-        compare: The currency to compare to.
-        parameters: The parameters to use for the API call.
-        credentials: The credentials to use for the API call.
-
-    Returns:
-        A pandas dataframe with the market chart data.
+    Parameters
+    ----------
+    currency: str
+        Currency to fetch data for.
+    compare: str
+        Currency to compare to.
+    parameters: Dict[str, str]
+        Dictionary of parameters.
+    credentials: Dict[str, str]
+        Dictionary of credentials for the API.
+    
+    Returns
+    -------
+    pd.DataFrame
+        Pandas dataframe containing the data.
     """
     symbol = f"{currency.upper()}{compare.upper()}"
     binance_client = Client(
