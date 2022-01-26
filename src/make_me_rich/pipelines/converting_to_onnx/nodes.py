@@ -1,4 +1,5 @@
 import glob
+import numpy as np
 import onnx
 import onnxruntime
 import pandas as pd
@@ -7,7 +8,7 @@ import torch
 from make_me_rich.pipelines.training_model import PricePredictor
 from make_me_rich.pipelines.training_model import LSTMDataLoader
 
-from typing import List, Tuple
+from typing import Any, Dict, List, Tuple
 
 
 def convert_model(
@@ -54,18 +55,26 @@ def convert_model(
                 "output": {0: "batch_size"},
             },
         )
-    return {"conversion_done": True}, input_sample
+    return {
+        "conversion_done": True,
+        "model_path": model_path,
+        "input_sample": input_sample,
+    }
 
 
-def validate_model(dir_path: str, conversion_done: bool, input_sample: torch.Tensor):
+def _to_numpy(tensor: torch.Tensor):
+    return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
+
+
+def validate_model(dir_path: str, conversion_outputs: Dict[str, Any]):
     """
     Check if the converted model is valid.
 
     Args:
         dir_path: Directory path where the model is saved.
-        conversion_done: Flag to check if the conversion is done.
+        conversion_outputs: Dictionary of outputs from the conversion step.
     """
-    if conversion_done["conversion_done"] == True:
+    if conversion_outputs["conversion_done"] == True:
         path_onnx_model = f"{dir_path}/model.onnx"
         onnx_model = onnx.load(path_onnx_model)
         try:
@@ -73,14 +82,17 @@ def validate_model(dir_path: str, conversion_done: bool, input_sample: torch.Ten
         except onnx.checker.ValidationError as e:
             raise ValueError(f"ONNX model is not valid: {e}")
         
-        # try:
-        #     ort_session = onnxruntime.InferenceSession(path_onnx_model)
-        #     ort_session.get_providers()
-
-
-
-
-
-
-        #     return {"validation_done": True}
-
+        try:
+            input_sample = conversion_outputs["input_sample"]
+            model = PricePredictor.load_from_checkpoint(conversion_outputs["model_path"])
+            model.eval()
+            with torch.no_grad():
+                torch_output = model(input_sample)
+            ort_session = onnxruntime.InferenceSession(path_onnx_model)
+            ort_inputs = {ort_session.get_inputs()[0].name: _to_numpy(input_sample)}
+            ort_outputs = ort_session.run(None, ort_inputs)
+            np.testing.assert_allclose(_to_numpy(torch_output), ort_outputs[0], rtol=1e-03, atol=1e-05)
+            print("🎉 ONNX model is valid. 🎉")
+        except Exception as e:
+            raise ValueError(f"ONNX model is not valid: {e}")
+        return {"validation_done": True}
