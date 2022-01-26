@@ -8,9 +8,18 @@ def create_pipeline(**kwargs):
         [
             node(
                 func=upload_files,
-                inputs=["params:MINIO"],
-                outputs="conversion_outputs",
-                name="converting_model_node"
+                inputs=[
+                    "params:currency",
+                    "params:compare",
+                    "params:MINIO_ACCESS_KEY",
+                    "params:MINIO_SECRET_KEY",
+                    "params:MINIO_ENDPOINT",
+                    "params:MINIO_BUCKET", 
+                    "validation_done",
+                    "params:dir_path",
+                ],
+                outputs="upload_done",
+                name="uploading_files_node"
             ),
         ]
     )

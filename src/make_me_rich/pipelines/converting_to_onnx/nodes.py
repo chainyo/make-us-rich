@@ -8,7 +8,7 @@ import torch
 from make_me_rich.pipelines.training_model import PricePredictor
 from make_me_rich.pipelines.training_model import LSTMDataLoader
 
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 
 def convert_model(
@@ -18,7 +18,7 @@ def convert_model(
     parameters: str,
     dir_path: str,
     training_done: Dict[str, bool],
-) -> Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]:
+) -> Dict[str, Any]:
     """
     Convert trained model to ONNX.
 
@@ -39,7 +39,7 @@ def convert_model(
 
     Returns
     -------
-    Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]
+    Dict[str, Any]
         Dictionary of outputs from the conversion step.
     """
     if training_done["training_done"] == True:
@@ -80,9 +80,8 @@ def _to_numpy(tensor: torch.Tensor):
 
 def validate_model(
     dir_path: str, 
-    conversion_outputs: Dict[
-        Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]
-    ]) -> Dict[Tuple[str, bool], Tuple[str, str]]:
+    conversion_outputs: Dict[str, Any],
+) -> Dict[str, bool]:
     """
     Check if the converted model is valid.
 
@@ -90,13 +89,13 @@ def validate_model(
     ----------
     dir_path: str
         Directory path where the model is saved.
-    conversion_outputs: Dict[Tuple[str, bool], Tuple[str, str], Tuple[str, torch.Tensor]]
+    conversion_outputs: Dict[str, Any]
         Dictionary of outputs from the conversion step.
     
     Returns
     -------
-    Dict[Tuple[str, bool], Tuple[str, str]]
-        Dictionary of outputs from the validation step.
+    Dict[str, bool]
+        Flag indicating if the model is valid.
     """
     if conversion_outputs["conversion_done"] == True:
         path_onnx_model = f"{dir_path}/model.onnx"
@@ -119,4 +118,4 @@ def validate_model(
             print("🎉 ONNX model is valid. 🎉")
         except Exception as e:
             raise ValueError(f"ONNX model is not valid: {e}")
-        return {"validation_done": True, "path_onnx_model": path_onnx_model}
+        return {"validation_done": True}
