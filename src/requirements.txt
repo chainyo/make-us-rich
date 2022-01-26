@@ -55,6 +55,7 @@ cachetools==4.2.4
     #   kedro
 certifi==2021.10.8
     # via
+    #   minio
     #   requests
     #   sentry-sdk
 cffi==1.15.0
@@ -232,6 +233,8 @@ matplotlib-inline==0.1.3
     #   ipython
 mccabe==0.6.1
     # via flake8
+minio==7.1.2
+    # via -r /home/chainyo/code/make-me-rich/src/requirements.in
 mistune==0.8.4
     # via nbconvert
 multidict==6.0.1
@@ -542,6 +545,7 @@ ujson==5.1.0
     # via python-binance
 urllib3==1.26.8
     # via
+    #   minio
     #   requests
     #   sentry-sdk
 wandb==0.12.9
