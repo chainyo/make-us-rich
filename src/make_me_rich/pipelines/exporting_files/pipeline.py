@@ -11,10 +11,6 @@ def create_pipeline(**kwargs):
                 inputs=[
                     "params:currency",
                     "params:compare",
-                    "params:MINIO_ACCESS_KEY",
-                    "params:MINIO_SECRET_KEY",
-                    "params:MINIO_ENDPOINT",
-                    "params:MINIO_BUCKET", 
                     "validation_done",
                     "params:dir_path",
                 ],
