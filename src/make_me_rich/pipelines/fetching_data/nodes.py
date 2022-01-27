@@ -7,8 +7,6 @@ from typing import Dict
 def fetch_data_to_dataframe(
     currency: str, 
     compare: str,
-    api_key: str,
-    secret_key: str,
     parameters: Dict[str, str],
 ) -> pd.DataFrame:
     """
@@ -22,10 +20,6 @@ def fetch_data_to_dataframe(
         Currency to compare to.
     parameters: Dict[str, str]
         Dictionary of parameters.
-    api_key: str
-        API key for the Binance API.
-    secret_key: str
-        Secret key for the Binance API.
     
     Returns
     -------
@@ -33,7 +27,9 @@ def fetch_data_to_dataframe(
         Pandas dataframe containing the data.
     """
     symbol = f"{currency.upper()}{compare.upper()}"
-    binance_client = Client(api_key=api_key, api_secret=secret_key)
+    binance_client = Client(
+        api_key="params:BINANCE_API_KEY", api_secret="params:BINANCE_SECRET_KEY"
+    )
     klines = binance_client.get_historical_klines(
         symbol, parameters["interval"], parameters["start_date"]
     )

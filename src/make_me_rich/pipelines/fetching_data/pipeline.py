@@ -11,8 +11,6 @@ def create_pipeline(**kwargs):
                 inputs=[
                     "params:currency", 
                     "params:compare", 
-                    "params:BINANCE_API_KEY",
-                    "params:BINANCE_SECRET_KEY",
                     "params:fetching",
                 ],
                 outputs="fetched_market_chart",
