@@ -1,6 +1,6 @@
 [tool.kedro]
-package_name = "make_me_rich"
-project_name = "Make Me Rich"
+package_name = "make_us_rich"
+project_name = "Make Us Rich"
 project_version = "0.17.6"
 
 [tool.isort]
@@ -14,7 +14,7 @@ known_third_party = "kedro"
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/make_me_rich -ra"""
+--cov src/make_us_rich -ra"""
 
 [tool.coverage.report]
 fail_under = 0

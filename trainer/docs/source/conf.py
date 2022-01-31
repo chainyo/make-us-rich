@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-# make_me_rich documentation build
+# make_us_rich documentation build
 # configuration file, created by sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its
@@ -22,11 +22,11 @@ import re
 from kedro.framework.cli.utils import find_stylesheets
 from recommonmark.transform import AutoStructify
 
-from make_me_rich import __version__ as release
+from make_us_rich import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "make_me_rich"
+project = "make_us_rich"
 author = "QuantumBlack"
 
 # The short X.Y version.
@@ -120,7 +120,7 @@ html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "make_me_richdoc"
+htmlhelp_basename = "make_us_richdoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -148,8 +148,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "make_me_rich.tex",
-        "make_me_rich Documentation",
+        "make_us_rich.tex",
+        "make_us_rich Documentation",
         "QuantumBlack",
         "manual",
     )
@@ -162,8 +162,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "make_me_rich",
-        "make_me_rich Documentation",
+        "make_us_rich",
+        "make_us_rich Documentation",
         [author],
         1,
     )
@@ -177,11 +177,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "make_me_rich",
-        "make_me_rich Documentation",
+        "make_us_rich",
+        "make_us_rich Documentation",
         author,
-        "make_me_rich",
-        "Project make_me_rich codebase.",
+        "make_us_rich",
+        "Project make_us_rich codebase.",
         "Data-Science",
     )
 ]
