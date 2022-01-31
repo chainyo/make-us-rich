@@ -1,4 +1,4 @@
-# Make Me Rich
+# Make Us Rich
 
 ## Overview
 
