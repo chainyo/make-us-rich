@@ -35,17 +35,17 @@ One `celery` worker will launch a pipeline with these 2 values. Once the pipelin
 launched, everything works smoothly and automatically. 
 
 There is 5 steps for the pipeline to complete:
-- Fetching data from Binance API.
-- Preprocessing data:
+- 🪙 Fetching data from Binance API.
+- 🔨 Preprocessing data:
     - Extract features from fetched data.
     - Split extracted features.
     - Scale splitted features.
     - Create sequences with scaled train features.
     - Create sequences with scaled test features.
     - Split train sequences as train and validation sequences.
-- Training model.
-- Converting model to ONNX format.
-- Uploading converted model to object storage service.
+- 🏋️ Training model.
+- 🔄 Converting model to ONNX format.
+- 📁 Uploading converted model to object storage service.
 
 After the end of the training pipeline, the new model will be loaded on the serving server where he will be consumed by API.
 
