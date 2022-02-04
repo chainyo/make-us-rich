@@ -47,9 +47,9 @@ There is 5 steps for the pipeline to complete:
 - 🔄 Converting model to ONNX format.
 - 📁 Uploading converted model to object storage service.
 
-After the end of the training pipeline, the new model will be loaded on the serving server where he will be consumed by API.
+After the end of the training pipeline, the new model will be loaded on the serving server where it could be consumed via API.
 
-The final step if the crypto dashboard that allows users to see forecasting for their favorite assets.
+The final step is the crypto dashboard that allows users to see forecasting for their favorite assets.
 
 ---
 
