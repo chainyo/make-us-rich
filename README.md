@@ -1,5 +1,14 @@
 # Make Us Rich
+Deep Learning applied to cryptocurrency forecasting.
 
-### Deep Learning applied on cryptocurrency forecasting
+---
 
-Make Us Rich aims to let you train LSTM models to forecast cryptocurrencies close prices.
+## Introduction
+
+We provide a simple way to train, serve and use cryptocurrency forecasting models on a daily basis.
+
+![Project Architecture](./img/project_architecture.png)
+
+---
+
+## How to use it
