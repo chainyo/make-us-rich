@@ -10,7 +10,7 @@ What is already functional?
 # Make Us Rich
 Deep Learning applied to cryptocurrency forecasting.
 
-For more details about this project, please refer to [documentation](/docs). (⚠️ Not ended yet.)
+For more details on how to use this project, please refer to [documentation](https://chainyo.github.io/make-us-rich/).
 
 You can also access to [Kedro Visualization](https://kedro.readthedocs.io/en/stable/03_tutorial/06_visualise_pipeline.html) tool in order to inspect in details the [full training pipeline]().
 

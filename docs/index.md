@@ -1,10 +1,11 @@
-# Make US Rich Documentation
+# Make US Rich 💰
 
 Welcome, you are at the right place to learn more about the Make US Rich project.
 This project is a tool to help people to train, serve and use cryptocurrencies forecasting models.
 
 <center>
 ![Money meme](assets/money-meme.gif)
+<p>This is you after training a model.</p>
 </center>
 
 We will see how to use the project in the following sections, but before that, you should know that the project is still
