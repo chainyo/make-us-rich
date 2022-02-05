@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "make-us-rich"
+version = "1.0"
+description = "Cryptocurrency forecasting: training and serving models made automatic."
+authors = ["Thomas Chaigneau"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+mkdocs-material = "^8.1.9"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
