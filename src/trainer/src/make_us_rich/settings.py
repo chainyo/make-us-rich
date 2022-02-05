@@ -1,5 +1,5 @@
 """Project settings."""
-from make_me_rich.hooks import (
+from make_us_rich.hooks import (
     ProjectHooks,
 )
 

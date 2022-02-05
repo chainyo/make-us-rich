@@ -1,122 +1,70 @@
-# Make Me Rich
+# 🚧 Be carefull this repo is still a work in progress
 
-## Overview
+What is already functional?
+- [ ] Cron jobs - 0%
+- [ ] Workers - 80%
+- [x] Training pipeline - 100%
+- [ ] Serving models - 0%
+- [ ] Interface - 50%
 
-This is your new Kedro project, which was generated using `Kedro 0.17.6`.
+# Make Us Rich
+Deep Learning applied to cryptocurrency forecasting.
 
-Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
+For more details about this project, please refer to [documentation](/docs). (⚠️ Not ended yet.)
 
-## Rules and guidelines
+You can also access to [Kedro Visualization](https://kedro.readthedocs.io/en/stable/03_tutorial/06_visualise_pipeline.html) tool in order to inspect in details the [full training pipeline]().
 
-In order to get the best out of the template:
+---
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/12_faq/01_faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
+## Introduction
 
-## How to install dependencies
+We provide a simple way to train, serve and use cryptocurrency forecasting models on a daily basis.
 
-Declare any dependencies in `src/requirements.txt` for `pip` installation and `src/environment.yml` for `conda` installation.
+![Project Architecture](img/project_architecture.png)
 
-To install them, run:
+Every day `cron` jobs send to `celery` workers the order to launch multiples training pipelines.
+Each order contains 2 variables: `currency` and `compare` to identify which type of data the `fetching data` part
+needs to get.
 
-```
-kedro install
-```
+For example, if you want to train a model on the currency `Bitcoin` compared with `US Dollar` the `cron` jobs will give: `currency="btc",compare="usdt"`.
 
-## How to run your Kedro pipeline
+You have to give the symbol for each variable. Find all available symbols on the 
+[Binance](https://www.binance.com/en/markets) platform.
 
-You can run your Kedro project with:
+One `celery` worker will launch a pipeline with these 2 values. Once the pipeline is
+launched, everything works smoothly and automatically. 
 
-```
-kedro run
-```
+There is 5 steps for the pipeline to complete:
+- 🪙 Fetching data from Binance API.
+- 🔨 Preprocessing data:
+    - Extract features from fetched data.
+    - Split extracted features.
+    - Scale splitted features.
+    - Create sequences with scaled train features.
+    - Create sequences with scaled test features.
+    - Split train sequences as train and validation sequences.
+- 🏋️ Training model.
+- 🔄 Converting model to ONNX format.
+- 📁 Uploading converted model to object storage service.
 
-## How to test your Kedro project
+After the end of the training pipeline, the new model will be loaded on the serving server where it could be consumed via API.
 
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+The final step is the crypto dashboard that allows users to see forecasting for their favorite assets.
 
-```
-kedro test
-```
+---
 
-To configure the coverage threshold, go to the `.coveragerc` file.
+## How to use it
 
-## Project dependencies
-
-To generate or update the dependency requirements for your project:
-
-```
-kedro build-reqs
-```
-
-This will copy the contents of `src/requirements.txt` into a new file `src/requirements.in` which will be used as the source for `pip-compile`. You can see the output of the resolution by opening `src/requirements.txt`.
-
-After this, if you'd like to update your project requirements, please update `src/requirements.in` and re-run `kedro build-reqs`.
-
-[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/04_kedro_project_setup/01_dependencies.html#project-specific-dependencies)
-
-## How to work with Kedro and notebooks
-
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
->
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `kedro install` you will not need to take any extra steps before you use them.
-
-### Jupyter
-To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
+This is the project repository architecture:
 
 ```
-pip install jupyter
+📦src
+ ┣ 📂serving
+ ┃ ┗...
+ ┣ 📂interface
+ ┃ ┗...
+ ┣ 📂trainer
+ ┃ ┗...
+ ┗ 📂worker
+   ┗...
 ```
-
-After installing Jupyter, you can start a local notebook server:
-
-```
-kedro jupyter notebook
-```
-
-### JupyterLab
-To use JupyterLab, you need to install it:
-
-```
-pip install jupyterlab
-```
-
-You can also start JupyterLab:
-
-```
-kedro jupyter lab
-```
-
-### IPython
-And if you want to run an IPython session:
-
-```
-kedro ipython
-```
-
-### How to convert notebook cells to nodes in a Kedro project
-You can move notebook code over into a Kedro project structure using a mixture of [cell tagging](https://jupyter-notebook.readthedocs.io/en/stable/changelog.html#release-5-0-0) and Kedro CLI commands.
-
-By adding the `node` tag to a cell and running the command below, the cell's source code will be copied over to a Python file within `src/<package_name>/nodes/`:
-
-```
-kedro jupyter convert <filepath_to_my_notebook>
-```
-> *Note:* The name of the Python file matches the name of the original notebook.
-
-Alternatively, you may want to transform all your notebooks in one go. Run the following command to convert all notebook files found in the project root directory and under any of its sub-folders:
-
-```
-kedro jupyter convert --all
-```
-
-### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can run `kedro activate-nbstripout`. This will add a hook in `.git/config` which will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/03_tutorial/05_package_a_project.html)

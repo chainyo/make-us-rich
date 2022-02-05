@@ -5,8 +5,8 @@ import onnxruntime
 import pandas as pd
 import torch
 
-from make_me_rich.pipelines.training_model import PricePredictor
-from make_me_rich.pipelines.training_model import LSTMDataLoader
+from make_us_rich.pipelines.training_model import PricePredictor
+from make_us_rich.pipelines.training_model import LSTMDataLoader
 
 from typing import Any, Dict, List, Tuple
 

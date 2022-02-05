@@ -1,5 +1,5 @@
 """Make Me Rich file for ensuring the package is executable
-as `make-me-rich` and `python -m make_me_rich`
+as `make-me-rich` and `python -m make_us_rich`
 """
 import importlib
 from pathlib import Path
