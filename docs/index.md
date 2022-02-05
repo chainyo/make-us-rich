@@ -1,17 +1,18 @@
-# Welcome to MkDocs
+# Make US Rich Documentation
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome, you are at the right place to learn more about the Make US Rich project.
+This project is a tool to help people to train, serve and use cryptocurrencies forecasting models.
 
-## Commands
+<center>
+![Money meme](assets/money-meme.gif)
+</center>
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+We will see how to use the project in the following sections, but before that, you should know that the project is still
+in development. Some features may not be available yet or some features may be not working properly.
 
-## Project layout
+We tend to write the documentation as quickly as the project is developed.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+---
+
+## What is actually functional?
+

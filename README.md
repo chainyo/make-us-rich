@@ -20,7 +20,7 @@ You can also access to [Kedro Visualization](https://kedro.readthedocs.io/en/sta
 
 We provide a simple way to train, serve and use cryptocurrency forecasting models on a daily basis.
 
-![Project Architecture](img/project_architecture.png)
+![Project Architecture](docs/assets/project_architecture.png)
 
 Every day `cron` jobs send to `celery` workers the order to launch multiples training pipelines.
 Each order contains 2 variables: `currency` and `compare` to identify which type of data the `fetching data` part

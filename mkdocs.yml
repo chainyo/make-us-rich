@@ -1,1 +1,16 @@
-site_name: My Docs
+site_name: Make Us Rich
+repo_url: https://github.com/ChainYo/make-us-rich
+repo_name: ChainYo/make-us-rich
+theme:
+  icon:
+    repo: fontawesome/brands/github
+  name: material
+  logo: assets/logo.png
+  palette:
+    scheme: slate
+    primary: white
+    accent: orange
+plugins:
+  - search:
+      lang: en
+
