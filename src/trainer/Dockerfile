@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.6-buster
+ARG BASE_IMAGE=python:3.8-buster
 FROM $BASE_IMAGE
 
 # install project requirements
