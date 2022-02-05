@@ -11,8 +11,8 @@ def create_pipeline(**kwargs):
                 inputs=[
                     "params:currency",
                     "params:compare",
-                    "validation_done",
                     "params:dir_path",
+                    "validation_done",
                 ],
                 outputs="upload_done",
                 name="uploading_files_node"
