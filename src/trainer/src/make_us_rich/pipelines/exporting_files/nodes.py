@@ -25,12 +25,12 @@ def upload_files(
     """
     if validation["validation_done"] == True:
         client = Minio(
-            "params:MINIO_ENDPOINT", 
-            access_key="params:MINIO_ACCESS_KEY", 
-            secret_key="params:MINIO_SECRET_KEY", 
+            "192.168.1.100:9101", 
+            access_key="make-us-rich-pipeline", 
+            secret_key="3Ggy3piB4936ZCmHzWWyGwPEGER3taFKYkUjyrCa", 
             secure=False
         )
-        bucket = "params:MINIO_BUCKET"
+        bucket = "make-us-rich"
         if not client.bucket_exists(bucket):
             client.make_bucket(bucket)
         date = datetime.now().strftime("%Y-%m-%d")
@@ -46,5 +46,5 @@ def upload_files(
             object_name=f"{date}/{currency}_{compare}/scaler.pkl",
             file_path=scaler_path,
         )
-    return {"upload_done": True}
+    return 
     
