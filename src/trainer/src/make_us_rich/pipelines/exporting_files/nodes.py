@@ -46,5 +46,5 @@ def upload_files(
             object_name=f"{date}/{currency}_{compare}/scaler.pkl",
             file_path=scaler_path,
         )
-    return 
+    return {"upload_done": True}
     
