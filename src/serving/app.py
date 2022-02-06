@@ -3,6 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
+from binance_client import BinanceClient
 from model_loader import ModelLoader
 
 
@@ -13,7 +14,8 @@ app = FastAPI(
     openapi_url="/api/v1/openapi.json",
 )
 
-model_loader = ModelLoader()
+models = ModelLoader()
+client = BinanceClient()
 
 
 @app.get("/", include_in_schema=False)
@@ -40,7 +42,10 @@ async def predict(currency: str, compare: str):
     -------
     """
     model_name = f"{currency}_{compare}"
-    response = model_loader.get_predictions(model_name)
+    symbol = "".join(model_name.split("_"))
+    data = client.get_five_days_data(symbol)
+    response = models.get_predictions(model_name, data)
+    return {"prediction": float(response)}
 
 
 @app.put("/update_models", include_in_schema=True)
@@ -48,7 +53,7 @@ async def update_model():
     """
     Update models endpoint.
     """
-    model_loader.update_model_files()
+    models.update_model_files()
     return {"message": "All models have been updated."}
 
 
@@ -57,7 +62,7 @@ async def update_date():
     """
     Update date endpoint.
     """
-    model_loader.update_date()
+    models.update_date()
     return {"message": "Date has been updated."}
 
 

@@ -6,7 +6,6 @@ import torch
 from pickle import load
 from sklearn.preprocessing import MinMaxScaler
 
-from trainer.src.make_us_rich.pipelines.preprocessing_data.nodes import scale_data
 
 class OnnxModel:
 
@@ -64,7 +63,8 @@ class OnnxModel:
         """
         Loads the scaler from the model files.
         """
-        return load(open(self.scaler_path, "rb"))
+        with open(self.scaler_path, "rb") as file:
+            return load(file)
 
     
     def _preprocessing_sample(self, sample: pd.DataFrame) -> torch.tensor:
@@ -97,12 +97,12 @@ class OnnxModel:
             rows.append(row_data)
         data = pd.DataFrame(rows)
         scaled_data = pd.DataFrame(
-            self.model.scaler.transform(data), index=data.index, columns=data.columns
+            self.scaler.transform(data), index=data.index, columns=data.columns
         )
         return torch.Tensor(scaled_data.values).unsqueeze(0)
     
 
-    def _to_numpy(tensor: torch.Tensor):
+    def _to_numpy(self, tensor: torch.Tensor):
         """
         Converts a tensor to numpy.
 
