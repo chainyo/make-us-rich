@@ -33,7 +33,7 @@ def upload_files(
     if validation["validation_done"] == True:
         client = Minio(
             "192.168.1.100:9101", 
-            access_key="make-us-rich-pipeline", 
+            access_key="makeusrich-training-pipeline", 
             secret_key="3Ggy3piB4936ZCmHzWWyGwPEGER3taFKYkUjyrCa", 
             secure=False
         )
