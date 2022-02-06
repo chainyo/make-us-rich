@@ -160,3 +160,6 @@ venv.bak/
 
 # wandb
 wandb/
+
+# node_modules
+node_modules/
