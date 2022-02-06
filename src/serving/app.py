@@ -23,4 +23,4 @@ async def home():
 
 
 if __name__ == "__main__":
-    uvicorn.run("serving.app:app", reload=True)
+    uvicorn.run("app:app", reload=True)
