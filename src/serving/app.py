@@ -1,5 +1,3 @@
-import onnx 
-import onnxruntime 
 import uvicorn
 
 from fastapi import FastAPI
@@ -41,7 +39,8 @@ async def predict(currency: str, compare: str):
     Returns
     -------
     """
-    return None
+    model_name = f"{currency}_{compare}"
+    response = model_loader.get_predictions(model_name)
 
 
 @app.put("/update_models", include_in_schema=True)
@@ -51,6 +50,15 @@ async def update_model():
     """
     model_loader.update_model_files()
     return {"message": "All models have been updated."}
+
+
+@app.put("/update_date", include_in_schema=True)
+async def update_date():
+    """
+    Update date endpoint.
+    """
+    model_loader.update_date()
+    return {"message": "Date has been updated."}
 
 
 if __name__ == "__main__":
