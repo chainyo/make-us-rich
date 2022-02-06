@@ -3,4 +3,6 @@ minio==7.1.2
 onnx==1.10.2
 onnxruntime==v1.10.0
 python-dotenv==0.19.2
+scikit-learn==1.0.2
+torch==1.10.1
 uvicorn[standard]==0.15.0
