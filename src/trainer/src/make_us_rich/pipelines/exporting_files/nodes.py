@@ -75,7 +75,6 @@ def clean_files(upload: Dict[str, bool]) -> Dict[str, bool]:
         data_folders = [folder[0] for folder in os.walk("data") if folder[0] != "data"]
         for folder in data_folders:
             files = os.listdir(folder)
-            print(files)
             for file in files:
                 os.remove(f"{folder}/{file}") if file != ".gitkeep" else None
         return {"clean_done": True}

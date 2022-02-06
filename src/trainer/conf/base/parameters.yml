@@ -1,8 +1,8 @@
 fetching:
-  interval: "15m"
+  interval: "1h"
   start_date: "365 days ago UTC"
 target_column: "close"
-sequence_length: 60
+sequence_length: 120
 val_size: 0.2
 dir_path: "data/06_models/"
 training:
