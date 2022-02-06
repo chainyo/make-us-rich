@@ -20,5 +20,5 @@ We tend to write the documentation as quickly as the project is developed.
 - [ ] Cron jobs [~0%]
 - [ ] Workers [~80%]
 - [x] Training pipeline [100%]
-- [ ] Serving models [~50%]
+- [ ] Serving models [~85%]
 - [ ] Interface [~50%]
