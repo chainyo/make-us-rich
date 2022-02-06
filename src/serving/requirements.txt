@@ -1,4 +1,6 @@
 fastapi==0.73.0
+minio==7.1.2
 onnx==1.10.2
 onnxruntime==v1.10.0
+python-dotenv==0.19.2
 uvicorn[standard]==0.15.0
