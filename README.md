@@ -51,18 +51,26 @@ The final step is the crypto dashboard that allows users to see forecasting for 
 
 ---
 
-## How to use it
+## How it works
 
 This is the project repository architecture:
 
 ```
 📦src
- ┣ 📂serving
- ┃ ┗...
  ┣ 📂interface
  ┃ ┗...
+ ┣ 📂serving
+ ┃ ┗...
  ┣ 📂trainer
+ ┃ ┗...
+ ┣ 📂viz
  ┃ ┗...
  ┗ 📂worker
    ┗...
 ```
+
+You can clone the full repository and then navigate to the `src` folder to see the code. Each folder contains the code 
+specific to that part of the project. Each part has its own README.md file and it's own requirements. Everything is
+documented in the [documentation](https://chainyo.github.io/make-us-rich/).
+
+The main project has `poetry` as package manager. If you need to install poetry, check their [documentation](https://python-poetry.org/docs/).
