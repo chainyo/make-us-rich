@@ -1,0 +1,747 @@
+{
+    "edges": [
+        {
+            "source": "d178c093",
+            "target": "f3a04181"
+        },
+        {
+            "source": "c867f922",
+            "target": "6b8dc1cb"
+        },
+        {
+            "source": "c87367bb",
+            "target": "8bbaa6b2"
+        },
+        {
+            "source": "e7604435",
+            "target": "63b208b7"
+        },
+        {
+            "source": "dad805c7",
+            "target": "86a0d086"
+        },
+        {
+            "source": "8bbaa6b2",
+            "target": "510744d5"
+        },
+        {
+            "source": "0dfd810d",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "ff1be263",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "f3a04181",
+            "target": "dad805c7"
+        },
+        {
+            "source": "35945dd4",
+            "target": "8bbaa6b2"
+        },
+        {
+            "source": "744ff022",
+            "target": "0169a4db"
+        },
+        {
+            "source": "b15d5a35",
+            "target": "d178c093"
+        },
+        {
+            "source": "33c52d29",
+            "target": "8122ce26"
+        },
+        {
+            "source": "e8bf42dd",
+            "target": "8bbaa6b2"
+        },
+        {
+            "source": "35945dd4",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "86a0d086",
+            "target": "c867f922"
+        },
+        {
+            "source": "ff1be263",
+            "target": "33c52d29"
+        },
+        {
+            "source": "e3a8311a",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "35945dd4",
+            "target": "0169a4db"
+        },
+        {
+            "source": "40fb2908",
+            "target": "9dd81c19"
+        },
+        {
+            "source": "f6954703",
+            "target": "e7604435"
+        },
+        {
+            "source": "35945dd4",
+            "target": "33c52d29"
+        },
+        {
+            "source": "63b208b7",
+            "target": "3d076a2e"
+        },
+        {
+            "source": "b92b6314",
+            "target": "9dd81c19"
+        },
+        {
+            "source": "e3a8311a",
+            "target": "33c52d29"
+        },
+        {
+            "source": "86a0d086",
+            "target": "71b5ce00"
+        },
+        {
+            "source": "9dd81c19",
+            "target": "ae01f9aa"
+        },
+        {
+            "source": "79a80a21",
+            "target": "33c52d29"
+        },
+        {
+            "source": "2ca41f7c",
+            "target": "6b8dc1cb"
+        },
+        {
+            "source": "35945dd4",
+            "target": "86a0d086"
+        },
+        {
+            "source": "8122ce26",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "2f76259c",
+            "target": "86a0d086"
+        },
+        {
+            "source": "0169a4db",
+            "target": "c87367bb"
+        },
+        {
+            "source": "6b8dc1cb",
+            "target": "ff1be263"
+        },
+        {
+            "source": "63b208b7",
+            "target": "e3a8311a"
+        },
+        {
+            "source": "3d076a2e",
+            "target": "f1aa3695"
+        },
+        {
+            "source": "3f449210",
+            "target": "6b8dc1cb"
+        },
+        {
+            "source": "b92b6314",
+            "target": "8bbaa6b2"
+        },
+        {
+            "source": "2ca41f7c",
+            "target": "f6954703"
+        },
+        {
+            "source": "f3a04181",
+            "target": "2f76259c"
+        },
+        {
+            "source": "e8bf42dd",
+            "target": "9dd81c19"
+        },
+        {
+            "source": "3d076a2e",
+            "target": "33c52d29"
+        },
+        {
+            "source": "f1aa3695",
+            "target": "744ff022"
+        },
+        {
+            "source": "ae01f9aa",
+            "target": "b15d5a35"
+        },
+        {
+            "source": "c07c3d9b",
+            "target": "63b208b7"
+        },
+        {
+            "source": "71b5ce00",
+            "target": "f6954703"
+        },
+        {
+            "source": "3f449210",
+            "target": "f6954703"
+        }
+    ],
+    "layers": [],
+    "modular_pipelines": [],
+    "nodes": [
+        {
+            "full_name": "converting_model_node",
+            "id": "f1aa3695",
+            "modular_pipelines": [],
+            "name": "Converting Model Node",
+            "parameters": {
+                "conversion": {
+                    "batch_size": 1
+                },
+                "dir_path": "data/06_models/"
+            },
+            "pipelines": [
+                "__default__",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": "kedro.io.memory_data_set.MemoryDataSet",
+            "full_name": "train_sequences",
+            "id": "e3a8311a",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Train Sequences",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data",
+                "training_model",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": "kedro.io.memory_data_set.MemoryDataSet",
+            "full_name": "val_sequences",
+            "id": "3d076a2e",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Val Sequences",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data",
+                "training_model",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": "kedro.io.memory_data_set.MemoryDataSet",
+            "full_name": "test_sequences",
+            "id": "ff1be263",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Test Sequences",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data",
+                "training_model",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:conversion",
+            "id": "0dfd810d",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Conversion",
+            "pipelines": [
+                "__default__",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:dir_path",
+            "id": "35945dd4",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Dir Path",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data",
+                "training_model",
+                "converting_to_onnx",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "training_done",
+            "id": "8122ce26",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Training Done",
+            "pipelines": [
+                "__default__",
+                "training_model",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "conversion_outputs",
+            "id": "744ff022",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Conversion Outputs",
+            "pipelines": [
+                "__default__",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "full_name": "create_sequences_for_test_node",
+            "id": "6b8dc1cb",
+            "modular_pipelines": [],
+            "name": "Create Sequences For Test Node",
+            "parameters": {
+                "sequence_length": 60,
+                "target_column": "close"
+            },
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "scaled_test_data",
+            "id": "c867f922",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Scaled Test Data",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:target_column",
+            "id": "3f449210",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Target Column",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:sequence_length",
+            "id": "2ca41f7c",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Sequence Length",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "full_name": "create_sequences_for_train_node",
+            "id": "f6954703",
+            "modular_pipelines": [],
+            "name": "Create Sequences For Train Node",
+            "parameters": {
+                "sequence_length": 60,
+                "target_column": "close"
+            },
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "scaled_train_data",
+            "id": "71b5ce00",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Scaled Train Data",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": "kedro.io.memory_data_set.MemoryDataSet",
+            "full_name": "sequences_train_data",
+            "id": "e7604435",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Sequences Train Data",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "full_name": "features_extraction_node",
+            "id": "b15d5a35",
+            "modular_pipelines": [],
+            "name": "Features Extraction Node",
+            "parameters": {},
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "fetched_market_chart",
+            "id": "ae01f9aa",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Fetched Market Chart",
+            "pipelines": [
+                "__default__",
+                "fetching_data",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "extracted_features",
+            "id": "d178c093",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Extracted Features",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "full_name": "fetching_data_node",
+            "id": "9dd81c19",
+            "modular_pipelines": [],
+            "name": "Fetching Data Node",
+            "parameters": {
+                "compare": null,
+                "currency": null,
+                "fetching": {
+                    "interval": "15m",
+                    "start_date": "365 days ago UTC"
+                }
+            },
+            "pipelines": [
+                "__default__",
+                "fetching_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:currency",
+            "id": "e8bf42dd",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Currency",
+            "pipelines": [
+                "__default__",
+                "fetching_data",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:compare",
+            "id": "b92b6314",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Compare",
+            "pipelines": [
+                "__default__",
+                "fetching_data",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:fetching",
+            "id": "40fb2908",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Fetching",
+            "pipelines": [
+                "__default__",
+                "fetching_data"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "full_name": "scaling_data_node",
+            "id": "86a0d086",
+            "modular_pipelines": [],
+            "name": "Scaling Data Node",
+            "parameters": {
+                "dir_path": "data/06_models/"
+            },
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "splitted_train_data",
+            "id": "dad805c7",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Splitted Train Data",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": "kedro.extras.datasets.pandas.csv_dataset.CSVDataSet",
+            "full_name": "splitted_test_data",
+            "id": "2f76259c",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Splitted Test Data",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "full_name": "split_train_and_val_sequences_node",
+            "id": "63b208b7",
+            "modular_pipelines": [],
+            "name": "Split Train And Val Sequences Node",
+            "parameters": {
+                "val_size": 0.2
+            },
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:val_size",
+            "id": "c07c3d9b",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Val Size",
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "full_name": "splitting_data_node",
+            "id": "f3a04181",
+            "modular_pipelines": [],
+            "name": "Splitting Data Node",
+            "parameters": {},
+            "pipelines": [
+                "__default__",
+                "preprocessing_data"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "full_name": "training_model_node",
+            "id": "33c52d29",
+            "modular_pipelines": [],
+            "name": "Training Model Node",
+            "parameters": {
+                "dir_path": "data/06_models/",
+                "training": {
+                    "dropout_rate": 0.2,
+                    "hidden_size": 128,
+                    "learning_rate": 0.0001,
+                    "log_n_steps": 2,
+                    "max_epochs": 100,
+                    "number_of_features": 9,
+                    "number_of_layers": 2,
+                    "run_on_gpu": true,
+                    "train_batch_size": 16,
+                    "train_workers": 2,
+                    "val_batch_size": 1,
+                    "val_workers": 1
+                }
+            },
+            "pipelines": [
+                "__default__",
+                "training_model"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "params:training",
+            "id": "79a80a21",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Params: Training",
+            "pipelines": [
+                "__default__",
+                "training_model"
+            ],
+            "tags": [],
+            "type": "parameters"
+        },
+        {
+            "full_name": "uploading_files_node",
+            "id": "8bbaa6b2",
+            "modular_pipelines": [],
+            "name": "Uploading Files Node",
+            "parameters": {
+                "compare": null,
+                "currency": null,
+                "dir_path": "data/06_models/"
+            },
+            "pipelines": [
+                "__default__",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "task"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "validation_done",
+            "id": "c87367bb",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Validation Done",
+            "pipelines": [
+                "__default__",
+                "converting_to_onnx",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "dataset_type": null,
+            "full_name": "upload_done",
+            "id": "510744d5",
+            "layer": null,
+            "modular_pipelines": [],
+            "name": "Upload Done",
+            "pipelines": [
+                "__default__",
+                "uploading_files"
+            ],
+            "tags": [],
+            "type": "data"
+        },
+        {
+            "full_name": "validating_model_node",
+            "id": "0169a4db",
+            "modular_pipelines": [],
+            "name": "Validating Model Node",
+            "parameters": {
+                "dir_path": "data/06_models/"
+            },
+            "pipelines": [
+                "__default__",
+                "converting_to_onnx"
+            ],
+            "tags": [],
+            "type": "task"
+        }
+    ],
+    "pipelines": [
+        {
+            "id": "__default__",
+            "name": "Default"
+        },
+        {
+            "id": "fetching_data",
+            "name": "Fetching Data"
+        },
+        {
+            "id": "preprocessing_data",
+            "name": "Preprocessing Data"
+        },
+        {
+            "id": "training_model",
+            "name": "Training Model"
+        },
+        {
+            "id": "converting_to_onnx",
+            "name": "Converting To Onnx"
+        },
+        {
+            "id": "uploading_files",
+            "name": "Uploading Files"
+        }
+    ],
+    "selected_pipeline": "__default__",
+    "tags": []
+}
