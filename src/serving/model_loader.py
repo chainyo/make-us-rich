@@ -1,13 +1,10 @@
-import numpy as np
 import os
-import onnxruntime
 import torch
 
 from datetime import datetime
 from dotenv import load_dotenv
 from minio import Minio
 from pathlib import Path
-from sklearn.preprocessing import MinMaxScaler
 from typing import List, Set
 
 from model import OnnxModel
@@ -179,19 +176,3 @@ class ModelLoader:
         if model_name in self.session_models.keys():
             return True
         return False
-
-    
-    def _to_numpy(tensor: torch.Tensor):
-        """
-        Converts a tensor to numpy.
-
-        Parameters
-        ----------
-        tensor: torch.Tensor
-            Tensor to be converted.
-        
-        Returns
-        -------
-        numpy.ndarray
-        """
-        return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
