@@ -39,7 +39,7 @@ class OnnxModel:
         X = self._preprocessing_sample(sample)
         inputs = {self.model.get_inputs()[0].name: self._to_numpy(X)}
         results = self.model.run(None, inputs)[0][0]
-        return results[0]
+        return self._descaling_sample(results)
 
 
     def _create_descaler(self) -> MinMaxScaler:
