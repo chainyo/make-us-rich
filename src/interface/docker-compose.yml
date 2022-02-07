@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  interface:
+    image: mur-interface
+    build: 
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: mur-interface
+    environment: 
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "8502:8501"
+
+  postgres:
+    container_name: postgres
+    image: postgres:13.4
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:snapshot
+    environment:
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+       - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    depends_on: 
+      - postgres
+
+volumes:
+    postgres-data:
+    postgres-var:
+    pgadmin-data:
+
+networks: 
+  default:
+    external:
+      name: proxy_manager
