@@ -74,12 +74,42 @@ class DatabaseHandler:
             """)
             self.conn.commit()
             self._disconnect()
+            self._add_member_role_to_user(username)
             return {
                 "success": True, "message": "User created successfully.", "username": username,
             }
         except Exception as e: 
             return {"success": False, "message": str(e)}
 
+
+    def _add_member_role_to_user(self, username:str) -> Dict[str, Any]:
+        """
+        Adds the role of the user to the database.
+
+        Parameters:
+        -----------
+        username: str
+            The username of the user.
+        
+        Returns:
+        --------
+        dict:
+            A dictionary with the success of the creation.
+        """
+        try:
+            self._connect()
+            cur = self.conn.cursor()
+            cur.execute(f"""
+                INSERT INTO user_roles (user_id, role_id)
+                SELECT u.id, r.id
+                FROM (SELECT id FROM users WHERE username = '{username}') u,
+                (SELECT id FROM roles WHERE name = 'member') r;
+            """)
+            self.conn.commit()
+            self._disconnect()
+            return {"success": True}
+        except Exception as e: 
+            return {"success": False, "message": str(e)}
     
     def _check_user_role(self, username:str) -> Dict[str, str]:
         """
@@ -99,9 +129,9 @@ class DatabaseHandler:
             self._connect()
             cur = self.conn.cursor()
             cur.execute(f"""
-                SELECT role_id FROM user_roles
-                JOIN users ON users.username = user_roles.user_id
-                JOIN roles ON roles.name = user_roles.role_id
+                SELECT name FROM user_roles
+                JOIN users ON users.id = user_roles.user_id
+                JOIN roles ON roles.id = user_roles.role_id
                 WHERE users.username = '{username}'; 
             """)
             role = cur.fetchone()[0]
