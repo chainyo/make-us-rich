@@ -26,7 +26,7 @@ async def home():
     return RedirectResponse("/docs")
 
 
-@app.get("/predict", include_in_schema=True)
+@app.get("/predict", include_in_schema=True, tags=["serving"])
 async def predict(currency: str, compare: str):
     """
     Predict endpoint.
@@ -48,7 +48,7 @@ async def predict(currency: str, compare: str):
     return {"prediction": float(response)}
 
 
-@app.put("/update_models", include_in_schema=True)
+@app.put("/update_models", include_in_schema=True, tags=["serving"])
 async def update_model():
     """
     Update models endpoint.
@@ -57,7 +57,7 @@ async def update_model():
     return {"message": "All models have been updated."}
 
 
-@app.put("/update_date", include_in_schema=True)
+@app.put("/update_date", include_in_schema=True, tags=["serving"])
 async def update_date():
     """
     Update date endpoint.
@@ -66,7 +66,7 @@ async def update_date():
     return {"message": "Date has been updated."}
 
 
-@app.get("/check_models_number", include_in_schema=True)
+@app.get("/check_models_number", include_in_schema=True, tags=["monitoring"])
 async def check_models_number():
     """
     Check models number endpoint.
@@ -78,7 +78,7 @@ async def check_models_number():
         return {"message": f"{number_of_running_models} models are running."}
 
 
-@app.get("/healthz", status_code=200, include_in_schema=False)
+@app.get("/healthz", status_code=200, include_in_schema=True, tags=["monitoring"])
 async def healthz():
     """
     Healthz endpoint.
@@ -86,7 +86,7 @@ async def healthz():
     return {"status": "ok"}
 
 
-@app.get("/readyz", status_code=200, include_in_schema=False)
+@app.get("/readyz", status_code=200, include_in_schema=True, tags=["monitoring"])
 async def readyz():
     """
     Readyz endpoint.
