@@ -45,6 +45,10 @@ class OnnxModel:
     def _create_descaler(self) -> MinMaxScaler:
         """
         Creates a descaler.
+
+        Returns
+        -------
+        MinMaxScaler
         """
         descaler = MinMaxScaler()
         descaler.min_, descaler.scale_ = self.scaler.min_[-1], self.scaler.scale_[-1]
@@ -54,6 +58,16 @@ class OnnxModel:
     def _descaling_sample(self, sample) -> None:
         """
         Descalings the sample.
+
+        Parameters
+        ----------
+        sample: numpy.ndarray
+            Sample to be descaled.
+        
+        Returns
+        -------
+        float
+            Descaled sample.
         """
         values_2d = np.array(sample)[:, np.newaxis]
         return self.descaler.inverse_transform(values_2d).flatten()
@@ -62,6 +76,10 @@ class OnnxModel:
     def _load_scaler(self) -> MinMaxScaler:
         """
         Loads the scaler from the model files.
+
+        Returns
+        -------
+        MinMaxScaler
         """
         with open(self.scaler_path, "rb") as file:
             return load(file)
