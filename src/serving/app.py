@@ -14,8 +14,8 @@ app = FastAPI(
     openapi_url="/api/v1/openapi.json",
 )
 
-models = ModelLoader()
 client = BinanceClient()
+models = ModelLoader()
 
 
 @app.get("/", include_in_schema=False)
@@ -64,6 +64,34 @@ async def update_date():
     """
     models.update_date()
     return {"message": "Date has been updated."}
+
+
+@app.get("/check_models_number", include_in_schema=True)
+async def check_models_number():
+    """
+    Check models number endpoint.
+    """
+    number_of_running_models = len(models.session_models)
+    if number_of_running_models == 0:
+        return {"message": "No models are running."}
+    else:
+        return {"message": f"{number_of_running_models} models are running."}
+
+
+@app.get("/healthz", status_code=200, include_in_schema=False)
+async def healthz():
+    """
+    Healthz endpoint.
+    """
+    return {"status": "ok"}
+
+
+@app.get("/readyz", status_code=200, include_in_schema=False)
+async def readyz():
+    """
+    Readyz endpoint.
+    """
+    return {"status": "ready"}
 
 
 if __name__ == "__main__":
