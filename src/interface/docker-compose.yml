@@ -4,14 +4,15 @@ services:
   interface:
     image: mur-interface
     build: 
+      context: ./
       dockerfile: Dockerfile
     restart: unless-stopped
     container_name: mur-interface
     environment: 
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_PWD=${DB_PWD}
     ports:
       - "8502:8501"
 
@@ -19,12 +20,12 @@ services:
     container_name: postgres
     image: postgres:13.4
     environment:
-      POSTGRES_USER: $POSTGRES_USER
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PWD
+      POSTGRES_DB: $DB_NAME
     volumes:
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -33,11 +34,11 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4:snapshot
     environment:
-      PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
-      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PWD
       PGDATA: /var/lib/postgresql/data
     volumes:
-       - pgadmin-data:/var/lib/pgadmin
+       - ./database/pgadmin-data:/var/lib/pgadmin
     ports:
       - "5050:80"
     restart: unless-stopped
@@ -49,7 +50,7 @@ volumes:
     postgres-var:
     pgadmin-data:
 
-networks: 
-  default:
-    external:
-      name: proxy_manager
+# networks: 
+#   default:
+#     external:
+#       name: proxy_manager
