@@ -1,5 +1,4 @@
 import os
-import torch
 
 from datetime import datetime
 from dotenv import load_dotenv
@@ -29,7 +28,7 @@ class ModelLoader:
         if not self.client.bucket_exists(self.bucket):
             self.client.make_bucket(self.bucket)
         self.session_models = {}
-        self.storage_path = Path("./models")
+        self.storage_path = Path(os.path.join(os.path.dirname(__file__), "models"))
         self.update_date()
         self.update_model_files()
 
