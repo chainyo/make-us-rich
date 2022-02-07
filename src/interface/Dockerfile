@@ -1,11 +1,10 @@
 FROM python:3.9
 
-COPY requirements.txt .
+WORKDIR /code
+COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
-COPY . /app
+COPY ./app /code/app
 
-WORKDIR /app
-
-CMD ["bash", "-c", "streamlit run app.py"]
+CMD ["bash", "-c", "streamlit run app/app.py"]
