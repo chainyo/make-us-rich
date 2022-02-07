@@ -3,8 +3,8 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
-from binance_client import BinanceClient
-from model_loader import ModelLoader
+from app.binance_client import BinanceClient
+from app.model_loader import ModelLoader
 
 
 app = FastAPI(
