@@ -73,9 +73,15 @@ async def check_models_number():
     """
     number_of_running_models = len(models.session_models)
     if number_of_running_models == 0:
-        return {"message": "No models are running."}
+        return {"message": "Warning: No models are running."}
     else:
-        return {"message": f"{number_of_running_models} models are running."}
+        response = {
+            "message": f"Number of running models: {number_of_running_models}",
+            "models": [],
+        }
+        for model in models.session_models:
+            response["models"].append(model)
+        return response
 
 
 @app.get("/healthz", status_code=200, include_in_schema=True, tags=["monitoring"])
