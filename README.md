@@ -4,7 +4,7 @@ What is already functional?
 - [ ] Cron jobs - 0%
 - [ ] Workers - 80%
 - [x] Training pipeline - 100%
-- [ ] Serving models - 85%
+- [x] Serving models - 100%
 - [ ] Interface - 50%
 
 # Make Us Rich
