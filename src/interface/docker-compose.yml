@@ -38,7 +38,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: $PGADMIN_PWD
       PGDATA: /var/lib/postgresql/data
     volumes:
-       - ./database/pgadmin-data:/var/lib/pgadmin
+       - pgadmin-data:/var/lib/pgadmin
     ports:
       - "5050:80"
     restart: unless-stopped
@@ -46,8 +46,8 @@ services:
       - postgres
 
 volumes:
-    postgres-data:
-    postgres-var:
+    # postgres-data:
+    # postgres-var:
     pgadmin-data:
 
 # networks: 
