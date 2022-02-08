@@ -82,6 +82,8 @@ class Authentication:
             st.session_state["username"] = None
         if "role" not in st.session_state:
             st.session_state["role"] = None
+        if "api_token" not in st.session_state:
+            st.session_state["api_token"] = None
 
         if st.session_state["authentication_status"] != True:
             try:
@@ -128,6 +130,7 @@ class Authentication:
 
         if st.session_state["authentication_status"] == True:
             st.session_state["role"] = DatabaseHandler._check_user_role(st.session_state["username"])["role"]
+            st.session_state["api_token"] = DatabaseHandler.get_api_token(st.session_state["username"])["token"]
             st.sidebar.title("User Panel")
             st.sidebar.markdown(f"**{st.session_state['username']}**, log out by clicking the button below.", unsafe_allow_html=True)
             if st.sidebar.button("Logout", key="logout"):
@@ -136,4 +139,9 @@ class Authentication:
                 st.session_state["username"] = None
                 st.session_state["role"] = None
         
-        return st.session_state["username"], st.session_state["role"], st.session_state["authentication_status"]
+        return (
+            st.session_state["username"], 
+            st.session_state["role"], 
+            st.session_state["api_token"],
+            st.session_state["authentication_status"],
+        )
