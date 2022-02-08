@@ -10,17 +10,48 @@ st.set_page_config(
 st.title("Make Us Rich")
 st.subheader("Cryptocurrency Forecasting Dashboard 📈")
 st.markdown("""
-    ![Version](https://img.shields.io/badge/Version-1.0-green)
-    ![Streamlit](https://img.shields.io/badge/Streamlit-1.4.0-yellow)
-    ![License](https://img.shields.io/badge/License-Apache_2.0-orange)
+    ![Version](https://img.shields.io/badge/Version-1.0-green?style=flat-square)
+    ![Streamlit](https://img.shields.io/badge/Streamlit-1.4.0-yellow?style=flat-square)
+    ![License](https://img.shields.io/badge/License-Apache_2.0-orange?style=flat-square)
+
+    Visit our [GitHub repository](https://github.com/ChainYo/make-us-rich) for source code.   
+    Visit the project's 📖 [documentation](https://chainyo.github.io/make-us-rich/) for more information.
 """)
-with st.expander("About"):
-    st.markdown("""
-    """)
 
 authentication = Authentication()
 username, role, authentication_status = authentication.login("login")
 
 if authentication_status:
-    pass
+    menu_choices = ["Forecasting", "API Token", "Admin"] if role == "admin" else ["Forecasting", "API Token"]
+    menu_choice = st.sidebar.selectbox("Menu", menu_choices)
+    if menu_choice == "Forecasting":
+        st.subheader("Forecasting")
+        st.markdown("""
+            """)
+    elif menu_choice == "API Token":
+        st.subheader("API Token")
+        st.markdown("""
+            🚧 This feature is not available yet.
+
+            This is your personal API token. Never share it with anyone.
+            You can use this forecasting service directly in your scripts by making API calls with this token.
+
+            You can find more information about the API usage in the [Make Us Rich documentation](https://chainyo.github.io/make-us-rich/)
+        """)
+        with st.expander("⚠️ API Token"):
+            if authentication_status:
+                st.markdown(f"Your API token is: `{DatabaseHandler.get_api_token(username)['token']}`")
+            else:
+                st.markdown("You need to be logged in to see your API token.")
+        consumed_calls = 1238
+        st.markdown(f"""
+        You API consumption is limited to 10.000 calls per month.
+
+        **You have already consumed: {consumed_calls}/10.000 calls.**
+        """)
+        st.progress(consumed_calls/10000)
+    elif menu_choice == "Admin":
+        st.subheader("Admin")
+        st.markdown("""
+            """)
 
