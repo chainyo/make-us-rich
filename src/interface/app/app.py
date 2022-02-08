@@ -3,6 +3,11 @@ import streamlit as st
 
 from authentication import Authentication
 from api_request import ApiRequest
+from plots import (
+    candlestick_plot,
+    scatter_plot,
+    format_data,
+)
 
 
 st.set_page_config(
@@ -35,9 +40,10 @@ if authentication_status:
         for model in st.session_state["available_models"]["models"]:
             curr, comp = model.split("_")
             response = api.prediction(curr, comp, token)
-            data, prediction = pd.DataFrame.from_dict(response["data"]), response["prediction"]
+            data, prediction = format_data(response)
             with st.expander(f"{curr.upper()}/{comp.upper()}"):
-                st.dataframe(data)
+                st.plotly_chart(scatter_plot(data, curr, comp, prediction))
+                st.plotly_chart(candlestick_plot(data, curr, comp, prediction))
 
     elif menu_choice == "API Token":
         st.subheader("API Token")
