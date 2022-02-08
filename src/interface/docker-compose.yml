@@ -13,6 +13,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PWD=${DB_PWD}
+      - API_URL=${API_URL}
     ports:
       - "8502:8501"
 
