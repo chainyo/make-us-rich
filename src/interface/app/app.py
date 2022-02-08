@@ -1,7 +1,8 @@
+import pandas as pd
 import streamlit as st 
 
-from database_handler import DatabaseHandler
 from authentication import Authentication
+from api_request import ApiRequest
 
 
 st.set_page_config(
@@ -18,16 +19,26 @@ st.markdown("""
     Visit the project's 📖 [documentation](https://chainyo.github.io/make-us-rich/) for more information.
 """)
 
+api = ApiRequest()
 authentication = Authentication()
-username, role, authentication_status = authentication.login("login")
+username, role, token, authentication_status = authentication.login("login")
 
 if authentication_status:
     menu_choices = ["Forecasting", "API Token", "Admin"] if role == "admin" else ["Forecasting", "API Token"]
     menu_choice = st.sidebar.selectbox("Menu", menu_choices)
+
     if menu_choice == "Forecasting":
         st.subheader("Forecasting")
         st.markdown("""
             """)
+        st.session_state["available_models"] = api.number_of_available_models()
+        for model in st.session_state["available_models"]["models"]:
+            curr, comp = model.split("_")
+            response = api.prediction(curr, comp, token)
+            data, prediction = pd.DataFrame.from_dict(response["data"]), response["prediction"]
+            with st.expander(f"{curr.upper()}/{comp.upper()}"):
+                st.dataframe(data)
+
     elif menu_choice == "API Token":
         st.subheader("API Token")
         st.markdown("""
@@ -40,7 +51,7 @@ if authentication_status:
         """)
         with st.expander("⚠️ API Token"):
             if authentication_status:
-                st.markdown(f"Your API token is: `{DatabaseHandler.get_api_token(username)['token']}`")
+                st.markdown(f"Your API token is: `{token}`")
             else:
                 st.markdown("You need to be logged in to see your API token.")
         consumed_calls = 1238
@@ -50,6 +61,7 @@ if authentication_status:
         **You have already consumed: {consumed_calls}/10.000 calls.**
         """)
         st.progress(consumed_calls/10000)
+
     elif menu_choice == "Admin":
         st.subheader("Admin")
         st.markdown("""
