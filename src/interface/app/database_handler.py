@@ -108,6 +108,36 @@ class DatabaseHandler:
             return {"error": str(e)}
 
 
+    @classmethod
+    def _check_user_role(cls, username:str) -> Dict[str, str]:
+        """
+        Checks the role of the user.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+        
+        Returns
+        -------
+        dict:
+            A dictionary with the role of the user.
+        """
+        try:
+            cls._connect()  
+            cursor = cls.connection.cursor()          
+            cursor.execute(f"""
+                SELECT name FROM user_roles
+                JOIN users ON users.id = user_roles.user_id
+                JOIN roles ON roles.id = user_roles.role_id
+                WHERE users.username = '{username}'; 
+            """)
+            role = cursor.fetchone()[0]
+            cls._disconnect()
+            return {"role": role}
+        except Exception as e: 
+            return {"error": str(e)}
+
 
     @classmethod
     def _add_member_role_to_user(cls, username:str) -> Dict[str, Any]:
@@ -171,37 +201,6 @@ class DatabaseHandler:
             return {"success": False, "message": str(e)}
     
 
-    @classmethod
-    def _check_user_role(cls, username:str) -> Dict[str, str]:
-        """
-        Checks the role of the user.
-
-        Parameters
-        ----------
-        username: str
-            The username of the user.
-        
-        Returns
-        -------
-        dict:
-            A dictionary with the role of the user.
-        """
-        try:
-            cls._connect()  
-            cursor = cls.connection.cursor()          
-            cursor.execute(f"""
-                SELECT name FROM user_roles
-                JOIN users ON users.id = user_roles.user_id
-                JOIN roles ON roles.id = user_roles.role_id
-                WHERE users.username = '{username}'; 
-            """)
-            role = cursor.fetchone()[0]
-            cls._disconnect()
-            return {"role": role}
-        except Exception as e: 
-            return {"error": str(e)}
-
-    
     @classmethod
     def _connect(cls):
         """
