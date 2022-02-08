@@ -26,8 +26,8 @@ async def home():
     return RedirectResponse("/docs")
 
 
-@app.get("/predict", include_in_schema=True, tags=["serving"])
-async def predict(currency: str, compare: str):
+@app.put("/predict", include_in_schema=True, tags=["serving"])
+async def predict(currency: str, compare: str, token: str = None):
     """
     Predict endpoint.
 
@@ -37,10 +37,16 @@ async def predict(currency: str, compare: str):
         Currency used in the model.
     compare: str
         Compare used in the model.
+    token: str
+        API token of the user.
     
     Returns
     -------
     """
+    if token is None:
+        return {
+            "error": "You need to provide an API token. Check documentation for more information: https://chainyo.github.io/make-us-rich/"
+        }
     model_name = f"{currency}_{compare}"
     symbol = "".join(model_name.split("_"))
     data = client.get_five_days_data(symbol)
