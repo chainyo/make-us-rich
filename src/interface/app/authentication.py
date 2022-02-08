@@ -1,4 +1,6 @@
 import jwt
+import time
+
 import streamlit as st
 import extra_streamlit_components as stx
 
@@ -39,7 +41,7 @@ class Authentication:
         """
         return jwt.encode(
             payload={
-                "username": st.session_state["username"], "expiration_date": self._generate_expiration_date
+                "username": st.session_state["username"], "expiration_date": self._generate_expiration_date()
             }, 
             key=self.key,
         )
@@ -79,8 +81,6 @@ class Authentication:
             st.session_state["authentication_status"] = None
         if "username" not in st.session_state:
             st.session_state["username"] = None
-        if "registered" not in st.session_state:
-            st.session_state["registered"] = None
 
         if st.session_state["authentication_status"] != True:
             try:
@@ -88,21 +88,18 @@ class Authentication:
                 self.token = self._decode_token()
                 if self.token["expiration_date"] > datetime.utcnow().timestamp():
                     st.session_state["authentication_status"] = True
+                    st.session_state["username"] = self.token["username"]
                 else:
                     st.session_state["authentication_status"] = False
-                st.session_state["username"] = self.token["username"]
-                st.session_state["registered"] = True
             except:
                 st.session_state["authentication_status"] = None
-                st.session_state["registered"] = False
 
         if st.session_state["authentication_status"] != True:
-            if st.session_state["registered"] == False:
-                login_form = st.form("Register")
-                login_form.subheader("Welcome 👋, please register first.")
-            elif st.session_state["registered"] == True:
-                login_form = st.form("Login")
-                login_form.subheader("Thanks for coming back! 😍")
+            login_form = st.form("Login")
+            login_form.subheader(
+                "Welcome 👋, please login first.\n"
+                "If you don't have an account, it will be created automatically when you submit the form."
+            )
             input_username_value = st.session_state["username"] if st.session_state["username"] else ""
             self.username = login_form.text_input("Username", value=input_username_value)
             self.password = login_form.text_input("Password", type="password")
@@ -120,6 +117,8 @@ class Authentication:
                             expires_at=datetime.now() + timedelta(self.cookie_ttl)
                         )
                         st.success(f"{results['message']} Welcome {st.session_state['username']}! 🎉")
+                        time.sleep(5)
+
                     else:
                         st.error(results["message"])
                 elif st.session_state["registered"] == True and st.session_state["authentication_status"] == False:
@@ -133,9 +132,10 @@ class Authentication:
                             expires_at=datetime.now() + timedelta(self.cookie_ttl)
                         )
                         st.success(f"{results['message']} Welcome back {st.session_state['username']}! 🎉")
+                        time.sleep(5)
 
         if st.session_state["authentication_status"] == True:
-            st.markdown(f"You can log out by clicking the button below.", unsafe_allow_html=True)
+            st.markdown(f"**{st.session_state['username']}**, log out by clicking the button below.", unsafe_allow_html=True)
             if st.button("Logout", key="logout"):
                 cookie_manager.delete(self.cookie_name)
                 st.session_state["authentication_status"] = None
