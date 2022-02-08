@@ -107,6 +107,36 @@ class DatabaseHandler:
         except Exception as e:
             return {"error": str(e)}
 
+    
+    @classmethod
+    def get_api_token(cls, username:str) -> Dict[str, str]:
+        """
+        Gets the API token of a user.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+        
+        Returns
+        -------
+        dict:
+            A dictionary with the API token of the user.
+        """
+        try:
+            cls._connect()
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
+                SELECT token FROM api_tokens
+                JOIN users ON users.id = api_tokens.user_id
+                WHERE users.username = '{username}';
+            """)
+            token = cursor.fetchone()
+            cls._disconnect()
+            return {"success": True, "token": token[0]} if token else {"success": False}
+        except Exception as e:
+            return {"error": str(e)}
+
 
     @classmethod
     def _check_user_role(cls, username:str) -> Dict[str, str]:
