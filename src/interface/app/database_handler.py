@@ -1,6 +1,4 @@
-from multiprocessing import connection
 import os
-from syslog import closelog
 import psycopg2
 
 from dotenv import load_dotenv
@@ -33,17 +31,17 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cursor = cls.connection.cursor()
-            cursor.execute(f"""
+            cls.cursor.execute(f"""
                 SELECT id FROM users WHERE username = '{username}' AND password = crypt('{password}', password);
             """)
-            match = cursor.fetchone()
+            match = cls.cursor.fetchone()
             cls._disconnect()
             return {"success": True} if match else {"success": False}
         except Exception as e: 
             return {"error": str(e)}
 
 
+    @classmethod
     def create_user(cls, username:str, password:str) -> Dict[str, Any]:
         """
         Creates a new user in the database.
@@ -62,8 +60,7 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cursor = cls.connection.cursor()
-            cursor.execute(f"""
+            cls.cursor.execute(f"""
                 INSERT INTO users (username, password)
                 VALUES ('{username}', crypt('{password}', gen_salt('bf'))) 
                 ON CONFLICT (username) DO NOTHING;
@@ -79,6 +76,7 @@ class DatabaseHandler:
             return {"success": False, "message": str(e)}
 
 
+    @classmethod
     def _add_member_role_to_user(cls, username:str) -> Dict[str, Any]:
         """
         Adds the role of the user to the database.
@@ -95,8 +93,7 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cursor = cls.connection.cursor()
-            cursor.execute(f"""
+            cls.cursor.execute(f"""
                 INSERT INTO user_roles (user_id, role_id)
                 SELECT u.id, r.id
                 FROM (SELECT id FROM users WHERE username = '{username}') u,
@@ -109,6 +106,7 @@ class DatabaseHandler:
             return {"success": False, "message": str(e)}
     
 
+    @classmethod
     def _generate_token_for_user(cls, username:str) -> Dict[str, Any]:
         """
         Generates a token for the user.
@@ -126,10 +124,9 @@ class DatabaseHandler:
         token = random_string()
         try:
             cls._connect()
-            cursor = cls.connection.cursor()
-            cursor.execute(f"""
-                INSERT INTO api_tokens (user_id, {token})
-                SELECT u.id
+            cls.cursor.execute(f"""
+                INSERT INTO api_tokens (user_id, token)
+                SELECT u.id, '{token}'
                 FROM (SELECT id FROM users WHERE username = '{username}') u;
             """)
             cls.connection.commit()
@@ -139,6 +136,7 @@ class DatabaseHandler:
             return {"success": False, "message": str(e)}
     
 
+    @classmethod
     def _check_user_role(cls, username:str) -> Dict[str, str]:
         """
         Checks the role of the user.
@@ -155,14 +153,13 @@ class DatabaseHandler:
         """
         try:
             cls._connect()            
-            cursor = cls.connection.cursor()
-            cursor.execute(f"""
+            cls.cursor.execute(f"""
                 SELECT name FROM user_roles
                 JOIN users ON users.id = user_roles.user_id
                 JOIN roles ON roles.id = user_roles.role_id
                 WHERE users.username = '{username}'; 
             """)
-            role = cursor.fetchone()[0]
+            role = cls.cursor.fetchone()[0]
             cls._disconnect()
             return {"role": role}
         except Exception as e: 
@@ -175,14 +172,15 @@ class DatabaseHandler:
             load_dotenv()
             db_name = os.getenv("DB_NAME")
             db_user = os.getenv("DB_USER")
-            db_host = "127.0.0.1:5432"
-            db_password = os.getenv("DB_PASSWORD")
+            db_host = os.getenv("DB_HOST")
+            db_password = os.getenv("DB_PWD")
             cls.connection = psycopg2.connect(
                 database=db_name,
                 user=db_user,
                 host=db_host,
                 password=db_password
             )
+            cls.cursor = cls.connection.cursor()
         except Exception as e:
             return e
 
@@ -196,7 +194,3 @@ class DatabaseHandler:
             cls.connection.close()
         except Exception as e:
             return e
-
-
-
-DatabaseHandler().create_user("chainyo", "123456")
