@@ -2,7 +2,7 @@ import random
 import string
 
 
-CHARACTERS = string.ascii_letters + string.digits + string.punctuation
+CHARACTERS = string.ascii_letters + string.digits
 
 
 def random_string(length: int = 25) -> str:
