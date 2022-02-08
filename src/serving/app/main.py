@@ -45,7 +45,7 @@ async def predict(currency: str, compare: str):
     symbol = "".join(model_name.split("_"))
     data = client.get_five_days_data(symbol)
     response = models.get_predictions(model_name, data)
-    return {"prediction": float(response)}
+    return {"data": data.to_dict(), "prediction": float(response)}
 
 
 @app.put("/update_models", include_in_schema=True, tags=["serving"])
