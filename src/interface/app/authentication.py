@@ -105,7 +105,20 @@ class Authentication:
             self.password = login_form.text_input("Password", type="password")
 
             if login_form.form_submit_button("Submit"):
-                if st.session_state["registered"] == False and st.session_state["authentication_status"] != True:
+                user_exist = DatabaseHandler.check_if_user_exist(self.username)
+                if user_exist["success"]:
+                    results = DatabaseHandler.authentication(self.username, self.password)
+                    if results["success"]:
+                        st.session_state["authentication_status"] = True
+                        st.session_state["username"] = results["username"]
+                        self.token = self._generate_cookie_token()
+                        cookie_manager.set(
+                            self.cookie_name, self.token, 
+                            expires_at=datetime.now() + timedelta(self.cookie_ttl)
+                        )
+                        st.success(f"{results['message']} Welcome back {st.session_state['username']}! 🎉")
+                        time.sleep(5)
+                else:
                     results = DatabaseHandler.create_user(self.username, self.password)
                     if results["success"]:
                         st.session_state["registered"] = True
@@ -121,18 +134,7 @@ class Authentication:
 
                     else:
                         st.error(results["message"])
-                elif st.session_state["registered"] == True and st.session_state["authentication_status"] == False:
-                    results = DatabaseHandler.authentication(self.username, self.password)
-                    if results["success"]:
-                        st.session_state["authentication_status"] = True
-                        st.session_state["username"] = results["username"]
-                        self.token = self._generate_cookie_token()
-                        cookie_manager.set(
-                            self.cookie_name, self.token, 
-                            expires_at=datetime.now() + timedelta(self.cookie_ttl)
-                        )
-                        st.success(f"{results['message']} Welcome back {st.session_state['username']}! 🎉")
-                        time.sleep(5)
+
 
         if st.session_state["authentication_status"] == True:
             st.markdown(f"**{st.session_state['username']}**, log out by clicking the button below.", unsafe_allow_html=True)

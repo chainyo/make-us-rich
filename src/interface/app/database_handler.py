@@ -17,15 +17,15 @@ class DatabaseHandler:
         """
         Checks if the user and password are correct
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         username: str
             The username of the user.
         password: str
             The password of the user.
         
-        Returns:
-        --------
+        Returns
+        -------
         dict:
             A dictionary with the success of the authentication.
         """
@@ -49,15 +49,15 @@ class DatabaseHandler:
         """
         Creates a new user in the database.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         username: str
             The username of the new user.
         password: str
             The password of the new user.
         
-        Returns:
-        --------
+        Returns
+        -------
         dict:
             A dictionary with the success of the creation.
         """
@@ -79,19 +79,48 @@ class DatabaseHandler:
         except Exception as e: 
             return {"success": False, "message": str(e)}
 
+    
+    @classmethod
+    def check_if_user_exist(cls, username:str) -> Dict[str, Any]:
+        """
+        Checks if a user exists in the database.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+
+        Returns
+        -------
+        dict:
+            A dictionary with the success of the check.
+        """
+        try:
+            cls._connect()
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
+                SELECT id FROM users WHERE username = '{username}';
+            """)
+            match = cursor.fetchone()
+            cls._disconnect()
+            return {"success": True} if match else {"success": False}
+        except Exception as e:
+            return {"error": str(e)}
+
+
 
     @classmethod
     def _add_member_role_to_user(cls, username:str) -> Dict[str, Any]:
         """
         Adds the role of the user to the database.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         username: str
             The username of the user.
         
-        Returns:
-        --------
+        Returns
+        -------
         dict:
             A dictionary with the success of the creation.
         """
@@ -116,13 +145,13 @@ class DatabaseHandler:
         """
         Generates a token for the user.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         username: str
             The username of the user.
         
-        Returns:
-        --------
+        Returns
+        -------
         str:
             The token of the user.
         """
@@ -147,13 +176,13 @@ class DatabaseHandler:
         """
         Checks the role of the user.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         username: str
             The username of the user.
         
-        Returns:
-        --------
+        Returns
+        -------
         dict:
             A dictionary with the role of the user.
         """
@@ -175,6 +204,9 @@ class DatabaseHandler:
     
     @classmethod
     def _connect(cls):
+        """
+        Connects to the database.
+        """
         try:
             load_dotenv()
             db_name = os.getenv("DB_NAME")
