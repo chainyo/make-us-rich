@@ -73,7 +73,6 @@ class Authentication:
 
     def login(self, form_title: str) -> Tuple[str, bool]:
         """"""
-        self.location = "main"
         self.form_title = form_title
         cookie_manager = stx.CookieManager()
 
