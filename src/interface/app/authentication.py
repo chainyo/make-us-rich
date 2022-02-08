@@ -116,7 +116,6 @@ class Authentication:
                 if results["success"]:
                     st.session_state["authentication_status"] = True
                     st.session_state["username"] = results["username"]
-                    st.session_state["role"] = DatabaseHandler._check_user_role(st.session_state["username"])["role"]
                     self.token = self._generate_cookie_token()
                     cookie_manager.set(
                         self.cookie_name, self.token, 
@@ -128,11 +127,13 @@ class Authentication:
                     st.error(results["message"])
 
         if st.session_state["authentication_status"] == True:
+            st.session_state["role"] = DatabaseHandler._check_user_role(st.session_state["username"])["role"]
             st.sidebar.title("User Panel")
             st.sidebar.markdown(f"**{st.session_state['username']}**, log out by clicking the button below.", unsafe_allow_html=True)
             if st.sidebar.button("Logout", key="logout"):
                 cookie_manager.delete(self.cookie_name)
                 st.session_state["authentication_status"] = None
                 st.session_state["username"] = None
+                st.session_state["role"] = None
         
         return st.session_state["username"], st.session_state["role"], st.session_state["authentication_status"]
