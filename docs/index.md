@@ -21,4 +21,4 @@ We tend to write the documentation as quickly as the project is developed.
 - [ ] Workers [~80%]
 - [x] Training pipeline [100%]
 - [x] Serving models [100%]
-- [ ] Interface [~50%]
+- [ ] Interface [~90%]
