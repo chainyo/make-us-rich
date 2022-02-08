@@ -23,6 +23,14 @@ CREATE TABLE IF NOT EXISTS user_roles (
   CONSTRAINT role_id_fk FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
+/* Create table for API tokens */
+CREATE TABLE IF NOT EXISTS api_tokens (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  token TEXT NOT NULL,
+  CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 /* Insert roles */
 INSERT INTO roles (name) VALUES ('admin');
 INSERT INTO roles (name) VALUES ('member');
