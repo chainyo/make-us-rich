@@ -31,12 +31,15 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cls.cursor.execute(f"""
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
                 SELECT id FROM users WHERE username = '{username}' AND password = crypt('{password}', password);
             """)
-            match = cls.cursor.fetchone()
+            match = cursor.fetchone()
             cls._disconnect()
-            return {"success": True} if match else {"success": False}
+            return {
+                "success": True, "message": "Authentication successful.", "username": username
+            } if match else {"success": False}
         except Exception as e: 
             return {"error": str(e)}
 
@@ -60,7 +63,8 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cls.cursor.execute(f"""
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
                 INSERT INTO users (username, password)
                 VALUES ('{username}', crypt('{password}', gen_salt('bf'))) 
                 ON CONFLICT (username) DO NOTHING;
@@ -93,7 +97,8 @@ class DatabaseHandler:
         """
         try:
             cls._connect()
-            cls.cursor.execute(f"""
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
                 INSERT INTO user_roles (user_id, role_id)
                 SELECT u.id, r.id
                 FROM (SELECT id FROM users WHERE username = '{username}') u,
@@ -124,7 +129,8 @@ class DatabaseHandler:
         token = random_string()
         try:
             cls._connect()
-            cls.cursor.execute(f"""
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
                 INSERT INTO api_tokens (user_id, token)
                 SELECT u.id, '{token}'
                 FROM (SELECT id FROM users WHERE username = '{username}') u;
@@ -152,14 +158,15 @@ class DatabaseHandler:
             A dictionary with the role of the user.
         """
         try:
-            cls._connect()            
-            cls.cursor.execute(f"""
+            cls._connect()  
+            cursor = cls.connection.cursor()          
+            cursor.execute(f"""
                 SELECT name FROM user_roles
                 JOIN users ON users.id = user_roles.user_id
                 JOIN roles ON roles.id = user_roles.role_id
                 WHERE users.username = '{username}'; 
             """)
-            role = cls.cursor.fetchone()[0]
+            role = cursor.fetchone()[0]
             cls._disconnect()
             return {"role": role}
         except Exception as e: 
@@ -180,7 +187,6 @@ class DatabaseHandler:
                 host=db_host,
                 password=db_password
             )
-            cls.cursor = cls.connection.cursor()
         except Exception as e:
             return e
 
