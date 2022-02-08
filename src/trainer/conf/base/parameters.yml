@@ -6,7 +6,7 @@ sequence_length: 120
 val_size: 0.2
 dir_path: "data/06_models/"
 training:
-  train_batch_size: 16
+  train_batch_size: 64
   val_batch_size: 1
   train_workers: 2
   val_workers: 1
