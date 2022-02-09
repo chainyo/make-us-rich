@@ -1,4 +1,4 @@
-# <project_root>/register_prefect_flow.py
+from email.policy import default
 from pathlib import Path
 
 import click
@@ -27,46 +27,48 @@ class KedroTask(Task):
 
 
 @click.command()
-@click.option("-p", "--pipeline", "pipeline_name", default=None)
-@click.option("--env", "-e", type=str, default=None)
-def build_and_register_flow(pipeline_name, env):
+@click.option("--currency", type=str)
+@click.option("--compare", type=str, default="usdt")
+def build_and_register_flow(currency, compare) -> None:
     """Register a Kedro pipeline as a Prefect flow."""
     project_path = Path.cwd()
     metadata = bootstrap_project(project_path)
 
-    session = KedroSession.create(project_path=project_path, env=env)
+    session = KedroSession.create(
+        project_path=project_path, extra_params={"currency": currency, "compare": compare}
+    )
     context = session.load_context()
 
     catalog = context.catalog
-    pipeline_name = pipeline_name or "__default__"
+    pipeline_name = "__default__"
     pipeline = pipelines.get(pipeline_name)
 
     unregistered_ds = pipeline.data_sets() - set(catalog.list())
     for ds_name in unregistered_ds:
         catalog.add(ds_name, MemoryDataSet())
 
-    flow = Flow(metadata.project_name)
+    with Flow(metadata.project_name) as flow:
 
-    tasks = {}
-    for node, parent_nodes in pipeline.node_dependencies.items():
-        if node._unique_key not in tasks:
-            node_task = KedroTask(node, catalog)
-            tasks[node._unique_key] = node_task
-        else:
-            node_task = tasks[node._unique_key]
-
-        parent_tasks = []
-
-        for parent in parent_nodes:
-            if parent._unique_key not in tasks:
-                parent_task = KedroTask(parent, catalog)
-                tasks[parent._unique_key] = parent_task
+        tasks = {}
+        for node, parent_nodes in pipeline.node_dependencies.items():
+            if node._unique_key not in tasks:
+                node_task = KedroTask(node, catalog)
+                tasks[node._unique_key] = node_task
             else:
-                parent_task = tasks[parent._unique_key]
+                node_task = tasks[node._unique_key]
 
-            parent_tasks.append(parent_task)
+            parent_tasks = []
 
-        flow.set_dependencies(task=node_task, upstream_tasks=parent_tasks)
+            for parent in parent_nodes:
+                if parent._unique_key not in tasks:
+                    parent_task = KedroTask(parent, catalog)
+                    tasks[parent._unique_key] = parent_task
+                else:
+                    parent_task = tasks[parent._unique_key]
+
+                parent_tasks.append(parent_task)
+
+            flow.set_dependencies(task=node_task, upstream_tasks=parent_tasks)
 
     client = Client()
     try:
