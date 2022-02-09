@@ -11,6 +11,7 @@ minio==7.1.2
 nbstripout~=0.4
 onnx==1.10.2
 onnxruntime==v1.10.0
+prefect==0.15.13
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
