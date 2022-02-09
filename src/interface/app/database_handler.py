@@ -138,6 +138,35 @@ class DatabaseHandler:
         except Exception as e:
             return {"error": str(e)}
 
+    
+    @classmethod
+    def increment_user_api_consumption(cls, username:str) -> Dict[str, Any]:
+        """
+        Increments the API consumption of a user.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+        
+        Returns
+        -------
+        dict:
+            A dictionary with the success of the increment.
+        """
+        try:
+            cls._connect()
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
+                UPDATE user_api_consumptions SET api_consumption = api_consumption + 1
+                WHERE user_id = (SELECT id FROM users WHERE username = '{username}');
+            """)
+            cls.connection.commit()
+            cls._disconnect()
+            return {"success": True}
+        except Exception as e:
+            return {"error": str(e)}
+
 
     @classmethod
     def _check_user_role(cls, username:str) -> Dict[str, str]:
@@ -251,7 +280,7 @@ class DatabaseHandler:
             cls._connect()
             cursor = cls.connection.cursor()
             cursor.execute(f"""
-                INSERT INTO api_consumption_limit (user_id, limit)
+                INSERT INTO user_api_consumptions (user_id, api_consumption)
                 SELECT u.id, 0
                 FROM (SELECT id FROM users WHERE username = '{username}') u;
             """)

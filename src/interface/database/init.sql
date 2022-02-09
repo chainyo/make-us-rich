@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS api_tokens (
 );
 
 /* Create table for API consumption limit per user */
-CREATE TABLE IF NOT EXISTS api_consumption_limit (
+CREATE TABLE IF NOT EXISTS user_api_consumptions (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
-  api_limit INTEGER NOT NULL,
+  api_consumption INTEGER NOT NULL,
   CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
