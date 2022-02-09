@@ -167,6 +167,35 @@ class DatabaseHandler:
         except Exception as e:
             return {"error": str(e)}
 
+    
+    @classmethod
+    def get_user_api_consumption(cls, username:str) -> Dict[str, Any]:
+        """
+        Gets the API consumption of a user.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+        
+        Returns
+        -------
+        dict:
+            A dictionary with the API consumption of the user.
+        """
+        try:
+            cls._connect()
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
+                SELECT api_consumption FROM user_api_consumptions
+                WHERE user_id = (SELECT id FROM users WHERE username = '{username}');
+            """)
+            consumption = cursor.fetchone()
+            cls._disconnect()
+            return {"success": True, "consumption": consumption[0]}
+        except Exception as e:
+            return {"error": str(e)}
+
 
     @classmethod
     def _check_user_role(cls, username:str) -> Dict[str, str]:
