@@ -67,12 +67,19 @@ if authentication_status:
             else:
                 st.markdown("You need to be logged in to see your API token.")
         user_api_consumption = DatabaseHandler.get_user_api_consumption(username)
-        st.markdown(f"""
-        You API consumption is limited to 10.000 calls per month.
+        if user_api_consumption["success"]:
+            st.markdown(f"""
+            You API consumption is limited to 1000 calls per month.
 
-        **You have already consumed: {user_api_consumption}/1000 calls.**
-        """)
-        st.progress(user_api_consumption/1000)
+            **You have already consumed: {user_api_consumption["consumption"]}/1000 calls.**
+            """)
+            st.progress(int(user_api_consumption["consumption"])/1000)
+        else:
+            st.markdown(f"""
+            You API consumption is limited to 1000 calls per month.
+
+            Something went wrong: {user_api_consumption["error"]}
+            """)
 
     elif menu_choice == "Admin":
         st.subheader("Admin")
