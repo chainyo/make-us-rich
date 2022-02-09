@@ -3,6 +3,7 @@ import streamlit as st
 
 from authentication import Authentication
 from api_request import ApiRequest
+from database_handler import DatabaseHandler
 from plots import (
     candlestick_plot,
     scatter_plot,
@@ -41,10 +42,12 @@ if authentication_status:
             for model in st.session_state["available_models"]["models"]:
                 curr, comp = model.split("_")
                 response = api.prediction(curr, comp, token)
-                data, prediction = format_data(response)
-                with st.expander(f"{curr.upper()}/{comp.upper()}"):
-                    st.plotly_chart(scatter_plot(data, curr, comp, prediction))
-                    st.plotly_chart(candlestick_plot(data, curr, comp, prediction))
+                if "error" not in response:
+                    DatabaseHandler.increment_user_api_consumption(username)
+                    data, prediction = format_data(response)
+                    with st.expander(f"{curr.upper()}/{comp.upper()}"):
+                        st.plotly_chart(scatter_plot(data, curr, comp, prediction))
+                        st.plotly_chart(candlestick_plot(data, curr, comp, prediction))
         else:
             st.markdown("No models available.")
 
