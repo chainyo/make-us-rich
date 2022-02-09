@@ -203,6 +203,8 @@ jinja2-time==0.2.0
     # via cookiecutter
 jmespath==0.10.0
     # via kedro
+joblib==1.1.0
+    # via scikit-learn
 json5==0.9.6
     # via jupyterlab-server
 jsonschema==4.4.0
@@ -320,6 +322,8 @@ numpy==1.22.0
     #   onnxruntime
     #   pandas
     #   pytorch-lightning
+    #   scikit-learn
+    #   scipy
     #   tensorboard
     #   torchmetrics
     #   torchvision
@@ -509,6 +513,10 @@ rope==0.21.1
     # via kedro
 rsa==4.8
     # via google-auth
+scikit-learn==1.0.2
+    # via -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
+scipy==1.8.0
+    # via scikit-learn
 semver==2.13.0
     # via kedro-viz
 send2trash==1.8.0
@@ -562,6 +570,8 @@ testpath==0.5.0
     # via nbconvert
 text-unidecode==1.3
     # via python-slugify
+threadpoolctl==3.1.0
+    # via scikit-learn
 toml==0.10.2
     # via
     #   black
