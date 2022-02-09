@@ -1,5 +1,5 @@
 kedro==0.17.6
 scikit-learn~=0.24
 openpyxl==3.0.9
-pillow~=9.0
+pillow
 matplotlib==3.5.0
