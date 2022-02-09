@@ -13,7 +13,7 @@ from .model import PricePredictor
 from .dataloader import LSTMDataLoader
 
 
-logger = WandbLogger(project="make-me-rich")
+logger = WandbLogger(project="make-us-rich")
 
 def training_loop(
     train_sequences: List[Tuple[pd.DataFrame, float]], 
