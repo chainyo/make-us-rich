@@ -8,6 +8,8 @@
 
 absl-py==1.0.0
     # via tensorboard
+aiofiles==0.6.0
+    # via kedro-viz
 aiohttp==3.8.1
     # via
     #   fsspec
@@ -75,6 +77,7 @@ click==7.1.2
     #   kedro-telemetry
     #   pip-tools
     #   prefect
+    #   uvicorn
     #   wandb
 cloudpickle==2.0.0
     # via
@@ -113,6 +116,8 @@ entrypoints==0.3
     # via
     #   jupyterlab-server
     #   nbconvert
+fastapi==0.66.1
+    # via kedro-viz
 flake8==3.9.2
     # via -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
 flatbuffers==2.0
@@ -142,6 +147,8 @@ google-auth-oauthlib==0.4.6
     # via tensorboard
 grpcio==1.43.0
     # via tensorboard
+h11==0.13.0
+    # via uvicorn
 heapdict==1.0.1
     # via zict
 idna==2.10
@@ -169,6 +176,7 @@ ipython==7.31.0
     #   ipywidgets
     #   jupyter-console
     #   jupyterlab
+    #   kedro-viz
 ipython-genutils==0.2.0
     # via
     #   ipywidgets
@@ -242,7 +250,10 @@ kedro[pandas.csvdataset]==0.17.6
     # via
     #   -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
     #   kedro-telemetry
+    #   kedro-viz
 kedro-telemetry==0.1.3
+    # via -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
+kedro-viz==3.16.0
     # via -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
 locket==0.2.1
     # via partd
@@ -403,6 +414,8 @@ pycodestyle==2.7.0
     # via flake8
 pycparser==2.21
     # via cffi
+pydantic==1.9.0
+    # via fastapi
 pydeprecate==0.3.1
     # via
     #   pytorch-lightning
@@ -502,6 +515,8 @@ rope==0.21.1
     # via kedro
 rsa==4.8
     # via google-auth
+semver==2.13.0
+    # via kedro-viz
 send2trash==1.8.0
     # via
     #   jupyter-server
@@ -529,6 +544,8 @@ sniffio==1.2.0
     # via anyio
 sortedcontainers==2.4.0
     # via distributed
+starlette==0.14.2
+    # via fastapi
 subprocess32==3.5.4
     # via wandb
 tabulate==0.8.9
@@ -609,6 +626,7 @@ traitlets==5.1.1
 typing-extensions==4.0.1
     # via
     #   onnx
+    #   pydantic
     #   pytorch-lightning
     #   torch
 tzdata==2021.5
@@ -623,8 +641,12 @@ urllib3==1.26.8
     #   prefect
     #   requests
     #   sentry-sdk
+uvicorn==0.13.4
+    # via kedro-viz
 wandb==0.12.9
     # via -r /home/chainyo/code/make-us-rich/src/trainer/src/requirements.in
+watchgod==0.7
+    # via kedro-viz
 wcwidth==0.2.5
     # via prompt-toolkit
 webencodings==0.5.1
