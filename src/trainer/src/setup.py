@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 entry_point = (
-    "make-me-rich = make_us_rich.__main__:main"
+    "make-us-rich = make_us_rich.__main__:main"
 )
 
 
