@@ -37,13 +37,16 @@ if authentication_status:
         st.markdown("""
             """)
         st.session_state["available_models"] = api.number_of_available_models()
-        for model in st.session_state["available_models"]["models"]:
-            curr, comp = model.split("_")
-            response = api.prediction(curr, comp, token)
-            data, prediction = format_data(response)
-            with st.expander(f"{curr.upper()}/{comp.upper()}"):
-                st.plotly_chart(scatter_plot(data, curr, comp, prediction))
-                st.plotly_chart(candlestick_plot(data, curr, comp, prediction))
+        if "models" in st.session_state["available_models"]:
+            for model in st.session_state["available_models"]["models"]:
+                curr, comp = model.split("_")
+                response = api.prediction(curr, comp, token)
+                data, prediction = format_data(response)
+                with st.expander(f"{curr.upper()}/{comp.upper()}"):
+                    st.plotly_chart(scatter_plot(data, curr, comp, prediction))
+                    st.plotly_chart(candlestick_plot(data, curr, comp, prediction))
+        else:
+            st.markdown("No models available.")
 
     elif menu_choice == "API Token":
         st.subheader("API Token")
