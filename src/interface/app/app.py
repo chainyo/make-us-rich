@@ -54,7 +54,7 @@ if authentication_status:
     elif menu_choice == "API Token":
         st.subheader("API Token")
         st.markdown("""
-            🚧 This feature is not available yet.
+            🚧 This feature is not totally available yet, there is currently no limit while you use the website.
 
             This is your personal API token. Never share it with anyone.
             You can use this forecasting service directly in your scripts by making API calls with this token.
