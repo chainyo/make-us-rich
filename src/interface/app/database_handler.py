@@ -73,6 +73,7 @@ class DatabaseHandler:
             cls._disconnect()
             cls._add_member_role_to_user(username)
             cls._generate_token_for_user(username)
+            cls._init_api_limit_for_user(username)
             return {
                 "success": True, "message": "User created successfully.", "username": username,
             }
@@ -222,6 +223,36 @@ class DatabaseHandler:
             cursor.execute(f"""
                 INSERT INTO api_tokens (user_id, token)
                 SELECT u.id, '{token}'
+                FROM (SELECT id FROM users WHERE username = '{username}') u;
+            """)
+            cls.connection.commit()
+            cls._disconnect()
+            return {"success": True}
+        except Exception as e: 
+            return {"success": False, "message": str(e)}
+
+    
+    @classmethod
+    def _init_api_limit_for_user(cls, username:str) -> Dict[str, Any]:
+        """
+        Initializes the API limit for the user.
+
+        Parameters
+        ----------
+        username: str
+            The username of the user.
+        
+        Returns
+        -------
+        dict:
+            A dictionary with the success of the creation.
+        """
+        try:
+            cls._connect()
+            cursor = cls.connection.cursor()
+            cursor.execute(f"""
+                INSERT INTO api_consumption_limit (user_id, limit)
+                SELECT u.id, 0
                 FROM (SELECT id FROM users WHERE username = '{username}') u;
             """)
             cls.connection.commit()
