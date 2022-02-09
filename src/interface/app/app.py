@@ -61,7 +61,7 @@ if authentication_status:
 
             You can find more information about the API usage in the [Make Us Rich documentation](https://chainyo.github.io/make-us-rich/)
         """)
-        with st.expander("⚠️ API Token"):
+        with st.expander(label="⚠️ API Token", expanded=False):
             if authentication_status:
                 st.markdown(f"Your API token is: `{token}`")
             else:
