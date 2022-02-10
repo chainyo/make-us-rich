@@ -1,15 +1,22 @@
-[tool.poetry]
-name = "make-us-rich"
-version = "1.0"
-description = "Cryptocurrency forecasting: training and serving models made automatic."
-authors = ["Thomas Chaigneau"]
+[tool.kedro]
+package_name = "make_us_rich"
+project_name = "Make Us Rich"
+project_version = "0.17.6"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-mkdocs-material = "^8.1.9"
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+known_third_party = "kedro"
 
-[tool.poetry.dev-dependencies]
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/make_us_rich -ra"""
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]

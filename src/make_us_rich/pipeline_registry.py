@@ -1,6 +1,7 @@
 """Project pipelines."""
-from kedro.pipeline import Pipeline
 from typing import Dict
+
+from kedro.pipeline import Pipeline
 
 from make_us_rich.pipelines import fetching_data as fd
 from make_us_rich.pipelines import preprocessing_data as pd

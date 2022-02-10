@@ -1,10 +1,7 @@
 """Project hooks."""
-from itertools import product
-from math import prod
 from typing import Any, Dict, Iterable, Optional
 
 from kedro.config import ConfigLoader
-from kedro.extras.datasets.api import APIDataSet
 from kedro.framework.hooks import hook_impl
 from kedro.io import DataCatalog
 from kedro.versioning import Journal
