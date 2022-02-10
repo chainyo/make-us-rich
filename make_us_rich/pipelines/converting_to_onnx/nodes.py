@@ -74,7 +74,7 @@ def convert_model(
     }
 
 
-def _to_numpy(tensor: torch.Tensor):
+def to_numpy(tensor: torch.Tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
 
@@ -112,9 +112,9 @@ def validate_model(
             with torch.no_grad():
                 torch_output = model(input_sample)
             ort_session = onnxruntime.InferenceSession(path_onnx_model)
-            ort_inputs = {ort_session.get_inputs()[0].name: _to_numpy(input_sample)}
+            ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(input_sample)}
             ort_outputs = ort_session.run(None, ort_inputs)
-            np.testing.assert_allclose(_to_numpy(torch_output), ort_outputs[0], rtol=1e-03, atol=1e-05)
+            np.testing.assert_allclose(to_numpy(torch_output), ort_outputs[0], rtol=1e-03, atol=1e-05)
             print("🎉 ONNX model is valid. 🎉")
         except Exception as e:
             raise ValueError(f"ONNX model is not valid: {e}")
