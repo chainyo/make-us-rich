@@ -12,6 +12,8 @@ Deep Learning applied to cryptocurrency forecasting.
 
 For more details on how to use this project, please refer to [documentation](https://chainyo.github.io/make-us-rich/).
 
+You can inspect the training pipeline with the `Kedro Viz` tool, available [here](https://makeusrich-viz.chainyo.tech)
+
 ---
 
 ## Introduction
