@@ -2,7 +2,7 @@ import pandas as pd
 
 from typing import Dict
 
-from mkrich import BinanceClient
+from make_us_rich.utils import BinanceClient
 
 
 def fetch_data_to_dataframe(

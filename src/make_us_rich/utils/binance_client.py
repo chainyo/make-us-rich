@@ -3,7 +3,7 @@ import pandas as pd
 from binance.client import Client
 from typing import Optional
 
-from .utils import load_env
+from make_us_rich.utils import load_env
 
 
 class BinanceClient:
