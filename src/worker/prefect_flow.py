@@ -35,7 +35,7 @@ class WorkerPrefect:
 
     
     def __repr__(self) -> str:
-        return f"WorkerPrefectFlow(project_path={self.metadata.project_path})"
+        return f"WorkerPrefect(project_path={self.metadata.project_path})"
 
     
     def list_registered_flows(self) -> Dict[str, Flow]:
