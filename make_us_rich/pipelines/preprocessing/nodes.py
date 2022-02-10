@@ -1,8 +1,10 @@
 import pandas as pd
 
 from pickle import dump
-from sklearn.preprocessing import MinMaxScaler
 from typing import List, Tuple
+
+from sklearn.preprocessing import MinMaxScaler
+
 
 def extract_features_from_dataset(data: pd.DataFrame) -> pd.DataFrame:
     """

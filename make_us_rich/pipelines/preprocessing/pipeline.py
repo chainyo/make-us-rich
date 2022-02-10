@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import (
+from make_us_rich.pipelines.preprocessing import (
     create_sequences,
     extract_features_from_dataset, 
     scale_data,

@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import fetch_data_to_dataframe
+from make_us_rich.pipelines.fetching import fetch_data_to_dataframe
 
 
 def create_pipeline(**kwargs):
@@ -14,7 +14,7 @@ def create_pipeline(**kwargs):
                     "params:fetching",
                 ],
                 outputs="fetched_market_chart",
-                name="fetching_data_node",
+                name="fetching_node",
             ),
         ]
     )

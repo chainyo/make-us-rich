@@ -4,7 +4,7 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from typing import List, Tuple
 
-from .crypto_dataset import CryptoDataset
+from make_us_rich.pipelines.training import CryptoDataset
 
 
 class LSTMDataLoader(pl.LightningDataModule):

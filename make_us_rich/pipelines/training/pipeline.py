@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import training_loop
+from make_us_rich.pipelines.training import training_loop
 
 
 def create_pipeline(**kwargs):
@@ -16,7 +16,7 @@ def create_pipeline(**kwargs):
                     "params:dir_path",
                 ],
                 outputs="training_done",
-                name="training_model_node",
+                name="training_node",
             ),
         ]
     )

@@ -1,6 +1,5 @@
 import pandas as pd
 
-from pathlib import Path
 from pytorch_lightning import (
     Trainer, 
     callbacks,
@@ -9,8 +8,8 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import WandbLogger
 from typing import  Any, Dict, List, Tuple
 
-from .model import PricePredictor
-from .dataloader import LSTMDataLoader
+from make_us_rich.pipelines.training import PricePredictor
+from make_us_rich.pipelines.training import LSTMDataLoader
 
 
 logger = WandbLogger(project="make-us-rich")
