@@ -3,7 +3,7 @@
 We were using `Celery` to run tasks in the background, but it's now deprecated in favor of `Prefect`.
 
 You can see `Prefect` flow initialization code in the 
-[`src/trainer/register_prefect_flow.py`](../trainer/register_prefect_flow.py) file.
+[`prefect_flow.py`](./prefect_flow.py) file.
 
 ## Prefect commands
 
