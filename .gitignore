@@ -164,3 +164,6 @@ wandb/
 
 # node_modules
 node_modules/
+
+# api models
+api/models/

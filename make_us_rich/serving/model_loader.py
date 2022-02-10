@@ -6,7 +6,7 @@ from minio import Minio
 from pathlib import Path
 from typing import List, Set
 
-from app.model import OnnxModel
+from make_us_rich.serving import OnnxModel
 
 
 load_dotenv()
