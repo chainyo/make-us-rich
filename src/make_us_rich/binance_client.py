@@ -1,17 +1,19 @@
-import os
 import pandas as pd
 
 from binance.client import Client
-from dotenv import load_dotenv
+from typing import Optional
 
-
-load_dotenv()
+from .utils import load_env
 
 
 class BinanceClient:
 
     def __init__(self):
-        self.client = Client(os.getenv("BINANCE_API_KEY"), os.getenv("BINANCE_SECRET_KEY"))
+        """
+        Initializes the client for connecting to the Binance API.
+        """
+        self._config = load_env("binance")
+        self.client = Client(self._config.API_KEY, self._config.SECRET_KEY)
         self.columns = ["timestamp", "open", "high", "low", "close", "volume", "close_time", 
             "quote_av", "trades", "tb_base_av", "tb_quote_av", "ignore"]
 
@@ -52,6 +54,32 @@ class BinanceClient:
             Dataframe for the last year.
         """
         klines = self.client.get_historical_klines(symbol, "1h", "1 year ago UTC")
+        data = pd.DataFrame(klines, columns=self.columns)
+        data["timestamp"] = pd.to_datetime(data["timestamp"], unit="ms")
+        return data
+
+    
+    def get_data(self, symbol: str, interval: str, start_time: str, end_time: Optional[str]) -> pd.DataFrame:
+        """
+        Gets the data for the given symbol, interval, and time range.
+
+        Parameters
+        ----------
+        symbol: str
+            Symbol to get the data for.
+        interval: str
+            Interval to get the data for.
+        start_time: str
+            Start time of the data.
+        end_time: str
+            End time of the data.
+        
+        Returns
+        -------
+        pd.DataFrame
+            Dataframe for the given symbol, interval, and time range.
+        """
+        klines = self.client.get_historical_klines(symbol, interval, start_time, end_time)
         data = pd.DataFrame(klines, columns=self.columns)
         data["timestamp"] = pd.to_datetime(data["timestamp"], unit="ms")
         return data

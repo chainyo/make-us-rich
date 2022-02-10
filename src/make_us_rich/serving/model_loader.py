@@ -1,15 +1,12 @@
-import os
+import pandas as pd
 
 from datetime import datetime
-from dotenv import load_dotenv
 from minio import Minio
 from pathlib import Path
-from typing import List, Set
+from typing import List
 
+from make_us_rich import load_env
 from make_us_rich.serving import OnnxModel
-
-
-load_dotenv()
 
 
 class ModelLoader:
@@ -18,22 +15,23 @@ class ModelLoader:
     """
 
     def __init__(self):
+        self._config = load_env("minio")
         self.client = Minio(
-            os.getenv("MINIO_ENDPOINT"),
-            access_key=os.getenv("MINIO_ACCESS_KEY"),
-            secret_key=os.getenv("MINIO_SECRET_KEY"),
+            self._config.ENDPOINT,
+            access_key=self._config.ACCESS_KEY,
+            secret_key=self._config.SECRET_KEY,
             secure=False
         )
-        self.bucket = os.getenv("MINIO_BUCKET")
+        self.bucket = self._config.MINIO_BUCKET
         if not self.client.bucket_exists(self.bucket):
             self.client.make_bucket(self.bucket)
         self.session_models = {}
-        self.storage_path = Path(os.path.join(os.path.dirname(__file__), "models"))
+        self.storage_path = Path.cwd().joinpath("models")
         self.update_date()
         self.update_model_files()
 
 
-    def get_predictions(self, model_name: str, sample) -> None:
+    def get_predictions(self, model_name: str, sample: pd.DataFrame) -> float:
         """
         Gets the predictions from the model.
 
@@ -41,6 +39,13 @@ class ModelLoader:
         ----------
         model_name: str
             Name of the model.
+        sample: pd.DataFrame
+            Sample to predict.
+        
+        Returns
+        -------
+        float
+            Predicted value.
         """
         if self._check_model_exists_in_session(model_name):
             model = self.session_models[model_name]["model"]
@@ -125,13 +130,13 @@ class ModelLoader:
         )
 
 
-    def _get_list_of_available_models(self) -> List[Set[str]]:
+    def _get_list_of_available_models(self) -> List[str]:
         """
         Looks for available models in the Minio bucket based on the date.
 
         Returns
         -------
-        List[Set[str]]
+        List[str]
             List of available models.
         """
         available_models = self.client.list_objects(self.bucket, prefix=self.date, recursive=True)
