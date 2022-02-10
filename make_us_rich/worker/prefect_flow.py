@@ -9,7 +9,7 @@ from kedro.framework.session import KedroSession
 from kedro.framework.startup import bootstrap_project, ProjectMetadata
 from kedro.io import MemoryDataSet
 
-from kedro_task import KedroTask
+from make_us_rich.worker import KedroTask
 
 
 class WorkerPrefect:
@@ -121,25 +121,16 @@ class WorkerPrefect:
         return flow
 
 
-    def _get_kedro_project_metadata(self, path: Path) -> ProjectMetadata:
+    def _get_kedro_project_metadata(self) -> ProjectMetadata:
         """
         Get the metadata of a Kedro project.
-
-        Parameters
-        ----------
-        project_path: Path, optional
-            Path to the Kedro project. If not provided, the current working directory is used.
         
         Returns
         -------
         dict
             Metadata of the Kedro project.
         """
-        if path is None:
-            parent_dir = Path(__file__).resolve().parents[1]
-            project_path = parent_dir.joinpath("trainer")
-        else:
-            project_path = Path(path)
+        project_path = Path.cwd()
         metadata = bootstrap_project(project_path)
         return metadata
 
