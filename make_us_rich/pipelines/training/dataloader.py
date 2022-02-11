@@ -58,11 +58,7 @@ class LSTMDataLoader(pl.LightningDataModule):
         Parameters
         ----------
         stage: str
-            Name of the stage.
-
-        Returns
-        -------
-        None
+            Name of the stage. 
         """
         self.train_dataset = CryptoDataset(self.train_sequences)
         self.val_dataset = CryptoDataset(self.val_sequences)
@@ -70,6 +66,7 @@ class LSTMDataLoader(pl.LightningDataModule):
 
     
     def train_dataloader(self):
+        """Return the training data loader."""
         return DataLoader(
             self.train_dataset, 
             batch_size=self.train_batch_size, 
@@ -79,6 +76,7 @@ class LSTMDataLoader(pl.LightningDataModule):
 
 
     def val_dataloader(self):
+        """Return the validation data loader."""
         return DataLoader(
             self.val_dataset, 
             batch_size=self.val_batch_size, 
@@ -88,6 +86,7 @@ class LSTMDataLoader(pl.LightningDataModule):
 
 
     def test_dataloader(self):
+        """Return the test data loader."""
         return DataLoader(
             self.test_dataset, 
             batch_size=self.val_batch_size, 

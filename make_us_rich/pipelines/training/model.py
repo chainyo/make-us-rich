@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import pytorch_lightning as pl
 
-from typing import Tuple
+from typing import Tuple, Dict
 
 
 class LSTMRegressor(nn.Module):
@@ -123,26 +123,79 @@ class PricePredictor(pl.LightningModule):
         return output
 
         
-    def training_step(self, batch, batch_idx):
+    def training_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> Dict:
+        """
+        Training step.
+
+        Parameters
+        ----------
+        batch: Tuple[torch.Tensor, torch.Tensor]
+            Tuple of input data and labels.
+        batch_idx: int
+            Batch index.
+        
+        Returns
+        -------
+        Dict
+            Dictionary with the train loss.
+        """
         sequences, labels = batch
         loss, _ = self(sequences, labels)
         self.log("train/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
-    def validation_step(self, batch, batch_idx):
+    def validation_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> Dict:
+        """
+        Validation step.
+
+        Parameters
+        ----------
+        batch: Tuple[torch.Tensor, torch.Tensor]
+            Tuple of input data and labels.
+        batch_idx: int
+            Batch index.
+        
+        Returns
+        -------
+        Dict
+            Dictionary with the valid loss.
+        """
         sequences, labels = batch
         loss, _ = self(sequences, labels)
         self.log("valid/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> Dict:
+        """
+        Test step.
+
+        Parameters
+        ----------
+        batch: Tuple[torch.Tensor, torch.Tensor]
+            Tuple of input data and labels.
+        batch_idx: int
+            Batch index.
+        
+        Returns
+        -------
+        Dict
+            Dictionary with the test loss.
+        """
         sequences, labels = batch
         loss, _ = self(sequences, labels)
         self.log("test/loss", loss, on_step=True, on_epoch=True)
         return {"loss": loss}
 
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> torch.optim.adamw.AdamW:
+        """
+        Configure the optimizer.
+
+        Returns
+        -------
+        torch.optim.adamw.AdamW
+            Optimizer.
+        """
         return torch.optim.AdamW(self.parameters(), lr=self.learning_rate)
