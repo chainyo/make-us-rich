@@ -7,7 +7,7 @@ import extra_streamlit_components as stx
 from datetime import datetime, timedelta
 from typing import Tuple
 
-from database_handler import DatabaseHandler
+from .database_handler import DatabaseHandler
 
 
 class Authentication:
