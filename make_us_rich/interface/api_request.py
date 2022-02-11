@@ -1,16 +1,18 @@
 import os
 import requests
 
-from dotenv import load_dotenv
 from typing import Dict
 
-
-load_dotenv()
+from make_us_rich.utils import load_env
 
 
 class ApiRequest:
+    """
+    Class that handles the API requests for the interface
+    """
     def __init__(self):
-        self.url = f"http://{os.getenv('API_URL')}"
+        self._config = load_env("api")
+        self.url = self._config["URL"]
 
     
     def prediction(self, currency:str, compare:str, token: str) -> Dict:
