@@ -16,7 +16,7 @@ class WorkerPrefect:
 
     TARGETED_COINS = ["btc", "eth", "chz"]
     
-    def __init__(self, path: Path = None) -> None:
+    def __init__(self) -> None:
         """
         Initialize a Prefect Flow from a Kedro project.
 
@@ -29,7 +29,7 @@ class WorkerPrefect:
         -------
         None
         """
-        self.metadata = self._get_kedro_project_metadata(path)
+        self.metadata = self._get_kedro_project_metadata()
         self.client = Client()
         self.registered_flows = self._build_flows()
 
