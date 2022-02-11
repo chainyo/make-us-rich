@@ -2,7 +2,7 @@ import pandas as pd
 
 from typing import Dict
 
-from make_us_rich.utils import BinanceClient
+from make_us_rich.client import BinanceClient
 
 
 def fetch_data_to_dataframe(
@@ -31,6 +31,3 @@ def fetch_data_to_dataframe(
     client = BinanceClient()
     data = client.get_data(symbol, parameters["interval"], parameters["start_date"])
     return data
-
-
-fetch_data_to_dataframe("BTC", "USDT", {"interval": "1h", "start_date": "1 year ago UTC"})
