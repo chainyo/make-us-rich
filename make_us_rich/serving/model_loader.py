@@ -1,12 +1,11 @@
 import pandas as pd
 
 from datetime import datetime
-from minio import Minio
 from pathlib import Path
 from typing import List
 
-from make_us_rich.utils import load_env
 from make_us_rich.serving import OnnxModel
+from make_us_rich.client import MinioClient
 
 
 class ModelLoader:
@@ -15,16 +14,7 @@ class ModelLoader:
     """
 
     def __init__(self):
-        self._config = load_env("minio")
-        self.client = Minio(
-            self._config["ENDPOINT"],
-            access_key=self._config["ACCESS_KEY"],
-            secret_key=self._config["SECRET_KEY"],
-            secure=False
-        )
-        self.bucket = self._config["BUCKET"]
-        if not self.client.bucket_exists(self.bucket):
-            self.client.make_bucket(self.bucket)
+        self.client = MinioClient()
         self.session_models = {}
         self.storage_path = Path.cwd().joinpath("api", "models")
         self.update_date()
@@ -119,12 +109,12 @@ class ModelLoader:
         """
         self._makedir(currency, compare)
         self.client.fget_object(
-            self.bucket,
+            self.client.bucket,
             f"{self.date}/{currency}_{compare}/model.onnx",
             f"{self.storage_path}/{currency}_{compare}/model.onnx"
         )
         self.client.fget_object(
-            self.bucket,
+            self.client.bucket,
             f"{self.date}/{currency}_{compare}/scaler.pkl",
             f"{self.storage_path}/{currency}_{compare}/scaler.pkl"
         )
@@ -139,7 +129,7 @@ class ModelLoader:
         List[str]
             List of available models.
         """
-        available_models = self.client.list_objects(self.bucket, prefix=self.date, recursive=True)
+        available_models = self.client.list_objects(self.client.bucket, prefix=self.date, recursive=True)
         return list(set([model.object_name.split("/")[1] for model in available_models]))
 
     

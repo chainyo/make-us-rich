@@ -1,8 +1,9 @@
 import os 
 
 from datetime import datetime
-from minio import Minio
 from typing import Dict, Tuple
+
+from make_us_rich.client import MinioClient
 
 
 def upload_files(
@@ -31,25 +32,17 @@ def upload_files(
         Dictionary of outputs from the upload step.
     """
     if validation["validation_done"] == True:
-        client = Minio(
-            "192.168.1.100:9101", 
-            access_key="makeusrich-training-pipeline", 
-            secret_key="3Ggy3piB4936ZCmHzWWyGwPEGER3taFKYkUjyrCa", 
-            secure=False
-        )
-        bucket = "make-us-rich"
-        if not client.bucket_exists(bucket):
-            client.make_bucket(bucket)
+        client = MinioClient()
         date = datetime.now().strftime("%Y-%m-%d")
         model_path = f"{dir_path}/model.onnx"
         client.fput_object(
-            bucket_name=bucket,
+            bucket_name=client.bucket,
             object_name=f"{date}/{currency}_{compare}/model.onnx",
             file_path=model_path,
         )
         scaler_path = f"{dir_path}/scaler.pkl"
         client.fput_object(
-            bucket_name=bucket,
+            bucket_name=client.bucket,
             object_name=f"{date}/{currency}_{compare}/scaler.pkl",
             file_path=scaler_path,
         )
