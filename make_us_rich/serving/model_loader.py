@@ -5,7 +5,7 @@ from minio import Minio
 from pathlib import Path
 from typing import List
 
-from make_us_rich import load_env
+from make_us_rich.utils import load_env
 from make_us_rich.serving import OnnxModel
 
 
@@ -17,16 +17,16 @@ class ModelLoader:
     def __init__(self):
         self._config = load_env("minio")
         self.client = Minio(
-            self._config.ENDPOINT,
-            access_key=self._config.ACCESS_KEY,
-            secret_key=self._config.SECRET_KEY,
+            self._config["ENDPOINT"],
+            access_key=self._config["ACCESS_KEY"],
+            secret_key=self._config["SECRET_KEY"],
             secure=False
         )
-        self.bucket = self._config.MINIO_BUCKET
+        self.bucket = self._config["BUCKET"]
         if not self.client.bucket_exists(self.bucket):
             self.client.make_bucket(self.bucket)
         self.session_models = {}
-        self.storage_path = Path.cwd().joinpath("models")
+        self.storage_path = Path.cwd().joinpath("api", "models")
         self.update_date()
         self.update_model_files()
 
@@ -166,7 +166,7 @@ class ModelLoader:
 
     def _check_model_exists_in_session(self, model_name: str) -> bool:
         """
-        Checks if the model exists in the session.
+        Checks if the model exists in the current session.
 
         Parameters
         ----------
