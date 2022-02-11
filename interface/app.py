@@ -1,14 +1,9 @@
-import pandas as pd
 import streamlit as st 
 
-from authentication import Authentication
-from api_request import ApiRequest
-from database_handler import DatabaseHandler
-from plots import (
-    candlestick_plot,
-    scatter_plot,
-    format_data,
-)
+from make_us_rich.interface import Authentication
+from make_us_rich.interface import ApiRequest
+from make_us_rich.interface import DatabaseHandler
+from make_us_rich.interface import candlestick_plot, scatter_plot, format_data
 
 
 st.set_page_config(
