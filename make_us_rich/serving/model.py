@@ -7,6 +7,8 @@ from pathlib import PosixPath
 from pickle import load
 from sklearn.preprocessing import MinMaxScaler
 
+from make_us_rich.pipelines.preprocessing import extract_features_from_dataset
+
 
 class OnnxModel:
 
@@ -100,21 +102,7 @@ class OnnxModel:
         torch.tensor
             Preprocessed sample.
         """
-        rows = []
-        for _, row in sample.iterrows():
-            row_data = dict(
-                day_of_week=row["timestamp"].dayofweek,
-                day_of_month=row["timestamp"].day,
-                week_of_year=row["timestamp"].week,
-                month_of_year=row["timestamp"].month,
-                open=row["open"],
-                high=row["high"],
-                low=row["low"],
-                close=row["close"],
-                close_change=float(row["close"]) - float(row["open"]),
-            )
-            rows.append(row_data)
-        data = pd.DataFrame(rows)
+        data = extract_features_from_dataset(sample)
         scaled_data = pd.DataFrame(
             self.scaler.transform(data), index=data.index, columns=data.columns
         )
