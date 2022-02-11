@@ -8,6 +8,7 @@ from pickle import load
 from sklearn.preprocessing import MinMaxScaler
 
 from make_us_rich.pipelines.preprocessing import extract_features_from_dataset
+from make_us_rich.pipelines.converting import to_numpy
 
 
 class OnnxModel:
@@ -40,7 +41,7 @@ class OnnxModel:
             Predicted close price.
         """
         X = self._preprocessing_sample(sample)
-        inputs = {self.model.get_inputs()[0].name: self._to_numpy(X)}
+        inputs = {self.model.get_inputs()[0].name: to_numpy(X)}
         results = self.model.run(None, inputs)[0][0]
         return self._descaling_sample(results)
 
@@ -107,19 +108,3 @@ class OnnxModel:
             self.scaler.transform(data), index=data.index, columns=data.columns
         )
         return torch.Tensor(scaled_data.values).unsqueeze(0)
-    
-
-    def _to_numpy(self, tensor: torch.Tensor):
-        """
-        Converts a tensor to numpy.
-
-        Parameters
-        ----------
-        tensor: torch.Tensor
-            Tensor to be converted.
-        
-        Returns
-        -------
-        numpy.ndarray
-        """
-        return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()

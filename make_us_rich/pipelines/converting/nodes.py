@@ -75,6 +75,18 @@ def convert_model(
 
 
 def to_numpy(tensor: torch.Tensor):
+    """
+    Converts a tensor to numpy.
+
+    Parameters
+    ----------
+    tensor: torch.Tensor
+        Tensor to be converted.
+    
+    Returns
+    -------
+    numpy.ndarray
+    """
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
 
