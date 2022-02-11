@@ -9,11 +9,11 @@ services:
     restart: unless-stopped
     container_name: mur-interface
     environment: 
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PWD=${DB_PWD}
-      - API_URL=${API_URL}
+      - HOST=${HOST}
+      - NAME=${NAME}
+      - USER=${USER}
+      - PWD=${PWD}
+      - URL=${URL}
     ports:
       - "8502:8501"
 
@@ -21,9 +21,9 @@ services:
     container_name: postgres
     image: postgres:13.4
     environment:
-      POSTGRES_USER: $DB_USER
-      POSTGRES_PASSWORD: $DB_PWD
-      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: $USER
+      POSTGRES_PASSWORD: $PWD
+      POSTGRES_DB: $NAME
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./database/postgres-data:/var/lib/postgresql/data
@@ -47,8 +47,6 @@ services:
       - postgres
 
 volumes:
-    # postgres-data:
-    # postgres-var:
     pgadmin-data:
 
 # networks: 
