@@ -1,15 +1,13 @@
-import os
 import psycopg2
 
-from dotenv import load_dotenv
 from typing import Any, Dict
 
-from utils import random_string
+from make_us_rich.utils import random_string, load_env
 
 
 class DatabaseHandler:
     """
-    Interface to the database.
+    This class handles the database connection and the queries.
     """
 
     @classmethod
@@ -326,16 +324,16 @@ class DatabaseHandler:
         Connects to the database.
         """
         try:
-            load_dotenv()
-            db_name = os.getenv("DB_NAME")
-            db_user = os.getenv("DB_USER")
-            db_host = os.getenv("DB_HOST")
-            db_password = os.getenv("DB_PWD")
+            _config = load_env("postgres")
+            database = _config["DATABASE"]
+            user = _config["USER"]
+            host = _config["HOST"]
+            password = _config["PWD"]
             cls.connection = psycopg2.connect(
-                database=db_name,
-                user=db_user,
-                host=db_host,
-                password=db_password
+                database=database,
+                user=user,
+                host=host,
+                password=password
             )
         except Exception as e:
             return e
