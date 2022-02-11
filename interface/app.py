@@ -1,4 +1,7 @@
+import sys
+
 import streamlit as st 
+from streamlit import cli as stcli
 
 from make_us_rich.interface import Authentication
 from make_us_rich.interface import ApiRequest
@@ -81,3 +84,6 @@ if authentication_status:
         st.markdown("""
             """)
 
+if __name__ == "__main__":
+    sys.argv = ["streamlit", "run", "APP_NAME.py"]
+    sys.exit(stcli.main())
