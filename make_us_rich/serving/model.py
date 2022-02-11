@@ -3,16 +3,17 @@ import onnxruntime
 import pandas as pd
 import torch
 
+from pathlib import PosixPath
 from pickle import load
 from sklearn.preprocessing import MinMaxScaler
 
 
 class OnnxModel:
 
-    def __init__(self, model_path: str, scaler_path: str):
+    def __init__(self, model_path: PosixPath, scaler_path: PosixPath):
         self.model_path = model_path
         self.scaler_path = scaler_path
-        self.model_name = str(self.model_path.parent).split("/")[-1]
+        self.model_name = self.model_path.parent.parts[-1]
         self.model = onnxruntime.InferenceSession(str(model_path))
         self.scaler = self._load_scaler()
         self.descaler = self._create_descaler()
