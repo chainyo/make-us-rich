@@ -8,8 +8,8 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import WandbLogger
 from typing import  Any, Dict, List, Tuple
 
-from make_us_rich.pipelines.training import PricePredictor
-from make_us_rich.pipelines.training import LSTMDataLoader
+from .model import PricePredictor
+from .dataloader import LSTMDataLoader
 
 
 

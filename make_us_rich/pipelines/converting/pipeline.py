@@ -1,9 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from make_us_rich.pipelines.converting import (
-    convert_model, 
-    validate_model, 
-)
+from .nodes import convert_model, validate_model
 
 
 def create_pipeline(**kwargs):

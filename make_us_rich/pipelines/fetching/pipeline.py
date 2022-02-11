@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from make_us_rich.pipelines.fetching import fetch_data_to_dataframe
+from .nodes import fetch_data_to_dataframe
 
 
 def create_pipeline(**kwargs):

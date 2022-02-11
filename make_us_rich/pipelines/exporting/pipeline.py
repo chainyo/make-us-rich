@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from make_us_rich.exporting import upload_files, clean_files
+from .nodes import upload_files, clean_files
 
 
 def create_pipeline(**kwargs):

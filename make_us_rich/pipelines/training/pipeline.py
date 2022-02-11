@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from make_us_rich.pipelines.training import training_loop
+from .nodes import training_loop
 
 
 def create_pipeline(**kwargs):
