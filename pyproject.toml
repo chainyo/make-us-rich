@@ -6,7 +6,7 @@ authors = ["Thomas Chaigneau <t.chaigneau.tc@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-make-us-rich = "make_us_rich.main:app"
+make-us-rich = "make_us_rich.cli.main:app"
 
 [tool.poetry.dependencies]
 python = "3.8"
