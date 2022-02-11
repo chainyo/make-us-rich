@@ -44,6 +44,11 @@ pytest-cov = "~=3.0"
 pytest-mock = ">=1.7.1"
 wheel = ">=0.35"
 
+[tool.kedro]
+package_name = "make_us_rich"
+project_name = "make-us-rich"
+project_version = "0.17.6"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
