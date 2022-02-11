@@ -1,7 +1,5 @@
 """All utility functions for the make_us_rich project.
 """
-import os 
-
 from dotenv import dotenv_values
 from pathlib import Path
 from typing import Dict, Optional
