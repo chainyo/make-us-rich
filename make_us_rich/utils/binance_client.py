@@ -13,7 +13,7 @@ class BinanceClient:
         Initializes the client for connecting to the Binance API.
         """
         self._config = load_env("binance")
-        self.client = Client(self._config.API_KEY, self._config.SECRET_KEY)
+        self.client = Client(self._config["API_KEY"], self._config["SECRET_KEY"])
         self.columns = ["timestamp", "open", "high", "low", "close", "volume", "close_time", 
             "quote_av", "trades", "tb_base_av", "tb_quote_av", "ignore"]
 
