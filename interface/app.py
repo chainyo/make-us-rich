@@ -83,7 +83,3 @@ if authentication_status:
         st.subheader("Admin")
         st.markdown("""
             """)
-
-if __name__ == "__main__":
-    sys.argv = ["streamlit", "run", "APP_NAME.py"]
-    sys.exit(stcli.main())
