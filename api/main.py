@@ -3,8 +3,8 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
-from app.binance_client import BinanceClient
-from app.model_loader import ModelLoader
+from make_us_rich.client import BinanceClient
+from make_us_rich.serving import ModelLoader
 
 
 app = FastAPI(
@@ -13,7 +13,6 @@ app = FastAPI(
     version="1.0",
     openapi_url="/api/v1/openapi.json",
 )
-
 client = BinanceClient()
 models = ModelLoader()
 
@@ -107,4 +106,4 @@ async def readyz():
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=True)
+    uvicorn.run("api.main:app", reload=True)
