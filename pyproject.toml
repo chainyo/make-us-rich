@@ -1,22 +1,41 @@
-[tool.kedro]
-package_name = "make_us_rich"
-project_name = "Make Us Rich"
-project_version = "0.17.6"
+[tool.poetry]
+name = "make-us-rich"
+version = "0.1.0"
+description = "Cryptocurrency forecasting 📈 training and serving models made automatic"
+authors = ["Thomas Chaigneau <t.chaigneau.tc@gmail.com>"]
+readme = "README.md"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
-known_third_party = "kedro"
+[tool.poetry.scripts]
+make-us-rich = "make_us_rich.main:app"
 
-[tool.pytest.ini_options]
-addopts = """
---cov-report term-missing \
---cov src/make_us_rich -ra"""
+[tool.poetry.dependencies]
+python = "3.8"
+ipython = "~=7.10"
+isort = "~=5.0"
+jupyter = "~=1.0"
+jupyter-client = ">=5.1"
+jupyterlab = "~=3.0"
+kedro = {version = "0.17.6", extras = ["pandas.CSVDataSet"]}
+kedro-viz = "3.16.0"
+minio = "7.1.2"
+onnx = "1.10.2"
+nbstripout = "~=0.4"
+onnxruntime = "v1.10.0"
+prefect = "0.15.13"
+python-binance = "v1.0.15"
+pytorch-lightning = "1.5.9"
+scikit-learn = "1.0.2"
+wandb = "0.12.9"
+torch = {url = "https://download.pytorch.org/whl/cu113/torch-1.10.1%2Bcu113-cp38-cp38-linux_x86_64.whl"}
 
-[tool.coverage.report]
-fail_under = 0
-show_missing = true
-exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+[tool.poetry.dev-dependencies]
+pytest = "~=6.2"
+black = "21.5b1"
+flake8 = ">=3.7.9"
+pytest-cov = "~=3.0"
+pytest-mock = ">=1.7.1"
+wheel = ">=0.35"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
