@@ -12,7 +12,7 @@ from make_us_rich.pipelines.training import PricePredictor
 from make_us_rich.pipelines.training import LSTMDataLoader
 
 
-logger = WandbLogger(project="make-us-rich")
+
 
 def training_loop(
     train_sequences: List[Tuple[pd.DataFrame, float]], 
@@ -38,6 +38,9 @@ def training_loop(
         Path to the directory where the model will be saved.
     """
     seed_everything(42, workers=True)
+    logger = WandbLogger(project=parameters["wandb_project"])
+    gpu_value = 1 if parameters["run_on_gpu"] else 0
+
     model = PricePredictor(
         batch_size=parameters["train_batch_size"],
         dropout_rate=parameters["dropout_rate"],
@@ -47,6 +50,7 @@ def training_loop(
         number_of_layers=parameters["number_of_layers"],
         run_on_gpu=parameters["run_on_gpu"],
     )
+
     data_module = LSTMDataLoader(
         train_sequences=train_sequences, 
         val_sequences=val_sequences,
@@ -56,6 +60,7 @@ def training_loop(
         train_workers=parameters["train_workers"],
         val_workers=parameters["val_workers"],
     )
+
     checkpoint_callback = callbacks.ModelCheckpoint(
         dirpath=dir_path,
         save_top_k=1,
@@ -69,7 +74,7 @@ def training_loop(
         verbose=True,
         mode="min",
     )
-    gpu_value = 1 if parameters["run_on_gpu"] else 0
+
     trainer = Trainer(
         max_epochs=parameters["max_epochs"],
         logger=logger,
@@ -81,4 +86,5 @@ def training_loop(
     )
     trainer.fit(model, data_module)
     trainer.test(model, data_module)
+    
     return {"training_done": True}
