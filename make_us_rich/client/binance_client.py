@@ -59,7 +59,7 @@ class BinanceClient:
         return data
 
     
-    def get_data(self, symbol: str, interval: str, start_time: str, end_time: Optional[str]) -> pd.DataFrame:
+    def get_data(self, symbol: str, interval: str, start_time: str, end_time: Optional[str] = None) -> pd.DataFrame:
         """
         Gets the data for the given symbol, interval, and time range.
 
@@ -71,8 +71,8 @@ class BinanceClient:
             Interval to get the data for.
         start_time: str
             Start time of the data.
-        end_time: str
-            End time of the data.
+        end_time: Optional[str]
+            End time of the data. 
         
         Returns
         -------
