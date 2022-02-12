@@ -189,7 +189,7 @@ class PricePredictor(pl.LightningModule):
         return {"loss": loss}
 
 
-    def configure_optimizers(self) -> torch.optim.adamw.AdamW:
+    def configure_optimizers(self) -> torch.optim.AdamW:
         """
         Configure the optimizer.
 
