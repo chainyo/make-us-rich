@@ -31,6 +31,7 @@ class WorkerPrefect:
         """
         self.metadata = self._get_kedro_project_metadata()
         self.client = Client()
+        self._initialize_project()
         self.registered_flows = self._build_flows()
 
     
