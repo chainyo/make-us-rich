@@ -6,7 +6,7 @@ authors = ["Thomas Chaigneau <t.chaigneau.tc@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-make-us-rich = "make_us_rich.cli.main:app"
+mkrich = "make_us_rich.cli.main:app"
 
 [tool.poetry.dependencies]
 python = "3.8"
@@ -35,6 +35,7 @@ extra-streamlit-components = "^0.1.53"
 psycopg2-binary = "^2.9.3"
 PyJWT = "^2.3.0"
 plotly = "^5.6.0"
+GitPython = "^3.1.26"
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.2"
