@@ -14,22 +14,13 @@ from make_us_rich.worker import KedroTask
 from make_us_rich.worker.project_metadata import ProjectMetadata, bootstrap_project
 
 
-class WorkerPrefect:
+class Trainer:
 
     TARGETED_COINS = ["btc", "eth", "chz"]
     
     def __init__(self) -> None:
         """
-        Initialize a Prefect Flow from a Kedro project.
-
-        Parameters
-        ----------
-        project_path: Path, optional
-            Path to the Kedro project. If not provided, the current working directory is used.
-        
-        Returns
-        -------
-        None
+        Initialize all training flows from a Kedro project pipeline.
         """
         self.metadata = self._get_kedro_project_metadata()
         self.client = Client()
@@ -39,7 +30,7 @@ class WorkerPrefect:
 
     
     def __repr__(self) -> str:
-        return f"WorkerPrefect(project_path={self.metadata.project_path})"
+        return f"Trainer(project_path={self.metadata.project_path})"
 
     
     def list_registered_flows(self) -> Dict[str, Flow]:
@@ -157,5 +148,5 @@ class WorkerPrefect:
 
 
 if __name__ == "__main__":
-    flow = WorkerPrefect()
+    flow = Trainer()
     print(flow.list_registered_flows())

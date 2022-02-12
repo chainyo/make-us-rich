@@ -1,7 +1,7 @@
 from .kedro_task import KedroTask
-from .prefect_flow import WorkerPrefect
+from .trainer_flow import Trainer
 
 __all__ = [
     "KedroTask",
-    "WorkerPrefect",
+    "Trainer",
 ]
