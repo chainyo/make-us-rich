@@ -6,10 +6,10 @@ from prefect.utilities.exceptions import ClientError
 
 from kedro.framework.project import pipelines
 from kedro.framework.session import KedroSession
-from kedro.framework.startup import bootstrap_project, ProjectMetadata
 from kedro.io import MemoryDataSet
 
 from make_us_rich.worker import KedroTask
+from make_us_rich.worker.project_metadata import ProjectMetadata, bootstrap_project
 
 
 class WorkerPrefect:
