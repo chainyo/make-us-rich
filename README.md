@@ -1,11 +1,11 @@
 # 🚧 Be carefull this repo is still a work in progress
 
 What is already functional?
-- [ ] Cron jobs - 0%
-- [ ] Workers - 80%
+- [ ] Prefect Flows - 80%
 - [x] Training pipeline - 100%
 - [x] Serving models - 100%
 - [x] Interface - 100%
+- [ ] Documentation - 0%
 
 # Make Us Rich
 Deep Learning applied to cryptocurrency forecasting.
