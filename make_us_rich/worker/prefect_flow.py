@@ -1,7 +1,9 @@
+from datetime import timedelta
 from pathlib import Path
 from typing import Dict
 
 from prefect import Client, Flow
+from prefect.schedules import IntervalSchedule
 from prefect.utilities.exceptions import ClientError
 
 from kedro.framework.project import pipelines
@@ -32,6 +34,7 @@ class WorkerPrefect:
         self.metadata = self._get_kedro_project_metadata()
         self.client = Client()
         self._initialize_project()
+        self.schedule = IntervalSchedule(interval=timedelta(hours=1))
         self.registered_flows = self._build_flows()
 
     
@@ -96,7 +99,7 @@ class WorkerPrefect:
         for ds_name in unregistered_ds:
             catalog.add(ds_name, MemoryDataSet())
 
-        with Flow(f"{currency}_{compare}") as flow:
+        with Flow(f"{currency}_{compare}", self.schedule) as flow:
             tasks = {}
             for node, parent_nodes in pipeline.node_dependencies.items():
                 if node._unique_key not in tasks:
