@@ -146,7 +146,6 @@ class Trainer:
             pass
 
 
-
 if __name__ == "__main__":
     flow = Trainer()
     print(flow.list_registered_flows())
