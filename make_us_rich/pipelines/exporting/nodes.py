@@ -35,17 +35,9 @@ def upload_files(
         client = MinioClient()
         date = datetime.now().strftime("%Y-%m-%d")
         model_path = f"{dir_path}/model.onnx"
-        client.fput_object(
-            bucket_name=client.bucket,
-            object_name=f"{date}/{currency}_{compare}/model.onnx",
-            file_path=model_path,
-        )
+        client.upload(client.bucket, f"{date}/{currency}_{compare}/model.onnx", model_path)
         scaler_path = f"{dir_path}/scaler.pkl"
-        client.fput_object(
-            bucket_name=client.bucket,
-            object_name=f"{date}/{currency}_{compare}/scaler.pkl",
-            file_path=scaler_path,
-        )
+        client.upload(client.bucket, f"{date}/{currency}_{compare}/scaler.pkl", scaler_path)
         return {"upload_done": True}
     return {"upload_done": False}
 

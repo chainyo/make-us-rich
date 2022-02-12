@@ -108,12 +108,12 @@ class ModelLoader:
             Compare used in the model.
         """
         self._makedir(currency, compare)
-        self.client.fget_object(
+        self.client.download(
             self.client.bucket,
             f"{self.date}/{currency}_{compare}/model.onnx",
             f"{self.storage_path}/{currency}_{compare}/model.onnx"
         )
-        self.client.fget_object(
+        self.client.download(
             self.client.bucket,
             f"{self.date}/{currency}_{compare}/scaler.pkl",
             f"{self.storage_path}/{currency}_{compare}/scaler.pkl"

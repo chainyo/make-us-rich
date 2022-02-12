@@ -24,3 +24,46 @@ class MinioClient:
         if not self.client.bucket_exists(self.bucket):
             self.client.make_bucket(self.bucket)
         
+
+    def upload(self, bucket: str, object_name: str, file_path: str) -> None:
+        """
+        Uploads a file to Minio.
+
+        Parameters
+        ----------
+        bucket: str
+            Bucket name.
+        object_name: str
+            Object name.
+        file_path: str
+            File path.
+
+        Returns
+        -------
+        None
+        """
+        self.client.fput_object(
+            bucket_name=bucket, object_name=object_name, file_path=file_path
+        )
+
+    
+    def download(self, bucket: str, object_name: str, file_path: str) -> None:
+        """
+        Downloads a file from Minio.
+
+        Parameters
+        ----------
+        bucket: str
+            Bucket name.
+        object_name: str
+            Object name.
+        file_path: str
+            File path.
+
+        Returns
+        -------
+        None
+        """
+        self.client.fget_object(
+            bucket_name=bucket, object_name=object_name, file_path=file_path
+        )
