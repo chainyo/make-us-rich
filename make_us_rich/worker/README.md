@@ -1,7 +1,7 @@
 # Make Us Rich
 
 You can see `Prefect` flow initialization code in the 
-[`prefect_flow.py`](./prefect_flow.py) file.
+[`trainer_flow.py`](./trainer_flow.py) file.
 
 ## Prefect commands
 
@@ -16,4 +16,11 @@ Now you can start the server using the command:
 
 ```bash
 $ prefect server start
+```
+
+## Start an Agent
+
+```bash
+$ export PREFECT__LOGGING__EXTRA_LOGGERS="['kedro']"
+$ prefect agent local start
 ```
