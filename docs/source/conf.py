@@ -26,8 +26,8 @@ from make_us_rich import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "make_us_rich"
-author = "QuantumBlack"
+project = "Make Us Rich"
+author = "Thomas Chaigneau"
 
 # The short X.Y version.
 version = re.match(r"^([0-9]+\.[0-9]+).*", release).group(1)
@@ -150,7 +150,7 @@ latex_documents = [
         master_doc,
         "make_us_rich.tex",
         "make_us_rich Documentation",
-        "QuantumBlack",
+        author,
         "manual",
     )
 ]
