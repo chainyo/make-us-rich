@@ -36,17 +36,16 @@ Cryptocurrency forecasting tool: training and serving models made automatic.
 
    interface/interface
 
-..toctree::
-   :maxdepth: 4
-   :caption: API
+API documentation
+=================
 
-   api/cli
-   api/client
-   api/interface
-   api/pipelines
-   api/serving
-   api/utils
-   api/worker
+.. autosummary::
+   :toctree:
+   :caption: API documentation
+   :template: autosummary/module.rst
+   :recursive:
+
+   make_us_rich
 
 
 Indices and tables
