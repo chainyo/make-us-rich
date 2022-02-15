@@ -167,3 +167,6 @@ node_modules/
 
 # api models
 api/models/
+
+# vscode
+.vscode
