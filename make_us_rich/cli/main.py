@@ -1,14 +1,16 @@
 import git
 import typer
 
-from pathlib import Path
+from pathlib import Path, PurePath
 
 from make_us_rich.utils import clean_dir
 
 from . import ALL, INTERFACE, SERVING, TRAINING
+from .runs_flavor import run_interface, run_serving, run_training
 
 
-DEPLOY_TYPES = ["full", "serving", "interface", "training"]
+INIT_TYPES = ["full", "serving", "interface", "training"]
+RUN_TYPES = ["serving", "training", "interface"]
 
 
 app = typer.Typer()
@@ -16,56 +18,75 @@ app = typer.Typer()
 
 @app.command("init")
 def initialize(
-    type: str = typer.Argument(..., help="Type of component to initialize (full, serving, interface, training)"),
-    workdir: str = typer.Option(None, "--path", "-p", help="Path to deploy, defaults to current directory"),
+    service: str = typer.Argument(..., help="Service to initialize (full, interface, serving, training)."),
+    workdir: str = typer.Option(None, "--path", "-p", help="Path to initialize, defaults to current directory"),
 ):
     """
-    Command line interface for deploying a full project or a specific component.
+    Command line interface for initializing a full project or a specific component.
 
-    - full: deploys the whole project on the same machine.
+    - full: initialize the whole project on the same machine.
 
-    - serving: deploys only the serving component, constisting of an API and a web server.
+    - serving: initialize only the serving component, constisting of an API and a web server.
 
-    - interface: deploys only the interface component, constisting of a streamlit dashboard, a postgres database and a 
+    - interface: initialize only the interface component, constisting of a streamlit dashboard, a postgres database and a 
     pgadmin UI.
 
-    - training: deploys only the training component, constisting of a training kedro pipeline and a fully prefect ETL 
+    - training: initialize only the training component, constisting of a training kedro pipeline and a fully prefect ETL 
     pipeline.
     """
-    if type not in DEPLOY_TYPES:
-        raise typer.BadParameter(f"{type} is not a valid deploy type. Valid deploy types are {DEPLOY_TYPES}")
-    typer.secho(f"🛠️ Initializing {type}", fg=typer.colors.GREEN)
+    service = service.lower()
+    if service not in INIT_TYPES:
+        raise typer.BadParameter(f"{service} is not a valid service. Valid service to initialize are {INIT_TYPES}")
+    typer.secho(f"🛠️ Initializing {service}\n", fg=typer.colors.GREEN)
 
     if workdir is None:
         workdir = Path.cwd()
     else:
         workdir = Path(workdir)
-    workdir = workdir.joinpath(f"mkrich-{type}")
+    workdir = workdir.joinpath(f"mkrich-{service}")
     if workdir.exists():
         raise typer.BadParameter(
             f"{workdir} already exists."
             f"\n\nPlease remove it or use a different path."
         )
-    typer.secho(f"📁 Working directory: {workdir}")
+    typer.echo(f"📁 Working directory: {workdir}")
 
-    typer.secho(f"Recuperating make-us-rich {type} files...", fg=typer.colors.YELLOW)
+    typer.echo(f"Recuperating make-us-rich {service} files...\n")
     git.Repo.clone_from(url="https://github.com/ChainYo/make-us-rich.git", to_path=workdir)
 
-    if type == "interface":
+    if service == "interface":
         exceptions = ALL + INTERFACE
-    elif type == "serving":
+    elif service == "serving":
         exceptions = ALL + SERVING
-    elif type == "training":
+    elif service == "training":
         exceptions = ALL + TRAINING
     else:
         exceptions = ALL + INTERFACE + SERVING + TRAINING
     
-    typer.secho("🗑️ Cleaning up make-us-rich useless files...", fg=typer.colors.MAGENTA)
+    typer.secho("🗑️ Cleaning up make-us-rich useless files...\n", fg=typer.colors.YELLOW)
     clean_dir(workdir, exceptions)
 
-    typer.secho(f"Setup complete! You can now run `mkrich {type}` to get started.", fg=typer.colors.BRIGHT_BLUE)
+    typer.secho(f"Setup complete! You can now run `mkrich run -h` to get help to start.\n", fg=typer.colors.GREEN)
 
 
 @app.command("run")
-def run():
-    pass
+def run(
+    service: str = typer.Argument(..., help="Service you want to run (interface, serving or training).")
+):
+    """"""
+    service = service.lower()
+    if service not in RUN_TYPES:
+        raise typer.BadParameter(f"{service} is not a valid service. Valid service to run are {RUN_TYPES}")
+    current_directory = Path.cwd()
+    if current_directory.name != f"mkrich-{service}":
+        raise FileNotFoundError(
+            f"You are not in the right working directory. Consider moving to mkrich-{service}."
+        )
+    typer.secho(f"🔄 Running {service}\n", fg=typer.colors.GREEN)
+
+    if service == "interface":
+        run_interface()
+    elif service == "serving":
+        run_serving()
+    else:
+        run_training()
