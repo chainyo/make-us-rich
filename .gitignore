@@ -170,3 +170,6 @@ api/models/
 
 # vscode
 .vscode
+
+# poetry.lock
+poetry.lock
