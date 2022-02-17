@@ -16,7 +16,7 @@ Cryptocurrency forecasting tool: training and serving models made automatic.
    :maxdepth: 4
    :caption: Introduction
 
-   intro/introduction
+   intro/intro
 
 .. toctree::
    :maxdepth: 4
