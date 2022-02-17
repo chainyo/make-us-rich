@@ -13,3 +13,5 @@ INTERFACE = [
 TRAINING = [
     "data",
 ]
+
+COMPONENTS = ["serving", "interface", "training"]
