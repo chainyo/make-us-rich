@@ -38,6 +38,7 @@ flake8 = ">=3.7.9"
 pytest-cov = "~=3.0"
 pytest-mock = ">=1.7.1"
 wheel = ">=0.35"
+recommonmark = "^0.7.1"
 
 [tool.kedro]
 package_name = "make_us_rich"
