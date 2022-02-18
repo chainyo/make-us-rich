@@ -5,7 +5,11 @@ from pathlib import Path
 
 from make_us_rich.utils import clean_dir
 
-from .utils import check_the_service, get_exceptions, launch_service
+from .utils import (
+    check_the_service, 
+    get_exceptions, 
+    launch_service
+)
 
 
 app = typer.Typer()

@@ -76,7 +76,17 @@ def launch_service(service: str) -> bool:
     elif service == "serving":
         run_serving()
     elif service == "training":
-        run_training()
+        env_valid = ask_user_about_environment()
+        if env_valid:
+            run_training()
     else:
         raise typer.BadParameter(f"{service} is not a valid service. Valid service to run are {COMPONENTS}")
+    return True
+
+
+def ask_user_about_environment() -> bool:
+    """
+    """
+    question = "Are you in the right environment?\nWe are going to install some required dependencies."
+    typer.confirm(question, abort=True)
     return True
