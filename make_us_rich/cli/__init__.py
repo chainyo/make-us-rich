@@ -8,6 +8,7 @@ SERVING = [
 
 INTERFACE = [
     "interface",
+    "database",
 ]
 
 TRAINING = [
