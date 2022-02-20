@@ -2,7 +2,6 @@ import typer
 
 from typing import List
 
-from .run_flavors import run_interface, run_serving, run_training
 from . import (
     ALL, 
     COMPONENTS,
@@ -55,33 +54,6 @@ def get_exceptions(service: str) -> List:
     else:
         raise typer.BadParameter(f"{service} is not a valid service. Valid service to run are {COMPONENTS}")
     return exceptions
-
-
-def launch_service(service: str) -> bool:
-    """
-    Launch the service.
-
-    Parameters
-    ----------
-    service: str
-        Service to launch.
-
-    Returns
-    -------
-    bool
-        True if the service was launched, raises an error otherwise.
-    """
-    if service == "interface":
-        run_interface()
-    elif service == "serving":
-        run_serving()
-    elif service == "training":
-        env_valid = ask_user_about_environment()
-        if env_valid:
-            run_training()
-    else:
-        raise typer.BadParameter(f"{service} is not a valid service. Valid service to run are {COMPONENTS}")
-    return True
 
 
 def ask_user_about_environment() -> bool:
