@@ -1,7 +1,4 @@
-import sys
-
 import streamlit as st 
-from streamlit import cli as stcli
 
 from make_us_rich.interface import Authentication
 from make_us_rich.interface import ApiRequest
