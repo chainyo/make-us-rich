@@ -4,15 +4,15 @@ import typer
 from pathlib import Path
 
 from make_us_rich.utils import clean_dir
-
+from .runner import ComponentRunner
 from .utils import (
     check_the_service, 
     get_exceptions, 
-    launch_service
 )
 
 
 app = typer.Typer()
+runner = ComponentRunner()
 
 
 @app.command("init")
@@ -81,6 +81,6 @@ def run(
         )
     typer.secho(f"🔄 Running {service}\n", fg=typer.colors.GREEN)
 
-    launched = launch_service(service)
+    launched = runner(service)
     if launched:
         typer.secho(f"🚀 {service} is running!\n", fg=typer.colors.GREEN)
