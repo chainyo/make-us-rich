@@ -9,6 +9,7 @@ readme = "README.md"
 mkrich = "make_us_rich.cli.main:app"
 
 [tool.poetry.dependencies]
+docker = "^5.0.3"
 GitPython = "^3.1.26"
 ipython = "~=7.10"
 isort = "~=5.0"
@@ -27,10 +28,9 @@ python-binance = "v0.7.10"
 python-dotenv = "^0.19.2"
 pytorch-lightning = "1.5.9"
 scikit-learn = "1.0.2"
-torch = {url = "https://download.pytorch.org/whl/cu113/torch-1.10.1%2Bcu113-cp38-cp38-linux_x86_64.whl"}
+torch = "1.10.0"
 typer = {extras = ["all"], version = "^0.4.0"}
 wandb = "0.12.9"
-docker = "^5.0.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.2"
