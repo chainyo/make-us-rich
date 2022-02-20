@@ -5,9 +5,10 @@ What is already functional?
 - [x] Training pipeline - 100%
 - [x] Serving models - 100%
 - [x] Interface - 100%
-- [ ] CLI - 30%
+- [ ] CLI - 70%
 - [ ] Documentation - 0%
-- package available on pypi - `NOT YET`
+
+Dev package available on [PyPI](https://pypi.org/project/make-us-rich/).
 
 # Make Us Rich
 Deep Learning applied to cryptocurrency forecasting.
