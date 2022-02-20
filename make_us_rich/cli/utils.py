@@ -2,7 +2,7 @@ import typer
 
 from typing import List
 
-from .runs_flavor import run_interface, run_serving, run_training
+from .run_flavors import run_interface, run_serving, run_training
 from . import (
     ALL, 
     COMPONENTS,
@@ -44,7 +44,7 @@ def get_exceptions(service: str) -> List:
     Returns
     -------
     List
-        List of exceptions.
+        List of exceptions, raises an error otherwise.
     """
     if service == "interface":
         exceptions = ALL + INTERFACE
@@ -86,6 +86,12 @@ def launch_service(service: str) -> bool:
 
 def ask_user_about_environment() -> bool:
     """
+    Ask the user if the right environment is active.
+
+    Returns
+    -------
+    bool
+        True if the environment is valid, raises an error otherwise.
     """
     question = "Are you in the right environment?\nWe are going to install some required dependencies."
     typer.confirm(question, abort=True)
