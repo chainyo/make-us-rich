@@ -55,7 +55,7 @@ def initialize(
     exceptions = get_exceptions(service)
     clean_dir(workdir, exceptions)
 
-    typer.secho(f"Setup complete! You can now run `mkrich run -h` to get help to start.\n", fg=typer.colors.GREEN)
+    typer.secho(f"Setup complete! You can now run `mkrich run --help` to get help to start.\n", fg=typer.colors.GREEN)
 
 
 @app.command("run")
