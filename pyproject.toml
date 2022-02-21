@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "make-us-rich"
-version = "0.1.0.dev2"
+version = "0.1.0.dev3"
 description = "Cryptocurrency forecasting 📈 training and serving models made automatic"
 authors = ["Thomas Chaigneau <t.chaigneau.tc@gmail.com>"]
 readme = "README.md"
@@ -28,9 +28,9 @@ python-binance = "v0.7.10"
 python-dotenv = "^0.19.2"
 pytorch-lightning = "1.5.9"
 scikit-learn = "1.0.2"
-torch = "1.10.2"
 typer = {extras = ["all"], version = "^0.4.0"}
 wandb = "0.12.9"
+torch = "1.10.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.2"
