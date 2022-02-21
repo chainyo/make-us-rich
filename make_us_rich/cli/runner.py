@@ -167,7 +167,7 @@ class ComponentRunner:
             typer.echo("Building pgadmin...")
             self.client.containers.run(
                 "dpage/pgadmin4", name="mkrich-pgadmin", restart_policy={"Name": "unless-stopped"},
-                environment=config["pgadmin"], ports={5050: 5050}, detach=True,
+                environment=config["pgadmin"], ports={5050: 80}, detach=True,
                 volumes={"pgadmin-data": {"bind": "/var/lib/pgadmin", "mode": "rw"}},
             )
 
