@@ -1,4 +1,5 @@
 from minio import Minio
+from os import getenv
 
 from make_us_rich.utils import load_env
 
@@ -13,7 +14,13 @@ class MinioClient:
         -------
         None
         """
-        self._config = load_env("minio")
+        try:
+            self._config = load_env("minio")
+        except:
+            self._config = {
+                "ACCESS_KEY": getenv("ACCESS_KEY"), "SECRET_KEY": getenv("SECRET_KEY"), 
+                "ENDPOINT": getenv("ENDPOINT"), "BUCKET": getenv("BUCKET")
+            }
         self.client = Minio(
             self._config["ENDPOINT"],
             access_key=self._config["ACCESS_KEY"],

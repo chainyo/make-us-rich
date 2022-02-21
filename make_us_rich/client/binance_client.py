@@ -1,6 +1,7 @@
 import pandas as pd
 
 from binance.client import Client
+from os import getenv
 from typing import Optional
 
 from make_us_rich.utils import load_env
@@ -12,7 +13,10 @@ class BinanceClient:
         """
         Initializes the client for connecting to the Binance API.
         """
-        self._config = load_env("binance")
+        try:
+            self._config = load_env("binance")
+        except:
+            self._config = {"API_KEY": getenv("API_KEY"), "SECRET_KEY": getenv("SECRET_KEY")}
         self.client = Client(self._config["API_KEY"], self._config["SECRET_KEY"])
         self.columns = ["timestamp", "open", "high", "low", "close", "volume", "close_time", 
             "quote_av", "trades", "tb_base_av", "tb_quote_av", "ignore"]
