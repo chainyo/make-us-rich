@@ -13,9 +13,7 @@ INTERFACE = [
 
 TRAINING = [
     "data",
-    "make_us_rich/worker",
-    "make_us_rich/pipelines",
-    "make_us_rich/client"
+    "make_us_rich",
 ]
 
 COMPONENTS = ["serving", "interface", "training"]
