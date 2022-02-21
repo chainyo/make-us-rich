@@ -188,7 +188,23 @@ class ComponentRunner:
 
     def _run_serving(self):
         """"""
-        print("Running serving")
+        typer.echo("Checking env variables...\n")
+        config = env_variables(["minio", "api"])
+
+        serving_exist = self._check_if_container_exists("mkrich-serving")
+        if serving_exist is True:
+            typer.echo(f"Container mkrich-serving already exists, skipping creation.")
+        else:
+            typer.echo("Building serving API...")
+            dockerfile_path = str(Path.cwd().joinpath("api"))
+            self.client.images.build(tag="mkrich-serving:latest", path=dockerfile_path)
+            config_for_serving = config["minio"].update(config["api"])
+            self.client.containers.run(
+                "mkrich-serving:latest", name="mkrich-serving", restart_policy={"Name": "unless-stopped"},
+                environment=config_for_serving, ports={8081: 80}, detach=True,
+            )
+
+        return True
 
 
     def _run_training(self):
