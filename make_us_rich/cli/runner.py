@@ -1,4 +1,5 @@
 import docker
+import subprocess
 import typer
 
 from pathlib import Path
@@ -122,7 +123,11 @@ class ComponentRunner:
 
     def _run_interface(self) -> bool:
         """
-        Run the interface.
+        Run the interface. There is different steps to run the interface.
+        - Check if the variables are set (they need to be different from the default `changeme`).
+        - Check if the images exist. If they don't, pull them.
+        - Check if the containers exist. If they do, skip the creation.
+        - Run all the containers.
 
         Returns
         -------
@@ -186,8 +191,19 @@ class ComponentRunner:
 
         return True
 
-    def _run_serving(self):
-        """"""
+    def _run_serving(self) -> bool:
+        """
+        Run the serving. There is different steps to run the serving.
+        - Check if the variables are set (they need to be different from the default `changeme`).
+        - Check if the images exist. If they don't, pull them.
+        - Check if the container exists. If it does, skip the creation.
+        - Run the container.
+
+        Returns
+        -------
+        bool
+            True if the serving components are running, raises an error otherwise.
+        """
         typer.echo("Checking env variables...\n")
         config = env_variables(["minio", "api"])
 
@@ -211,3 +227,16 @@ class ComponentRunner:
         """"""
         typer.echo("Checking env variables...\n")
         config = env_variables(["minio", "binance"])
+
+        typer.echo("Pulling Prefect images needed for the training...\n")
+        prefect_backend = "prefect backend server"
+        process = subprocess.Popen(prefect_backend.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()
+        print(output)
+        print(error)
+        prefect_start = "prefect server start"
+        process = subprocess.Popen(prefect_start.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()
+        print(output)
+        print(error)
+        
