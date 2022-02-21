@@ -1,8 +1,7 @@
+import os
 import requests
 
 from typing import Dict
-
-from make_us_rich.utils import load_env
 
 
 class ApiRequest:
@@ -10,8 +9,7 @@ class ApiRequest:
     Class that handles the API requests for the interface
     """
     def __init__(self):
-        self._config = load_env("api")
-        self.url = self._config["URL"]
+        self.url = os.getenv("URL")
 
     
     def prediction(self, currency:str, compare:str, token: str) -> Dict:

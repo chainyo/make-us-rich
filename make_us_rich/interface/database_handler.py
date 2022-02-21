@@ -1,8 +1,9 @@
+import os
 import psycopg2
 
 from typing import Any, Dict
 
-from make_us_rich.utils import random_string, load_env
+from make_us_rich.utils import random_string
 
 
 class DatabaseHandler:
@@ -324,16 +325,11 @@ class DatabaseHandler:
         Connects to the database.
         """
         try:
-            _config = load_env("postgres")
-            database = _config["DATABASE"]
-            user = _config["USER"]
-            host = _config["HOST"]
-            password = _config["PWD"]
             cls.connection = psycopg2.connect(
-                database=database,
-                user=user,
-                host=host,
-                password=password
+                database=os.getenv("POSTGRES_DB"),
+                user=os.getenv("POSTGRES_USER"),
+                host=os.getenv("HOST"),
+                password=os.getenv("POSTGRES_PASSWORD")
             )
         except Exception as e:
             return e
