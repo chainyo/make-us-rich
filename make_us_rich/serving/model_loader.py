@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List
 
-from make_us_rich.serving import OnnxModel
+from .model import OnnxModel
 from make_us_rich.client import MinioClient
 
 

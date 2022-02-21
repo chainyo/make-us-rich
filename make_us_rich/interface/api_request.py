@@ -1,5 +1,6 @@
 import requests
 
+from os import getenv
 from typing import Dict
 
 from make_us_rich.utils import load_env
@@ -10,7 +11,10 @@ class ApiRequest:
     Class that handles the API requests for the interface
     """
     def __init__(self):
-        self._config = load_env("api")
+        try:
+            self._config = load_env("api")
+        except:
+            self._config = {"URL": getenv("URL")}
         self.url = self._config["URL"]
 
     
