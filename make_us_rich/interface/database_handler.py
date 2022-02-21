@@ -1,6 +1,6 @@
-import os
 import psycopg2
 
+from os import getenv
 from typing import Any, Dict
 
 from make_us_rich.utils import random_string
@@ -326,10 +326,10 @@ class DatabaseHandler:
         """
         try:
             cls.connection = psycopg2.connect(
-                database=os.getenv("POSTGRES_DB"),
-                user=os.getenv("POSTGRES_USER"),
-                host=os.getenv("HOST"),
-                password=os.getenv("POSTGRES_PASSWORD")
+                database=getenv("POSTGRES_DB"),
+                user=getenv("POSTGRES_USER"),
+                host=getenv("HOST"),
+                password=getenv("POSTGRES_PASSWORD")
             )
         except Exception as e:
             return e
