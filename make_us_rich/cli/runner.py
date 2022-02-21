@@ -129,12 +129,12 @@ class ComponentRunner:
         bool
             True if the interface components are running, raises an error otherwise.
         """
+        typer.echo("Checking env variables...\n")
+        config = env_variables(["pgadmin", "postgres", "api"])
+
         typer.echo("Pulling images needed for the interface\n")
         images = [("postgres", "13.4"), ("dpage/pgadmin4", "snapshot")]
         self._check_if_images_exist(images)
-        
-        typer.echo("\nChecking env variables...")
-        config = env_variables(["pgadmin", "postgres", "api"])
 
         data_dir = Path.cwd().joinpath("database")
         data_dir.joinpath("postgres-data").mkdir(exist_ok=True, mode=777)
@@ -167,7 +167,7 @@ class ComponentRunner:
             typer.echo("Building pgadmin...")
             self.client.containers.run(
                 "dpage/pgadmin4", name="mkrich-pgadmin", restart_policy={"Name": "unless-stopped"},
-                environment=config["pgadmin"], ports={5050: 80}, detach=True,
+                environment=config["pgadmin"], ports={5050: 5050}, detach=True,
                 volumes={"pgadmin-data": {"bind": "/var/lib/pgadmin", "mode": "rw"}},
             )
 
