@@ -209,4 +209,5 @@ class ComponentRunner:
 
     def _run_training(self):
         """"""
-        print("Running training")
+        typer.echo("Checking env variables...\n")
+        config = env_variables(["minio", "binance"])
