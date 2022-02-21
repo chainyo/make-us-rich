@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "make-us-rich"
-version = "0.1.0.dev3"
+version = "0.1.0.dev5"
 description = "Cryptocurrency forecasting 📈 training and serving models made automatic"
 authors = ["Thomas Chaigneau <t.chaigneau.tc@gmail.com>"]
 readme = "README.md"
