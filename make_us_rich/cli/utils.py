@@ -1,3 +1,4 @@
+import subprocess
 import typer
 
 from typing import List, Dict
@@ -97,3 +98,10 @@ def env_variables(files: List[str]) -> Dict[str, Dict]:
         config[file] = variables
 
     return config
+
+
+def subprocess_cmd_to_str(*args):
+    """
+    TODO
+    """
+    return subprocess.run(args)
