@@ -1,11 +1,10 @@
 import docker
-import subprocess
 import typer
 
 from pathlib import Path
 
 from . import COMPONENTS
-from .utils import ask_user_about_environment, env_variables
+from .utils import ask_user_about_environment, env_variables, subprocess_cmd_to_str
 
 
 class ComponentRunner:
@@ -229,14 +228,11 @@ class ComponentRunner:
         config = env_variables(["minio", "binance"])
 
         typer.echo("Pulling Prefect images needed for the training...\n")
-        prefect_backend = "prefect backend server"
-        process = subprocess.Popen(prefect_backend.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
-        print(output)
-        print(error)
-        prefect_start = "prefect server start"
-        process = subprocess.Popen(prefect_start.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
-        print(output)
-        print(error)
-        
+        change_backend = subprocess_cmd_to_str("prefect", "backend", "server")
+        start_prefect = subprocess_cmd_to_str("prefect", "server", "start", "--detach")
+
+        flows = Path.cwd().joinpath("make_us_rich", "worker", "trainer_flow.py")
+        flows_process = subprocess_cmd_to_str("python", str(flows))
+        typer.echo(flows_process.returncode)
+
+        return True
