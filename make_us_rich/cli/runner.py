@@ -228,10 +228,10 @@ class ComponentRunner:
         config = env_variables(["minio", "binance"])
 
         typer.echo("Pulling Prefect images needed for the training...\n")
-        change_backend = subprocess_cmd_to_str("prefect", "backend", "server")
-        start_prefect = subprocess_cmd_to_str("prefect", "server", "start", "--detach")
+        subprocess_cmd_to_str("prefect", "backend", "server")
+        subprocess_cmd_to_str("prefect", "server", "start", "--detach")
 
-        flows = Path.cwd().joinpath("make_us_rich", "worker", "trainer_flow.py")
+        flows = Path.cwd().joinpath("training", "trainer_flow.py")
         flows_process = subprocess_cmd_to_str("python", str(flows))
         typer.echo(flows_process.returncode)
 
