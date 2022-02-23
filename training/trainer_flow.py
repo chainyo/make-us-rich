@@ -10,8 +10,7 @@ from kedro.framework.project import pipelines
 from kedro.framework.session import KedroSession
 from kedro.io import MemoryDataSet
 
-from make_us_rich.worker import KedroTask
-from make_us_rich.worker.project_metadata import ProjectMetadata, bootstrap_project
+from make_us_rich.worker import KedroTask, ProjectMetadata, bootstrap_project
 
 
 class Trainer:

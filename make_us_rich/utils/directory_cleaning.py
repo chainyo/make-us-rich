@@ -1,5 +1,3 @@
-from os import listdir
-from os.path import isfile, isdir
 from pathlib import Path
 from shutil import rmtree
 from typing import List, Union
@@ -7,7 +5,7 @@ from typing import List, Union
 
 def clean_dir(path_to_clean: Union[str, Path], exception: List[str]) -> None:
     """
-    Removes all files and directories in the given path.
+    Removes all files and directories in the given path if they don't match the exception list.
 
     Parameters
     ----------
@@ -19,10 +17,9 @@ def clean_dir(path_to_clean: Union[str, Path], exception: List[str]) -> None:
     if isinstance(path_to_clean, str):
         path_to_clean = Path(path_to_clean)
 
-    all_files = [f for f in listdir(path_to_clean) if isfile(path_to_clean.joinpath(f)) and f not in exception]
-    for file in all_files:
-        path_to_clean.joinpath(file).unlink()
-
-    all_directories = [d for d in listdir(path_to_clean) if isdir(path_to_clean.joinpath(d)) and d not in exception]
-    for directory in all_directories:
-        rmtree(path_to_clean.joinpath(directory))
+    items_to_remove = [item for item in path_to_clean.iterdir() if item.name not in exception]
+    for item in items_to_remove:
+        if item.is_dir():
+            rmtree(item)
+        else:
+            item.unlink()

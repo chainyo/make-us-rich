@@ -13,7 +13,8 @@ INTERFACE = [
 
 TRAINING = [
     "data",
-    "make_us_rich",
+    "training",
+    "pyproject.toml"
 ]
 
 COMPONENTS = ["serving", "interface", "training"]
