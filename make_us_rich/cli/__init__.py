@@ -13,7 +13,7 @@ INTERFACE = [
 
 TRAINING = [
     "data",
-    "training",
+    "make_us_rich",
     "pyproject.toml"
 ]
 
