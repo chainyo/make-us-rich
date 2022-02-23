@@ -10,7 +10,8 @@ from kedro.framework.project import pipelines
 from kedro.framework.session import KedroSession
 from kedro.io import MemoryDataSet
 
-from make_us_rich.worker import KedroTask, ProjectMetadata, bootstrap_project
+from .kedro_task import KedroTask
+from .project_metadata import ProjectMetadata, bootstrap_project
 
 
 class Trainer:
@@ -143,8 +144,3 @@ class Trainer:
         except ClientError:
             # `project_name` project already exists
             pass
-
-
-if __name__ == "__main__":
-    flow = Trainer()
-    print(flow.list_registered_flows())
