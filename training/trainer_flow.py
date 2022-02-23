@@ -124,7 +124,7 @@ class Trainer:
         dict
             Metadata of the Kedro project.
         """
-        project_path = Path.cwd()
+        project_path = Path(__file__).parent.parent.parent
         metadata = bootstrap_project(project_path)
         return metadata
 
