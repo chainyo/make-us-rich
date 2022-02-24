@@ -78,7 +78,7 @@ class Trainer:
             Prefect Flow built from the Kedro project.
         """
         session = KedroSession.create(
-            project_path=self.metadata.project_path, extra_params={"currency": currency, "compare": compare}
+            project_path=Path(__file__).parents[1], extra_params={"currency": currency, "compare": compare}
         )
         context = session.load_context()
         catalog = context.catalog

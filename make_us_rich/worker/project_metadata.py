@@ -112,9 +112,9 @@ def bootstrap_project(project_path: Path) -> ProjectMetadata:
     return metadata
 
 
-def get_kedro_project_metadata(self) -> ProjectMetadata:
+def get_kedro_project_metadata() -> ProjectMetadata:
     """
-    Get the metadata of a Kedro project.
+    Get the metadata of a Kedro project. Wrapper around `bootstrap_project` for mkrich package.
     
     Returns
     -------
