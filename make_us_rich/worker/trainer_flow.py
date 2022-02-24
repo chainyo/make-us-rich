@@ -144,3 +144,8 @@ class Trainer:
         except ClientError:
             # `project_name` project already exists
             pass
+
+
+if __name__ == "__main__":
+    flow = Trainer()
+    print(flow.list_registered_flows())

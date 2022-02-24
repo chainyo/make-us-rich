@@ -6,7 +6,7 @@ Here is the original file: https://github.com/kedro-org/kedro/blob/main/kedro/fr
 """
 import os
 import sys
-from pathlib import Path
+from pathlib import Path, PosixPath
 from typing import NamedTuple, Union
 
 import anyconfig
@@ -14,7 +14,7 @@ import anyconfig
 from kedro import __version__ as kedro_version
 from kedro.framework.project import configure_project
 
-_PYPROJECT = "pyproject.toml"
+_PYPROJECT = "kedro_config.toml"
 
 
 class ProjectMetadata(NamedTuple):

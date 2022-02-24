@@ -1,0 +1,5 @@
+[tool.kedro]
+package_name = "make_us_rich"
+project_name = "make-us-rich"
+project_version = "0.17.6"
+source_dir = "make_us_rich"
