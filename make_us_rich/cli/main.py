@@ -112,3 +112,12 @@ def start(
         )
     typer.secho(f"🔄 Starting {service}\n", fg=typer.colors.GREEN)
     runner.start_local_agent()
+
+
+@app.command("stop")
+def stop():
+    """"""
+    typer.secho("❌ Stopping all training services.\n", fg=typer.colors.GREEN)
+    runner.stop_training()
+    typer.secho("🎉 All services stopped!\n", fg=typer.colors.GREEN)
+    

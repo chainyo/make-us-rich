@@ -254,4 +254,11 @@ class ComponentRunner:
         Start the local agent.
         """
         subprocess_cmd_to_str("prefect", "agent", "local", "start")
+    
+
+    def stop_training(self):
+        """
+        Stop all Prefect containers.
+        """
+        subprocess_cmd_to_str("prefect", "server", "stop")
         
