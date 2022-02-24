@@ -11,7 +11,18 @@ theme:
       primary: orange
       accent: yellow
 
+nav:
+- MakeUsRich: index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
 plugins:
-- search
-- mkdocstrings
-- git-revision-date
+  - search:
+      lang: en
+  - mkdocstrings
+  - git-revision-date
