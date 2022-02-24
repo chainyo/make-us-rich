@@ -100,8 +100,18 @@ def env_variables(files: List[str]) -> Dict[str, Dict]:
     return config
 
 
-def subprocess_cmd_to_str(*args):
+def subprocess_cmd_to_str(*args) -> subprocess.CompletedProcess:
     """
-    TODO
+    Convert a list of arguments to a string.
+
+    Parameters
+    ----------
+    *args: List[str]
+        List of arguments to convert.
+    
+    Returns
+    -------
+    subprocess.CompletedProcess
+        CompletedProcess object.
     """
     return subprocess.run(args)
