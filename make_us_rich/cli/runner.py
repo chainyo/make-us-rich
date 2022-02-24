@@ -223,7 +223,18 @@ class ComponentRunner:
 
 
     def _run_training(self):
-        """"""
+        """
+        Run the training. There is different steps to run the training.
+        - Check if the variables are set (they need to be different from the default `changeme`).
+        - Change the Prefect backend server to the local one.
+        - Pull all Prefect images and launch all the containers in detached mode.
+        - Register the Prefect flows.
+
+        Returns
+        -------
+        bool
+            True if the training components are running, raises an error otherwise.
+        """
         typer.echo("Checking env variables...\n")
         config = env_variables(["minio", "binance"])
 
@@ -236,3 +247,11 @@ class ComponentRunner:
         typer.echo(flows_process.returncode)
 
         return True
+
+
+    def start_local_agent(self):
+        """
+        Start the local agent.
+        """
+        subprocess_cmd_to_str("prefect", "agent", "local", "start")
+        

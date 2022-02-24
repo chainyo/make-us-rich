@@ -111,4 +111,4 @@ def start(
             f"You are not in the right working directory. Consider moving to mkrich-training."
         )
     typer.secho(f"🔄 Starting {service}\n", fg=typer.colors.GREEN)
-    subprocess.run(["prefect", "agent", "local", "start"])
+    runner.start_local_agent()
