@@ -103,43 +103,24 @@ def _get_project_metadata(project_path: Union[str, Path]) -> ProjectMetadata:
         ) from exc
 
 
-def _validate_source_path(source_path: Path, project_path: Path) -> None:
-    """Validate the source path exists and is relative to the project path.
-    Args:
-        source_path: Absolute source path.
-        project_path: Path to the Kedro project.
-    Raises:
-        ValueError: If source_path is not relative to project_path.
-        NotADirectoryError: If source_path does not exist.
-    """
-    try:
-        source_path.relative_to(project_path)
-    except ValueError as exc:
-        raise ValueError(
-            f"Source path '{source_path}' has to be relative to "
-            f"your project root '{project_path}'."
-        ) from exc
-    if not source_path.exists():
-        raise NotADirectoryError(f"Source path '{source_path}' cannot be found.")
-
-
-def _add_src_to_path(source_dir: Path, project_path: Path) -> None:
-    _validate_source_path(source_dir, project_path)
-
-    if str(source_dir) not in sys.path:
-        sys.path.insert(0, str(source_dir))
-
-    python_path = os.getenv("PYTHONPATH") or ""
-    if str(source_dir) not in python_path:
-        sep = os.pathsep if python_path else ""
-        os.environ["PYTHONPATH"] = f"{str(source_dir)}{sep}{python_path}"
-
-
 def bootstrap_project(project_path: Path) -> ProjectMetadata:
     """Run setup required at the beginning of the workflow
     when running in project mode, and return project metadata.
     """
     metadata = _get_project_metadata(project_path)
-    _add_src_to_path(metadata.source_dir, project_path)
     configure_project(metadata.package_name)
+    return metadata
+
+
+def get_kedro_project_metadata(self) -> ProjectMetadata:
+    """
+    Get the metadata of a Kedro project.
+    
+    Returns
+    -------
+    dict
+        Metadata of the Kedro project.
+    """
+    project_path = Path(__file__).parents[1]
+    metadata = bootstrap_project(project_path)
     return metadata

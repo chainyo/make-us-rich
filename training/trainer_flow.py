@@ -10,8 +10,7 @@ from kedro.framework.project import pipelines
 from kedro.framework.session import KedroSession
 from kedro.io import MemoryDataSet
 
-from .kedro_task import KedroTask
-from .project_metadata import ProjectMetadata, bootstrap_project
+from make_us_rich.worker import KedroTask, get_kedro_project_metadata
 
 
 class Trainer:
@@ -22,7 +21,7 @@ class Trainer:
         """
         Initialize all training flows from a Kedro project pipeline.
         """
-        self.metadata = self._get_kedro_project_metadata()
+        self.metadata = get_kedro_project_metadata()
         self.client = Client()
         self._initialize_project()
         self.schedule = IntervalSchedule(interval=timedelta(hours=1))
@@ -114,20 +113,6 @@ class Trainer:
             flow.register(self.metadata.project_name)
 
         return flow
-
-
-    def _get_kedro_project_metadata(self) -> ProjectMetadata:
-        """
-        Get the metadata of a Kedro project.
-        
-        Returns
-        -------
-        dict
-            Metadata of the Kedro project.
-        """
-        project_path = Path(__file__).parent.parent.parent
-        metadata = bootstrap_project(project_path)
-        return metadata
 
 
     def _initialize_project(self) -> None:

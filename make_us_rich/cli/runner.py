@@ -231,7 +231,7 @@ class ComponentRunner:
         subprocess_cmd_to_str("prefect", "backend", "server")
         subprocess_cmd_to_str("prefect", "server", "start", "--detach")
 
-        flows = Path.cwd().joinpath("training", "run_training.py")
+        flows = Path(__file__).parents[1].joinpath("worker", "trainer_flow.py")
         flows_process = subprocess_cmd_to_str("python", str(flows))
         typer.echo(flows_process.returncode)
 

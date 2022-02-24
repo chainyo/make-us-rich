@@ -1,10 +1,8 @@
 from .kedro_task import KedroTask
-from .project_metadata import ProjectMetadata, bootstrap_project
-from .trainer_flow import Trainer
+from .project_metadata import ProjectMetadata, get_kedro_project_metadata
 
 __all__ = [
-    "bootstrap_project",
+    "get_kedro_project_metadata",
     "KedroTask",
     "ProjectMetadata",
-    "Trainer",
 ]

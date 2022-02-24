@@ -13,8 +13,7 @@ INTERFACE = [
 
 TRAINING = [
     "data",
-    "kedro_config.toml"
-    "make_us_rich",
+    "training",
 ]
 
 COMPONENTS = ["serving", "interface", "training"]
