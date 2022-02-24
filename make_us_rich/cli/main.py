@@ -1,3 +1,4 @@
+from asyncio import subprocess
 import git
 import typer
 
@@ -84,3 +85,30 @@ def run(
     launched = runner(service)
     if launched:
         typer.secho(f"🚀 {service} is running!\n", fg=typer.colors.GREEN)
+        if service == "training":
+            typer.secho(f"🚀 You can now run `mkrich agent start` to start the training agent.", fg=typer.colors.GREEN)
+
+
+@app.command("start")
+def start(
+    service: str = typer.Argument(..., help="Service you want to start (agent only for the moment).")
+):
+    """
+    Command line interface for starting a local agent that will do flows registered in the training component.
+
+    - agent: start the Prefect agent.
+    """
+    service = service.lower()
+    if service != "agent":
+        raise typer.BadParameter(
+            f"{service} is not a valid service."
+            f"\n\nPlease use `mkrich start agent`."
+        )
+
+    current_directory = Path.cwd()
+    if current_directory.name != f"mkrich-training":
+        raise FileNotFoundError(
+            f"You are not in the right working directory. Consider moving to mkrich-training."
+        )
+    typer.secho(f"🔄 Starting {service}\n", fg=typer.colors.GREEN)
+    subprocess.run(["prefect", "agent", "local", "start"])
