@@ -95,8 +95,8 @@ def env_variables(files: List[str]) -> Dict[str, Dict]:
         for key, value in variables.items():
             if value == "changeme":
                 raise typer.BadParameter(f"You need to set the {key} environment variable.")
-
-        config[file] = variables
+            else:
+                config[key] = value
 
     return config
 

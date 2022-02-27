@@ -171,7 +171,7 @@ class ComponentRunner:
             typer.echo("Building pgadmin...")
             self.client.containers.run(
                 "dpage/pgadmin4", name="mkrich-pgadmin", restart_policy={"Name": "unless-stopped"},
-                environment=config["pgadmin"], ports={5050: 80}, detach=True,
+                environment=config, ports={5050: 80}, detach=True,
                 volumes={"pgadmin-data": {"bind": "/var/lib/pgadmin", "mode": "rw"}},
             )
 
@@ -182,10 +182,9 @@ class ComponentRunner:
             typer.echo("Building interface...")
             dockerfile_path = str(Path.cwd().joinpath("interface"))
             self.client.images.build(tag="mkrich-interface:latest", path=dockerfile_path)
-            config_for_interface = config["postgres"].update(config["api"])
             self.client.containers.run(
                 "mkrich-interface:latest", name="mkrich-interface", restart_policy={"Name": "unless-stopped"},
-                environment=config_for_interface, ports={8501: 8501}, detach=True,
+                environment=config, ports={8501: 8501}, detach=True,
             )
 
         return True
@@ -205,6 +204,7 @@ class ComponentRunner:
         """
         typer.echo("Checking env variables...\n")
         config = env_variables(["minio", "binance"])
+        print(config)
 
         serving_exist = self._check_if_container_exists("mkrich-serving")
         if serving_exist is True:
@@ -213,10 +213,9 @@ class ComponentRunner:
             typer.echo("Building serving API...")
             dockerfile_path = str(Path.cwd().joinpath("api"))
             self.client.images.build(tag="mkrich-serving:latest", path=dockerfile_path)
-            config_for_serving = config["minio"].update(config["api"])
             self.client.containers.run(
                 "mkrich-serving:latest", name="mkrich-serving", restart_policy={"Name": "unless-stopped"},
-                environment=config_for_serving, ports={8081: 80}, detach=True,
+                environment=config, ports={8081: 80}, detach=True,
             )
 
         return True
