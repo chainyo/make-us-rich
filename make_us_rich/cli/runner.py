@@ -204,7 +204,7 @@ class ComponentRunner:
             True if the serving components are running, raises an error otherwise.
         """
         typer.echo("Checking env variables...\n")
-        config = env_variables(["minio", "api"])
+        config = env_variables(["minio", "binance"])
 
         serving_exist = self._check_if_container_exists("mkrich-serving")
         if serving_exist is True:
