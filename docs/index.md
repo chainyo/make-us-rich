@@ -10,9 +10,11 @@ This project is a tool to help people to train, serve and use cryptocurrencies f
 
 This project was build by [@ChainYo](https://github.com/ChainYo) to help people building their own **MLOps projects**.
 
-⚠️ Cryptocurrencies are just a pretext to build a **machine learning project**. You won't be able to use this project to make
-money, but you can use it to train, serve and use your own models. In fact, you can use this project to train, serve and
-use **any kind of machine learning models**.
+!!! warning
+    Cryptocurrencies are only a pretext to build a **machine learning project**. You won't be able to use this project 
+    to make real money, but you can use it to train, serve and use your own models. 
+    
+    In fact, you can use the project baselines to train, serve and use **any kind of machine learning models**.
 
 We will see how to use the project in the following sections. Please feel free to ask questions and share your ideas by
 [opening an issue](https://github.com/ChainYo/make-us-rich/issues/new). You help and opinion is welcome in order to
