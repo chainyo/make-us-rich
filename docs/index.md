@@ -13,7 +13,7 @@ This project was build by [@ChainYo](https://github.com/ChainYo) to help people 
 !!! warning
     Cryptocurrencies are only a pretext to build a **machine learning project**. You won't be able to use this project 
     to make real money, but you can use it to train, serve and use your own models. 
-    
+
     In fact, you can use the project baselines to train, serve and use **any kind of machine learning models**.
 
 We will see how to use the project in the following sections. Please feel free to ask questions and share your ideas by
@@ -70,5 +70,5 @@ Here is a simple diagram of the project:
 
 🚀 Let's dive into the components details! 
 
-!!! tips
+!!! tip
     *You can start with any, but I recommend to start with the [`training`](/training) component.*
