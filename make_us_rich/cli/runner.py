@@ -204,7 +204,6 @@ class ComponentRunner:
         """
         typer.echo("Checking env variables...\n")
         config = env_variables(["minio", "binance"])
-        print(config)
 
         serving_exist = self._check_if_container_exists("mkrich-serving")
         if serving_exist is True:

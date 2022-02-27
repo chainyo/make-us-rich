@@ -21,6 +21,7 @@ class MinioClient:
                 "ACCESS_KEY": getenv("ACCESS_KEY"), "SECRET_KEY": getenv("SECRET_KEY"), 
                 "ENDPOINT": getenv("ENDPOINT"), "BUCKET": getenv("BUCKET")
             }
+        print(self._config)
         self.client = Minio(
             endpoint=str(self._config["ENDPOINT"]),
             access_key=self._config["ACCESS_KEY"],
@@ -74,3 +75,6 @@ class MinioClient:
         self.client.fget_object(
             bucket_name=bucket, object_name=object_name, file_path=file_path
         )
+
+
+minio = MinioClient()
