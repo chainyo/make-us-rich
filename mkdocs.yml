@@ -13,6 +13,11 @@ theme:
 
 nav:
 - MakeUsRich: index.md
+- Components:
+  - Training: training.md
+  - Serving: serving.md
+  - Interface: interface.md
+- API: api.md
 
 markdown_extensions:
   - admonition
