@@ -10,6 +10,8 @@ theme:
     - scheme: slate
       primary: orange
       accent: yellow
+  features:
+    - navigation.tracking
 
 nav:
 - MakeUsRich: index.md
