@@ -31,5 +31,9 @@ markdown_extensions:
 plugins:
   - search:
       lang: en
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: numpy
   - git-revision-date
