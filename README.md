@@ -5,7 +5,7 @@ What is already functional?
 - [x] Training pipeline - 100%
 - [x] Serving models - 100%
 - [x] Interface - 100%
-- [ ] CLI - 70%
+- [x] CLI - 100%
 - [ ] Documentation - 0%
 
 Dev package available on [PyPI](https://pypi.org/project/make-us-rich/).
