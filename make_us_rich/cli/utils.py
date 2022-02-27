@@ -1,6 +1,7 @@
 import subprocess
 import typer
 
+from pathlib import Path
 from typing import List, Dict
 
 from make_us_rich.utils import load_env
@@ -115,3 +116,12 @@ def subprocess_cmd_to_str(*args) -> subprocess.CompletedProcess:
         CompletedProcess object.
     """
     return subprocess.run(args)
+
+
+def create_gitignore_file(path: Path) -> None:
+    """
+    Automatically create a .gitignore file and file it with the conf directory as a content.
+    """
+    workdir = path.absolute()
+    with open(f"{workdir}/.gitignore", "w") as gitignore:
+        gitignore.write("conf/")

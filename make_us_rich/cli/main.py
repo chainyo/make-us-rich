@@ -8,6 +8,7 @@ from make_us_rich.utils import clean_dir
 from .runner import ComponentRunner
 from .utils import (
     check_the_service, 
+    create_gitignore_file,
     get_exceptions, 
 )
 
@@ -55,6 +56,9 @@ def initialize(
     typer.secho("🗑️ Cleaning up make-us-rich useless files...\n", fg=typer.colors.YELLOW)
     exceptions = get_exceptions(service)
     clean_dir(workdir, exceptions)
+
+    typer.secho("📝 Creating .gitignore file...\n", fg=typer.colors.YELLOW)
+    create_gitignore_file(workdir)
 
     typer.secho(f"Setup complete! You can now run `mkrich run --help` to get help to start.\n", fg=typer.colors.GREEN)
 
