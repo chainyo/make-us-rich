@@ -22,7 +22,7 @@ class MinioClient:
                 "ENDPOINT": getenv("ENDPOINT"), "BUCKET": getenv("BUCKET")
             }
         self.client = Minio(
-            self._config["ENDPOINT"],
+            endpoint=str(self._config["ENDPOINT"]),
             access_key=self._config["ACCESS_KEY"],
             secret_key=self._config["SECRET_KEY"],
             secure=False
