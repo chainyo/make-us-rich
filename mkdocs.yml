@@ -7,9 +7,18 @@ theme:
   icon:
     repo: fontawesome/brands/github
   palette:
-    - scheme: slate
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
       primary: orange
-      accent: yellow
+      accent: red
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+      primary: orange
+      accent: red
   features:
     - navigation.tracking
 
