@@ -68,4 +68,5 @@ Here is a simple diagram of the project:
 
 🚀 Let's dive into the components details! 
 
-*You can start with any, but I recommend to start with the [`training`](/training) component.*
+!!! tips
+    *You can start with any, but I recommend to start with the [`training`](/training) component.*
