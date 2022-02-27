@@ -3,13 +3,13 @@ The training component is the one that will be used to automatically schedule an
 To automate the training process, we will use `Prefect` to schedule and run the training jobs and `Kedro` that handles 
 the different steps represented as modular pipelines.
 
+
 ## Setup
 
 Before we start, you need to check if you are in the right environment. If you are not, follow these 
 [instructions](../#installation) to setup the required environment.
 
 Once you have activated your working environment and `make-us-rich` is installed, we are ready to start.
-
 
 ### Initialize the training component
 
@@ -32,7 +32,6 @@ code .
 ```
 
 Don't worry if you don't use **VS Code**, you can open the directory in **any text editor of your choice**.
-
 
 ### Configure the env variables
 
