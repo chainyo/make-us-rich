@@ -1,3 +1,7 @@
-::: make_us_rich
-    selection:
-        docstring_style: numpy
+- [CLI](./cli)
+- [Client](./client)
+- [Interface](./interface)
+- [Pipelines](./pipelines)
+- [Serving](./serving)
+- [Utils](./utils)
+- [Worker](./worker)
