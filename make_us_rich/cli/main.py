@@ -120,7 +120,9 @@ def start(
 
 @app.command("stop")
 def stop():
-    """"""
+    """
+    Command line interface for stopping all ressources deployed after `mkrich run training` command.
+    """
     typer.secho("❌ Stopping all training services.\n", fg=typer.colors.GREEN)
     runner.stop_training()
     typer.secho("🎉 All services stopped!\n", fg=typer.colors.GREEN)
