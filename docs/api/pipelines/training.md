@@ -4,9 +4,7 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_full_path: false
-
----
+        merge_init_into_class: true
 
 # LSTMDataLoader
 
@@ -14,9 +12,7 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_heading: false
-
----
+        merge_init_into_class: true
 
 # LSTMRegressor
 
@@ -24,9 +20,7 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_heading: false
-
----
+        merge_init_into_class: true
 
 # PricePredictor
 
@@ -34,9 +28,7 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_heading: false
-
----
+        merge_init_into_class: true
 
 # Training Loop
 
@@ -44,4 +36,4 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_heading: false
+        merge_init_into_class: true
