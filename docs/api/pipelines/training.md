@@ -4,7 +4,9 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_toc_entry: false
+        show_root_full_path: false
+
+---
 
 # LSTMDataLoader
 
@@ -14,6 +16,8 @@
     rendering:
         show_root_heading: false
 
+---
+
 # LSTMRegressor
 
 ::: make_us_rich.pipelines.training.LSTMRegressor
@@ -22,6 +26,8 @@
     rendering:
         show_root_heading: false
 
+---
+
 # PricePredictor
 
 ::: make_us_rich.pipelines.training.PricePredictor
@@ -29,6 +35,8 @@
         docstring_style: numpy
     rendering:
         show_root_heading: false
+
+---
 
 # Training Loop
 
