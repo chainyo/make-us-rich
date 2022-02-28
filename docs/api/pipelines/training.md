@@ -1,39 +1,34 @@
-# CryptoDataset
-
-::: make_us_rich.pipelines.training.CryptoDataset
+::: make_us_rich.pipelines.CryptoDataset
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
+        heading_level: 2
 
-# LSTMDataLoader
-
-::: make_us_rich.pipelines.training.LSTMDataLoader
+::: make_us_rich.pipelines.LSTMDataLoader
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
+        heading_level: 2
 
-# LSTMRegressor
-
-::: make_us_rich.pipelines.training.LSTMRegressor
+::: make_us_rich.pipelines.LSTMRegressor
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
+        heading_level: 2
 
-# PricePredictor
-
-::: make_us_rich.pipelines.training.PricePredictor
+::: make_us_rich.pipelines.PricePredictor
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
+        heading_level: 2
 
-# Training Loop
-
-::: make_us_rich.pipelines.training.nodes.training_loop
+::: make_us_rich.pipelines.training.training_loop
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
+        heading_level: 2
