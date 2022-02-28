@@ -1,25 +1,25 @@
-::: make_us_rich.pipelines.CryptoDataset
+::: make_us_rich.pipelines.training.CryptoDataset
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
         heading_level: 2
 
-::: make_us_rich.pipelines.LSTMDataLoader
+::: make_us_rich.pipelines.training.LSTMDataLoader
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
         heading_level: 2
 
-::: make_us_rich.pipelines.LSTMRegressor
+::: make_us_rich.pipelines.training.LSTMRegressor
     selection:
         docstring_style: numpy
     rendering:
         merge_init_into_class: true
         heading_level: 2
 
-::: make_us_rich.pipelines.PricePredictor
+::: make_us_rich.pipelines.training.PricePredictor
     selection:
         docstring_style: numpy
     rendering:
