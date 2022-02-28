@@ -4,7 +4,7 @@
     selection:
         docstring_style: numpy
     rendering:
-        show_root_heading: false
+        show_root_toc_entry: false
 
 # LSTMDataLoader
 

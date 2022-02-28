@@ -1,7 +1,0 @@
-- [CLI](./cli)
-- [Client](./client)
-- [Interface](./interface)
-- [Pipelines](./pipelines)
-- [Serving](./serving)
-- [Utils](./utils)
-- [Worker](./worker)
