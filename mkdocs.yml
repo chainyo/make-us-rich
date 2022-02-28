@@ -35,7 +35,12 @@ nav:
   - pipelines: 
     - fetching: api/pipelines/fetching.md
     - preprocessing: api/pipelines/preprocessing.md
-    - training: api/pipelines/training.md
+    - training: 
+      - api/pipelines/training/cryptodataset.md
+      - api/pipelines/training/lstmdataloader.md
+      - api/pipelines/training/lstmregressor.md
+      - api/pipelines/training/pricepredictor.md
+      - api/pipelines/training/trainingloop.md
     - converting: api/pipelines/converting.md
     - exporting: api/pipelines/exporting.md
   - serving: api/serving.md
