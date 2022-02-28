@@ -16,9 +16,17 @@ Here is the simplified project architecture:
 
 ## Installation
 
+I recommend to install this package in an isolated environment. If you want to learn more about the recommended 
+installation, check the [installation instructions](https://chainyo.github.io/make-us-rich/#installation).
+
 ```bash
 pip install make-us-rich
 ```
+
+## CLI Usage
+
+Basic commands are: `mkrich init` and `mkrich run`. Check the 
+[API documentation](https://chainyo.github.io/make-us-rich/api/cli/) related to the cli usage for more details.
 
 ## Support
 
