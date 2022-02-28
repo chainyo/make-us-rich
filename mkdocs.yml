@@ -29,7 +29,7 @@ nav:
   - Serving: serving.md
   - Interface: interface.md
 - API: 
-  - CLI: api/cli.md
+  - cli: api/cli.md
   - client: api/client.md
   - interface: api/interface.md
   - pipelines: 

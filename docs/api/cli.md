@@ -1,4 +1,4 @@
-## Initialization
+## init
 
 - `mkrich init [OPTIONS] SERVICE`
 
@@ -22,6 +22,8 @@ Options:
 
 ```
 
+## run
+
 - `mkrich run [OPTIONS] SERVICE`
 
 ```bash
@@ -41,6 +43,8 @@ Options:
   --help  Show this message and exit.
 ```
 
+## start
+
 - `mkrich start [OPTIONS] SERVICE`
 
 ```bash
@@ -54,6 +58,8 @@ Arguments:
 Options:
   --help  Show this message and exit.
 ```
+
+## stop
 
 - `mkrich stop [OPTIONS]`
 
