@@ -59,4 +59,6 @@ plugins:
         python:
           selection:
             docstring_style: numpy
+          rendering:
+            show_root_heading: false
   - git-revision-date
