@@ -8,7 +8,7 @@ For more details on how to use this project, please refer to [documentation](htt
 
 You can inspect the training pipeline with the `Kedro Viz` tool, available [here](https://makeusrich-viz.chainyo.tech)
 
-Here is the project simplified architecture:
+Here is the simplified project architecture:
 
 ![Project Architecture](./docs/img/project_architecture.png)
 
