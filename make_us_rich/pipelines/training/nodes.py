@@ -12,8 +12,6 @@ from .model import PricePredictor
 from .dataloader import LSTMDataLoader
 
 
-
-
 def training_loop(
     train_sequences: List[Tuple[pd.DataFrame, float]], 
     val_sequences: List[Tuple[pd.DataFrame, float]],
