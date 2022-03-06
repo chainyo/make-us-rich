@@ -39,7 +39,7 @@ def training_loop(
     """
     seed_everything(42, workers=True)
     logger = WandbLogger(project=parameters["wandb_project"])
-    gpu_value = 1 if parameters["run_on_gpu"] else 0
+    gpu_value = 1 if parameters["run_on_gpu"] is True else 0
 
     model = PricePredictor(
         batch_size=parameters["train_batch_size"],
