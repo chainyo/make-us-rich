@@ -173,3 +173,5 @@ api/models/
 
 # poetry.lock
 poetry.lock
+
+notebooks/** linguist-vendored
